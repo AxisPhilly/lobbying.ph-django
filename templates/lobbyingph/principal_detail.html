@@ -13,4 +13,10 @@
             </li>
         </ul>
     </div>
+
+    <div class="detail container">
+        {% for filing in principal.filing_set.all %}
+            {{ filing.quarter }}
+        {% endfor %}
+    </div>
 {% endblock %}
