@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1>Registered Philadelphia Principals</h1>
+        
+        <ul class="lobbyists">
+            {% for principal in object_list %}
+                <li class="lobbyist">
+                    <h2><a href="/principal/{{ principal.id }}">{{ principal.name }}</a></h2>
+                    <ul>
+                        <li class="address"> {{ principal.get_address }} </li>
+                        <li class="phone"> {{ principal.phone }} </li>
+                        <li class="email"> {{ principal.email }} </li>
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

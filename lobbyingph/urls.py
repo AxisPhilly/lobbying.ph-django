@@ -1,17 +1,18 @@
 from django.conf.urls import patterns, include, url
+from lobbyingph.views import LobbyistList, LobbyistDetail
+from lobbyingph.views import FirmList, FirmDetail
+from lobbyingph.views import PrincipalList, PrincipalDetail
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'lobbyingph.views.home', name='home'),
-    # url(r'^lobbyingph/', include('lobbyingph.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', LobbyistList.as_view()),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^lobbyists/$', LobbyistList.as_view()),
+    url(r'^lobbyist/(?P<pk>\d+)/$', LobbyistDetail.as_view()),
+    url(r'^firms/$', FirmList.as_view()),
+    url(r'^firm/(?P<pk>\d+)/$', FirmDetail.as_view()),
+    url(r'^principals/$', PrincipalList.as_view()),
+    url(r'^principal/(?P<pk>\d+)/$', PrincipalList.as_view()),
 )

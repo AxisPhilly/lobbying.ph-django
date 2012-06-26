@@ -1,4 +1,9 @@
 # Django settings for lobbyingph project.
+import os
+from os.path import abspath, basename, dirname, join, normpath
+
+PROJECT_ROOT = dirname(dirname(abspath(__file__)))
+PROJECT_URL = '/'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -9,10 +14,13 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+import dj_database_url
+DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'lobbying',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -67,9 +75,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    
 )
 
 # List of finder classes that know how to find static files in
@@ -106,9 +112,7 @@ ROOT_URLCONF = 'lobbyingph.urls'
 WSGI_APPLICATION = 'lobbyingph.wsgi.application'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    join(PROJECT_ROOT, 'templates/'),
 )
 
 INSTALLED_APPS = (
@@ -118,10 +122,9 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'django.contrib.admin',
+    'south',
+    'lobbyingph',
 )
 
 # A sample logging configuration. The only tangible logging

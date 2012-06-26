@@ -1,0 +1,174 @@
+@import url(https://fonts.googleapis.com/css?family=Droid+Sans:regular,bold);
+.container {
+  width: 960px;
+  margin: 0 auto; }
+
+.container.detail {
+  padding-top: 30px; }
+
+* {
+  margin: 0;
+  padding: 0; }
+
+body {
+  font-family: helvetica, arial, sans-serif;
+  color: #555555;
+  font-size: 12px; }
+  body h1 {
+    color: #346983;
+    font-family: "Droid Sans", Arial, sans-serif;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 10px;
+    font-size: 20px;
+    clear: left; }
+    body h1 a.view-more {
+      font-size: 12px;
+      color: #777777;
+      font-weight: normal;
+      font-style: italic; }
+  body a {
+    color: #027bb6; }
+  body ul li {
+    list-style-type: none; }
+  body p {
+    line-height: 18px; }
+  body form fieldset {
+    border: none; }
+    body form fieldset input {
+      display: block;
+      border: 1px solid #e5e5e5; }
+    body form fieldset button {
+      display: block; }
+
+header {
+  background: #e4f3fa;
+  display: block; }
+  header nav {
+    display: block;
+    background: #346983;
+    overflow: hidden;
+    padding-top: 10px;
+    margin-bottom: 30px; }
+    header nav ul {
+      width: 960px;
+      margin: 0 auto; }
+      header nav ul li {
+        font-weight: bold;
+        float: left;
+        margin-right: 2px; }
+        header nav ul li a {
+          text-decoration: none;
+          color: #fff;
+          display: block;
+          height: 20px;
+          padding: 5px 7px 0 10px; }
+      header nav ul li.current a, header nav ul li a:hover {
+        background: #e4f3fa;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        color: #346983; }
+      header nav ul li a:hover {
+        color: #fff;
+        background: #3f80a0; }
+  header h1 {
+    font-size: 24px;
+    line-height: 26px;
+    padding-bottom: 15px;
+    border: none; }
+    header h1 a {
+      text-decoration: none;
+      color: #346983; }
+    header h1 span {
+      display: block;
+      font-size: 18px;
+      color: #777777;
+      font-weight: normal; }
+  header form {
+    width: 960px;
+    margin: 0 auto; }
+    header form fieldset {
+      margin-top: -50px;
+      float: right; }
+      header form fieldset input.text {
+        font-style: inherit;
+        font-size: 14px;
+        padding: 10px;
+        width: 200px;
+        float: left; }
+      header form fieldset button {
+        float: left;
+        background: #efefef;
+        padding: 5px; }
+        header form fieldset button:hover {
+          cursor: pointer; }
+
+section.cover {
+  padding: 30px 0;
+  margin-bottom: 30px;
+  overflow: hidden;
+  background: #f9f9f9;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5; }
+  section.cover div.overview, section.cover a.overview {
+    text-decoration: none;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    background: #fff;
+    padding: 20px 0;
+    text-align: center;
+    width: 22%;
+    float: left;
+    margin-right: 35px; }
+    section.cover div.overview h2, section.cover a.overview h2 {
+      font-size: 18px;
+      font-weight: bold;
+      color: #346983;
+      font-family: "Droid Sans", Arial, sans-serif; }
+      section.cover div.overview h2 span, section.cover a.overview h2 span {
+        display: block;
+        color: #c00000; }
+    section.cover div.overview:last-child, section.cover a.overview:last-child {
+      margin-right: 0; }
+  section.cover a.overview:hover {
+    background: #346983; }
+    section.cover a.overview:hover h2, section.cover a.overview:hover span {
+      color: #fff; }
+
+ul.lobbyists {
+  clear: left; }
+  ul.lobbyists li.lobbyist {
+    width: 50%;
+    float: left;
+    margin-bottom: 20px; }
+    ul.lobbyists li.lobbyist h2 {
+      font-family: "Droid Sans", Arial, sans-serif;
+      color: #111111;
+      margin-bottom: 3px; }
+      ul.lobbyists li.lobbyist h2 a {
+        color: #111111;
+        text-decoration: none; }
+    ul.lobbyists li.lobbyist ul li {
+      line-height: 16px; }
+
+ul.lobbyists.one-column li {
+  width: 100%;
+  float: none; }
+
+footer {
+  padding: 20px 0;
+  display: block;
+  overflow: hidden;
+  background: #e4f3fa;
+  border-top: 1px solid #e5e5e5;
+  clear: left; }
+  footer div.column {
+    float: left;
+    width: 50%; }
+    footer div.column h2 {
+      color: #346983;
+      margin-bottom: 10px;
+      font-family: "Droid Sans", Arial, sans-serif; }
+    footer div.column p {
+      width: 80%;
+      margin-bottom: 15px; }

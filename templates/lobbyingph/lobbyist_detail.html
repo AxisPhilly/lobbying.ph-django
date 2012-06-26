@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="detail container">
+        <ul class="lobbyists">
+            <li class="lobbyist">
+                <h2>{{ lobbyist.name }}</h2>
+                <ul>
+                    <li class="address"> {{ lobbyist.get_address }} </li>
+                    <li class="phone"> {{ lobbyist.phone }} </li>
+                    <li class="email"> {{ lobbyist.email }} </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

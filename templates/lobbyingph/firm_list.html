@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1>Registered Philadelphia Lobbying Firms</h1>
+        
+        <ul class="lobbyists">
+            {% for firm in object_list %}
+                <li class="lobbyist">
+                    <h2><a href="/firm/{{ firm.id }}">{{ firm.name }}</a></h2>
+                    <ul>
+                        <li class="address"> {{ firm.get_address }} </li>
+                        <li class="phone"> {{ firm.phone }} </li>
+                        <li class="email"> {{ firm.email }} </li>
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
