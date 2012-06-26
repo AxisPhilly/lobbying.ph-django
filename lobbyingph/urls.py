@@ -14,5 +14,5 @@ urlpatterns = patterns('',
     url(r'^firms/$', FirmList.as_view()),
     url(r'^firm/(?P<pk>\d+)/$', FirmDetail.as_view()),
     url(r'^principals/$', PrincipalList.as_view()),
-    url(r'^principal/(?P<pk>\d+)/$', PrincipalList.as_view()),
+    url(r'^principal/(?P<pk>\d+)/$', PrincipalDetail.as_view()),
 )
