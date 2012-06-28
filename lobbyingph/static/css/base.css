@@ -218,6 +218,10 @@ h1.name {
   text-transform: uppercase;
 }
 
+.container.detail .spending .total {
+  font-size: 45px;
+}
+
 .container.detail .article {
   float: left;
   width: 47%;
