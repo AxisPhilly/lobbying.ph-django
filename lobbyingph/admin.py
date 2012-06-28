@@ -1,10 +1,9 @@
 from django.contrib import admin
-from lobbyingph.models import Lobbyist, Firm, Principal
-from lobbyingph.models import Filing, Exp_Direct_Comm, Exp_Indirect_Comm
-from lobbyingph.models import Issue, Bill, Official, Agency, Category
+from lobbyingph.models import *
 
 class Exp_Direct_CommInline(admin.TabularInline):
     model = Exp_Direct_Comm
+    filter_horizontal = ['officials',]
 
 class Exp_Indirect_CommInline(admin.TabularInline):
     model = Exp_Indirect_Comm
@@ -24,3 +23,5 @@ admin.site.register(Bill)
 admin.site.register(Official)
 admin.site.register(Agency)
 admin.site.register(Category)
+admin.site.register(Communication_Method)
+admin.site.register(Receipent_Group)
