@@ -1,16 +1,35 @@
 {% extends "base.html" %}
+{% load humanize %}
+
+{% block header %}
+    {% include "_header.html" %}
+{% endblock %}
 
 {% block content %}
+    <ol class="path">
+        <li><a href="/">Home</a></li> / 
+        <li><a href="/lobbyists">Lobbyists</a></li> / 
+        <li>Lobbyist Detail: {{ lobbyist.name }}</li>
+    </ol>
+
+    <h1 class="name">{{ lobbyist.name }}</h1>
     <div class="detail container">
-        <ul class="lobbyists">
-            <li class="lobbyist">
-                <h2>{{ lobbyist.name }}</h2>
-                <ul>
-                    <li class="address"> {{ lobbyist.get_address }} </li>
-                    <li class="phone"> {{ lobbyist.phone }} </li>
-                    <li class="email"> {{ lobbyist.email }} </li>
-                </ul>
-            </li>
-        </ul>
+        <article>
+            <div class="article">
+            <ul class="contact">
+                <li class="address"> {{ lobbyist.get_address }} </li>
+                <li class="phone"> {{ lobbyist.phone }} </li>
+                <li class="email"> {{ lobbyist.email }} </li>
+                <li class="firm"> <a href="/firms/{{ lobbyist.firm.id }}">{{ lobbyist.firm }}</a></li>
+            </ul>
+
+        </article>
+
+        <aside>
+            <div class="aside">
+
+            </div>
+        </aside>
+
     </div>
 {% endblock %}
