@@ -7,7 +7,7 @@
 {% block content %}
 <ol class="path">
     <li><a href="/">Home</a></li> / 
-    <li><a href="/principals">Principal List</a></li>
+    <li>Principals</li>
 </ol>
     
     <h1 class="name">Principals</h1>
@@ -21,18 +21,18 @@
         <aside>
             <div class="aside">
 
-                 <div class="spending">
+                <!--<div class="spending">
                     <div>
                         <h4>Highest Spenders</h4>
                     </div>
-                </div>
+                </div>-->
 
             </div>
         </aside>
     </div>
 
     <div class="filings container">
-        <table id="principals" class="tablesorter"> 
+        <table id="lists" class="tablesorter"> 
             <thead>
                 <tr>
                     <th>Name</th>
@@ -60,7 +60,7 @@
     <script type='text/javascript'>
 
     $(document).ready(function() { 
-        $("#principals").tablesorter(); 
+        $("#lists").tablesorter(); 
     }); 
 
     </script>   
