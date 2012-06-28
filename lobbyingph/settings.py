@@ -1,6 +1,7 @@
 # Django settings for lobbyingph project.
 import os
 from os.path import abspath, basename, dirname, join, normpath
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
 PROJECT_ROOT = dirname(dirname(abspath(__file__)))
 PROJECT_URL = '/'
@@ -94,6 +95,10 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+    'django.core.context_processors.request',
 )
 
 MIDDLEWARE_CLASSES = (
