@@ -14,7 +14,7 @@
     <div class="detail container">      
         <article>  
             <div class="article">
-                <p>Lobbyists work for <a href="/firms"> and meet with City officials on the behalf of <a href="/principals">principals</a>.</p>
+                <p>Lobbyists work for <a href="/firms">firms</a> and meet with City officials on the behalf of <a href="/principals">principals</a>.</p>
             </div>
         </article>
 
@@ -26,36 +26,12 @@
     </div>
 
     <div class="filings container">
-        <table id="list" class="tablesorter"> 
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Phone</th>
-                <tr>
-            </thead>
-            <tbody>
-                {% for lobbyist in object_list %}
-                    <tr>
-                        <td> <a href="/lobbyist/{{ lobbyist.id }}">{{ lobbyist.name }}</a></td>
-                        <td> {{ lobbyist.phone }} </td>
-                        <td>
-                            {{ lobbyist.email }} 
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+
+        {% include 'lobbyingph/partials/_list_table.html' %}
+
     </div>
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
-    <script type='text/javascript'>
-
-    $(document).ready(function() { 
-        $("#list").tablesorter(); 
-    }); 
-
-    </script>   
+    {% include 'lobbyingph/partials/_table_scripts.html' %}  
 {% endblock %}

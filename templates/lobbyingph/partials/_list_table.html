@@ -1,0 +1,33 @@
+<div class="pager-container">
+    <div id="pager" class="pager">
+        <span class="prev"/>Prev</span>
+        <span class="pagedisplay"/></span>
+        <span class="next"/>Next</span>
+        <select class="pagesize">
+            <option selected="selected"  value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+    </div>
+</div>
+
+<table id="list" class="tablesorter"> 
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+        <tr>
+    </thead>
+    <tbody>
+        {% for object in object_list %}
+            <tr>
+                <td> <a href="{{ request.get_full_path}}{{ object.id }}">{{ object.name }}</a></td>
+                <td> {{ object.phone }} </td>
+                <td>
+                    {{ object.email }} 
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -21,47 +21,17 @@
         <aside>
             <div class="aside">
 
-                <!--<div class="spending">
-                    <div>
-                        <h4>Highest Spenders</h4>
-                    </div>
-                </div>-->
-
             </div>
         </aside>
     </div>
 
     <div class="filings container">
-        <table id="lists" class="tablesorter"> 
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Phone</th>
-                <tr>
-            </thead>
-            <tbody>
-                {% for principal in object_list %}
-                    <tr>
-                        <td> <a href="/principal/{{ principal.id }}">{{ principal.name }}</a></td>
-                        <td> {{ principal.phone }} </td>
-                        <td>
-                            {{ principal.email }} 
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+
+       {% include 'lobbyingph/partials/_list_table.html' %}
+       
     </div>
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
-    <script type='text/javascript'>
-
-    $(document).ready(function() { 
-        $("#lists").tablesorter(); 
-    }); 
-
-    </script>   
+    {% include 'lobbyingph/partials/_table_scripts.html' %}  
 {% endblock %}

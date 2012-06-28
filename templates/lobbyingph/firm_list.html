@@ -26,36 +26,12 @@
     </div>
 
     <div class="filings container">
-        <table id="list" class="tablesorter"> 
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Phone</th>
-                <tr>
-            </thead>
-            <tbody>
-                {% for firm in object_list %}
-                    <tr>
-                        <td> <a href="/firm/{{ firm.id }}">{{ firm.name }}</a></td>
-                        <td> {{ firm.phone }} </td>
-                        <td>
-                            {{ firm.email }} 
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+
+        {% include 'lobbyingph/partials/_list_table.html' %}
+
     </div>
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
-    <script type='text/javascript'>
-
-    $(document).ready(function() { 
-        $("#list").tablesorter(); 
-    }); 
-
-    </script>   
+    {% include 'lobbyingph/partials/_table_scripts.html' %}  
 {% endblock %}

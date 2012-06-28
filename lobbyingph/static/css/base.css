@@ -242,6 +242,36 @@ h1.name {
   width: 100%;
 }
 
+.pager-container {
+  overflow: auto;
+  height: 30px;
+  width: 100%;
+}
+
+.pager {
+  float: right;
+}
+
+.prev {
+  background-color: #E6EEEE;
+  display: inline-block;
+  border-radius: 3px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.next {
+  background-color: #E6EEEE;
+  display: inline-block;
+  border-radius: 3px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.pagesize {
+  margin-left: 10px;
+}
+
 footer {
   padding: 20px 0;
   display: block;
