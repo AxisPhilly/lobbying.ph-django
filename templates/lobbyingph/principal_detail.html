@@ -56,7 +56,7 @@
                 <h3>Firms Paid</h3>
                 <ul>
                     {% for firm in firms %}
-                        <li><a href="/firm/{{ firm.id }}">{{ firm }}</a></li>
+                        <li><a href="/firms/{{ firm.id }}">{{ firm }}</a></li>
                     {% endfor %}
                     {% if not firms %} N/A {% endif %}
                 </ul>
