@@ -77,7 +77,7 @@ header nav ul li a {
 }
 
 header nav ul li.current a, header nav ul li a:hover {
-  background: #e4f3fa;
+  background: #E6EEEE;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
   color: #346983; 
