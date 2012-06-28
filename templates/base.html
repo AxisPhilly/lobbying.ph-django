@@ -12,12 +12,11 @@
     <header id="header">
       <nav>
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/lobbyists">Lobbyists</a></li>
-          <li><a href="/principals">Principals</a></li>
-          <li><a href="/firms">Firms</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="http://github.com/caseypt/lobbying.ph-django">Source Code</a></li>
+          <li {% if request.path == '/' %} class="current" {% endif %} ><a href="/">Home</a></li>
+          <li {% if 'lobbyist' in request.path %} class="current" {% endif %}><a href="/lobbyists">Lobbyists</a></li>
+          <li {% if 'principal' in request.path %} class="current" {% endif %}><a href="/principals">Principals</a></li>
+          <li {% if 'firm' in request.path %} class="current" {% endif %}><a href="/firms">Firms</a></li>
+          <li><a href="#about">About</a></li>
         </ul>
       </nav>
       {% block header %}
@@ -40,6 +39,7 @@
         <div class="column">
           <h2>Developers</h2>
           <p>This app was created at Code Across America: Philadelphia's Civic Hackathon on February 25, 2012 by <a href="https://twitter.com/caseypt">@caseypt</a>, <a href="http://www.mikeball.us">Mike Ball</a>, <a href="https://twitter.com/#!/">@ahinz</a>, and <a href="https://twitter.com/#!/dannyJF">@DannyJF</a>.</p>
+          <p>The source code is availabe on <a href="http://github.com/caseypt/lobbying.ph-django">Github</a></p>
           <p><a href="#header">Return to top</a></p>
         </div>
       </div>
