@@ -29,6 +29,29 @@ class FirmList(ListView):
 class FirmDetail(DetailView):
     model = Firm
 
+    def get_context_data(self, **kwargs):
+        context = super(FirmDetail, self).get_context_data()
+
+        # the clients (principals)
+        clients = self.object.filing_set.distinct('principal')
+        client = []
+
+        for c in clients:
+            client.append(c.principal)
+
+        for row in self.object.filing_set.all():
+            # the lobbying categories
+            topics = row.exp_direct_comm_set.distinct('category')
+            topic = []
+
+            for t in topics: 
+                topic.append(t.category)
+
+        context['clients'] = client
+        context['topics'] = topic
+
+        return context
+
 class PrincipalList(ListView):
     model = Principal
 
