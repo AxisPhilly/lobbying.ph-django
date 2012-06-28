@@ -53,20 +53,20 @@
                     {% if not topics %} N/A {% endif %}
                 </ul>
 
-                <h3>Firms Paid</h3>
-                <ul>
-                    {% for firm in firms %}
-                        <li><a href="/firms/{{ firm.id }}">{{ firm }}</a></li>
-                    {% endfor %}
-                    {% if not firms %} N/A {% endif %}
-                </ul>
-
                 <h3>Issues</h3>
                 <ul>
                     {% for issue, position in issues.items %}
                         <li>{{ position }}: <a href="/issue/{{ issue.id }}">{{ issue }}</a></li>
                     {% endfor %}
                     {% if not issues %} N/A {% endif %}
+                </ul>
+
+                <h3>Firms Paid</h3>
+                <ul>
+                    {% for firm in firms %}
+                        <li><a href="/firms/{{ firm.id }}">{{ firm }}</a></li>
+                    {% endfor %}
+                    {% if not firms %} N/A {% endif %}
                 </ul>
             </div>
         </aside>
