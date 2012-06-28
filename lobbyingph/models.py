@@ -117,6 +117,8 @@ class Exp_Indirect_Comm(models.Model):
     agency = models.ForeignKey('Agency', blank=True, null=True)
 
     officials = models.ManyToManyField('Official', blank=True, null=True)
+    methods = models.ManyToManyField('Communication_Method', blank=True, null=True)
+    groups = models.ManyToManyField('Receipent_Group', blank=True, null=True)
     filing = models.ForeignKey(Filing)
 
 class Exp_Other(models.Model):
@@ -145,9 +147,9 @@ class Agency(models.Model):
         return self.name
 
 class Bill(models.Model):
-    name = models.CharField(max_length=100, blank=False, null=False)
-    number = models.CharField(max_length=10, blank=True, null=True)
-    url = models.URLField(blank=False, null=False, default="http://legislation.phila.gov/mattersearch/home.aspx")
+    name = models.CharField(max_length=100, blank=True, null=True)
+    number = models.CharField(max_length=10, blank=False, null=False, default=0)
+    url = models.URLField(blank=False, null=False, default="http://legislation.phila.gov/detailreport/?key=")
 
     class Meta:
         ordering = ['name']
@@ -162,6 +164,24 @@ class Issue(models.Model):
         return self.description
 
 class Category(models.Model):
+    name = models.CharField(max_length=100, blank=False, null=False)
+
+    class Meta:
+        ordering = ['name']
+
+    def __unicode__(self):
+        return self.name
+
+class Communication_Method(models.Model):
+    name = models.CharField(max_length=100, blank=False, null=False)
+
+    class Meta:
+        ordering = ['name']
+
+    def __unicode__(self):
+        return self.name
+
+class Receipent_Group(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False)
 
     class Meta:
