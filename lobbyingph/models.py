@@ -86,9 +86,9 @@ QUARTER_CHOICES = (
 class Filing(models.Model):
     quarter = models.CharField(max_length=2, choices=QUARTER_CHOICES)
     year = models.DateField(null=False, blank=False, default=datetime.date.today)
-    total_exp_direct_comm = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
-    total_exp_indriect_comm = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
-    total_exp_other = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True) 
+    total_exp_direct_comm = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    total_exp_indirect_comm = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    total_exp_other = models.DecimalField(max_digits=12, decimal_places=2, default=0.00) 
 
     principal = models.ForeignKey(Principal, null=True, blank=True)
     firms = models.ManyToManyField(Firm, null=True, blank=True)
