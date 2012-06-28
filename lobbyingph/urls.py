@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from lobbyingph.views import index
 from lobbyingph.views import LobbyistList, LobbyistDetail
 from lobbyingph.views import FirmList, FirmDetail
 from lobbyingph.views import PrincipalList, PrincipalDetail
@@ -7,7 +8,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', LobbyistList.as_view()),
+    url(r'^$', index),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^lobbyists/$', LobbyistList.as_view()),
     url(r'^lobbyist/(?P<pk>\d+)/$', LobbyistDetail.as_view()),

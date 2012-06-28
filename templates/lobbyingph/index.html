@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+    
+    <div class="container">
+        <div class="intro">
+            <h1>Lobbying.ph</h1>
+            <h2>Who's Lobbying in Philadelphia?</h2>
+        </div>
+
+        <div class="tally">
+            <p>{{ lobbyists }} Lobbyists</p>
+            <p>{{ firms }} Firms</p>
+            <p>{{ principals }} Principals</p>
+        </div>
+    </div>
+
+{% endblock %}
