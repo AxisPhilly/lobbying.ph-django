@@ -1,20 +1,67 @@
 {% extends "base.html" %}
 
+{% block header %}
+    {% include "_header.html" %}
+{% endblock %}
+
 {% block content %}
-    <div class="container">
-        <h1>Registered Philadelphia Principals</h1>
-        
-        <ul class="lobbyists">
-            {% for principal in object_list %}
-                <li class="lobbyist">
-                    <h2><a href="/principal/{{ principal.id }}">{{ principal.name }}</a></h2>
-                    <ul>
-                        <li class="address"> {{ principal.get_address }} </li>
-                        <li class="phone"> {{ principal.phone }} </li>
-                        <li class="email"> {{ principal.email }} </li>
-                    </ul>
-                </li>
-            {% endfor %}
-        </ul>
+<ol class="path">
+    <li><a href="/">Home</a></li> / 
+    <li><a href="/principals">Principal List</a></li>
+</ol>
+    
+    <h1 class="name">Principals</h1>
+    <div class="detail container">      
+        <article>  
+            <div class="article">
+                <p>Principals are the companies, organizations, and groups that pay for lobbying services. They are required to fill out quarterly reports detailing their expenditures lobbying firms.</p>
+            </div>
+        </article>
+
+        <aside>
+            <div class="aside">
+
+                 <div class="spending">
+                    <div>
+                        <h4>Highest Spenders</h4>
+                    </div>
+                </div>
+
+            </div>
+        </aside>
     </div>
+
+    <div class="filings container">
+        <table id="principals" class="tablesorter"> 
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                <tr>
+            </thead>
+            <tbody>
+                {% for principal in object_list %}
+                    <tr>
+                        <td> <a href="/principal/{{ principal.id }}">{{ principal.name }}</a></td>
+                        <td> {{ principal.phone }} </td>
+                        <td>
+                            {{ principal.email }} 
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
+    <script type='text/javascript'>
+
+    $(document).ready(function() { 
+        $("#principals").tablesorter(); 
+    }); 
+
+    </script>   
 {% endblock %}
