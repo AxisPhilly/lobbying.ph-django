@@ -1,22 +1,109 @@
 {% extends "base.html" %}
+{% load humanize %}
+
+{% block header %}
+    {% include "_header.html" %}
+{% endblock %}
 
 {% block content %}
+    <ol class="path">
+        <li><a href="/">Home</a></li> / 
+        <li><a href="/principals">Principals</a></li> / 
+        <li>Principal Detail: {{ principal.name }}</li>
+    </ol>
+
+    <h1 class="name">{{ principal.name }}</h1>
     <div class="detail container">
-        <ul class="lobbyists">
-            <li class="lobbyist">
-                <h2>{{ principal.name }}</h2>
-                <ul>
+        <article>
+            <div class="article">
+                <ul class="contact">
                     <li class="address"> {{ principal.get_address }} </li>
                     <li class="phone"> {{ principal.phone }} </li>
                     <li class="email"> {{ principal.email }} </li>
                 </ul>
-            </li>
-        </ul>
+
+                <div class="spending">
+                    <div>
+                        <h4>Total Expenditures To Date</h4>
+                        <span>${{ totals.exp|intcomma }}</span>
+                    </div>
+                    <div>
+                        <h4>Direct Communications</h4>
+                        <span>${{ totals.exp_direct_comm.val|intcomma }}</span>
+                    </div>
+                    <div>
+                        <h4>Indirect Communications</h4>
+                        <span>${{ totals.exp_indirect_comm.val|intcomma }}</span>
+                    </div>
+                    <div>
+                        <h4>Travel, Lodging</h4>
+                        <span>${{ totals.exp_other.val|intcomma }}</span>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <aside>
+            <div class="aside">
+                <h3>Topics</h3>
+                <ul>
+                    {% for topic in topics %}
+                        <li><a href="/topic/{{ topic.id }}">{{ topic.name }}</a></li>
+                    {% endfor %}
+                    {% if not topics %} N/A {% endif %}
+                </ul>
+
+                <h3>Firms Paid</h3>
+                <ul>
+                    {% for firm in firms %}
+                        <li><a href="/firm/{{ firm.id }}">{{ firm }}</a></li>
+                    {% endfor %}
+                    {% if not firms %} N/A {% endif %}
+                </ul>
+
+                <h3>Issues</h3>
+                <ul>
+                    {% for issue, position in issues.items %}
+                        <li>{{ position }}: <a href="/issue/{{ issue.id }}">{{ issue }}</a></li>
+                    {% endfor %}
+                    {% if not issues %} N/A {% endif %}
+                </ul>
+            </div>
+        </aside>
     </div>
 
-    <div class="detail container">
-        {% for filing in principal.filing_set.all %}
-            {{ filing.quarter }}
-        {% endfor %}
+    <div class="filings container">
+        <h3>Filings</h3>
+        <table id="filings" class="tablesorter">
+            <thead> 
+                <tr> 
+                    <th>Quarter</th>
+                    <th>Year</th>
+                    <th>Direct Communication</th> 
+                    <th>Indirect Communication</th> 
+                </tr>
+            </thead>
+            <tbody>
+            {% for filing in principal.filing_set.all %}
+                <tr>
+                    <td>{{ filing.quarter }}</td>
+                    <td>{{ filing.year|date:"Y" }}</td>
+                    <td>${{ filing.total_exp_direct_comm|intcomma }}</td>
+                    <td>${{ filing.total_exp_indirect_comm|intcomma }}</td>
+                </tr>   
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
+    <script type='text/javascript'>
+
+    $(document).ready(function() { 
+        $("#filings").tablesorter(); 
+    }); 
+
+    </script>   
 {% endblock %}
