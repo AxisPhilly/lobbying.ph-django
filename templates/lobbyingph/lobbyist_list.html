@@ -1,20 +1,61 @@
 {% extends "base.html" %}
 
+{% block header %}
+    {% include "_header.html" %}
+{% endblock %}
+
 {% block content %}
-    <div class="container">
-        <h1>Registered Philadelphia Lobbyists</h1>
-        
-        <ul class="lobbyists">
-            {% for lobbyist in object_list %}
-                <li class="lobbyist">
-                    <h2><a href="/lobbyist/{{ lobbyist.id }}">{{ lobbyist.name }}</a></h2>
-                    <ul>
-                        <li class="address"> {{ lobbyist.get_address }} </li>
-                        <li class="phone"> {{ lobbyist.phone }} </li>
-                        <li class="email"> {{ lobbyist.email }} </li>
-                    </ul>
-                </li>
-            {% endfor %}
-        </ul>
+<ol class="path">
+    <li><a href="/">Home</a></li> / 
+    <li>Lobbyists</li>
+</ol>
+    
+    <h1 class="name">Lobbyists</h1>
+    <div class="detail container">      
+        <article>  
+            <div class="article">
+                <p>Lobbyists work for <a href="/firms"> and meet with City officials on the behalf of <a href="/principals">principals</a>.</p>
+            </div>
+        </article>
+
+        <aside>
+            <div class="aside">
+
+            </div>
+        </aside>
     </div>
+
+    <div class="filings container">
+        <table id="list" class="tablesorter"> 
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                <tr>
+            </thead>
+            <tbody>
+                {% for lobbyist in object_list %}
+                    <tr>
+                        <td> <a href="/lobbyist/{{ lobbyist.id }}">{{ lobbyist.name }}</a></td>
+                        <td> {{ lobbyist.phone }} </td>
+                        <td>
+                            {{ lobbyist.email }} 
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
+    <script type='text/javascript'>
+
+    $(document).ready(function() { 
+        $("#list").tablesorter(); 
+    }); 
+
+    </script>   
 {% endblock %}
