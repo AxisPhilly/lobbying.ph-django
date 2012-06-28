@@ -147,6 +147,7 @@ class Agency(models.Model):
 class Bill(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False)
     number = models.CharField(max_length=10, blank=True, null=True)
+    url = models.URLField(blank=False, null=False, default="http://legislation.phila.gov/mattersearch/home.aspx")
 
     class Meta:
         ordering = ['name']
