@@ -66,21 +66,25 @@ class PrincipalDetail(DetailView):
         exp_indirect_comm = self.object.filing_set.aggregate(val=Sum('total_exp_indirect_comm'))
         exp_other = self.object.filing_set.aggregate(val=Sum('total_exp_other'))
 
-        exp = exp_direct_comm['val'] + exp_indirect_comm['val'] + exp_other['val']
+        exp = float(exp_direct_comm['val'] or 0) + float(exp_indirect_comm['val'] or 0) + float(exp_other['val'] or 0)
         
         context['totals'] = {
-            'exp': exp,
-            'exp_direct_comm' : exp_direct_comm,
-            'exp_indirect_comm' : exp_indirect_comm,
-            'exp_other' : exp_other
+            'exp': exp if exp else 0,
+            'exp_direct_comm' : exp_direct_comm['val'] if exp_direct_comm['val'] else 0,
+            'exp_indirect_comm' : exp_indirect_commp['val'] if exp_indirect_comm['val'] else 0,
+            'exp_other' : exp_other if exp_other['val'] else 0
         }
         
+        topic = []
+        issue = {}
+        bill = {}
+        firms = None
+
         for row in self.object.filing_set.all():
 
             # the lobbying categories
             topics = row.exp_direct_comm_set.distinct('category')
-            topic = []
-
+            
             for t in topics: 
                 topic.append(t.category)
 
@@ -89,13 +93,21 @@ class PrincipalDetail(DetailView):
 
             # the issues
             issues = row.exp_direct_comm_set.distinct('issue')
-            issue = {}
-
+            
             for i in issues:
-                issue[i.issue] = i.get_position_display()
+                if i.issue != None:
+                    issue[i.issue] = i.get_position_display()
+
+            # the bills
+            bills = row.exp_direct_comm_set.distinct('bill')
+            
+            for b in bills:
+                if b.bill != None:
+                    bill[b.bill] = b.get_position_display()
 
         context['topics'] = topic
         context['firms'] = firms
         context['issues'] = issue
+        context['bills'] = bill
         
         return context
