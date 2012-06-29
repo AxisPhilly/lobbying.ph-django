@@ -71,8 +71,8 @@ class PrincipalDetail(DetailView):
         context['totals'] = {
             'exp': exp if exp else 0,
             'exp_direct_comm' : exp_direct_comm['val'] if exp_direct_comm['val'] else 0,
-            'exp_indirect_comm' : exp_indirect_commp['val'] if exp_indirect_comm['val'] else 0,
-            'exp_other' : exp_other if exp_other['val'] else 0
+            'exp_indirect_comm' : exp_indirect_comm['val'] if exp_indirect_comm['val'] else 0,
+            'exp_other' : exp_other['val'] if exp_other['val'] else 0
         }
         
         topic = []

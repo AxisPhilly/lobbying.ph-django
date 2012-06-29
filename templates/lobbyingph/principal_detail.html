@@ -25,19 +25,19 @@
                 <div class="spending">
                     <div>
                         <h4>Total Expenditures To Date</h4>
-                        <span class="total">${{ totals.exp|intcomma }}</span>
+                        <span class="total">${{ totals.exp|floatformat:0|intcomma }}</span>
                     </div>
                     <div>
                         <h4>Direct Communications</h4>
-                        <span>${{ totals.exp_direct_comm|intcomma }}</span>
+                        <span>${{ totals.exp_direct_comm|floatformat:0|intcomma }}</span>
                     </div>
                     <div>
                         <h4>Indirect Communications</h4>
-                        <span>${{ totals.exp_indirect_comm|intcomma }}</span>
+                        <span>${{ totals.exp_indirect_comm|floatformat:0|intcomma }}</span>
                     </div>
                     <div>
                         <h4>Travel, Lodging</h4>
-                        <span>${{ totals.exp_other|intcomma }}</span>
+                        <span>${{ totals.exp_other|floatformat:0|intcomma }}</span>
                     </div>
                 </div>
             </div>
