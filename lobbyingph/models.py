@@ -74,6 +74,7 @@ POSITION_CHOICE = (
     (3, 'Ammend'),
     (4, 'Proposed'),
     (5, 'Other'),
+    (6, 'Monitor'),
 )
 
 QUARTER_CHOICES = (
@@ -103,8 +104,8 @@ class Exp_Direct_Comm(models.Model):
     bill = models.ForeignKey('Bill', blank=True, null=True)
     position = models.SmallIntegerField(choices=POSITION_CHOICE, blank=True, null=True)
     other_desc = models.CharField(max_length=100, blank=True, null=True)
-    agency = models.ForeignKey('Agency', blank=True, null=True)
-
+    
+    agencies = models.ManyToManyField('Agency', blank=True, null=True)
     officials = models.ManyToManyField('Official', blank=True, null=True)
     filing = models.ForeignKey(Filing)
 
