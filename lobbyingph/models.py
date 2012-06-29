@@ -140,7 +140,7 @@ class Official(models.Model):
         ordering = ['last_name']
 
     def __unicode__(self):
-        return self.last_name + ': ' + self.agency.name
+        return self.first_name  + ' ' + self.last_name + ': ' + self.agency.name
 
 class Agency(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False)
@@ -151,9 +151,15 @@ class Agency(models.Model):
     def __unicode__(self):
         return self.name
 
+BILL_TYPE_CHOICES = (
+    (0, 'Bill'),
+    (1, 'Resolution')
+)
+
 class Bill(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     number = models.CharField(max_length=10, blank=False, null=False, default=0)
+    bill_type = models.SmallIntegerField(blank=False, null=False, default=0, choices=BILL_TYPE_CHOICES)
     url = models.URLField(blank=False, null=False, default="http://legislation.phila.gov/detailreport/?key=")
 
     class Meta:
