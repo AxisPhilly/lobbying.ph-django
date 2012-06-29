@@ -29,15 +29,15 @@
                     </div>
                     <div>
                         <h4>Direct Communications</h4>
-                        <span>${{ totals.exp_direct_comm.val|intcomma }}</span>
+                        <span>${{ totals.exp_direct_comm|intcomma }}</span>
                     </div>
                     <div>
                         <h4>Indirect Communications</h4>
-                        <span>${{ totals.exp_indirect_comm.val|intcomma }}</span>
+                        <span>${{ totals.exp_indirect_comm|intcomma }}</span>
                     </div>
                     <div>
                         <h4>Travel, Lodging</h4>
-                        <span>${{ totals.exp_other.val|intcomma }}</span>
+                        <span>${{ totals.exp_other|intcomma }}</span>
                     </div>
                 </div>
             </div>
@@ -61,7 +61,15 @@
                     {% if not issues %} N/A {% endif %}
                 </ul>
 
-                <h3>Firms Paid</h3>
+                <h3>Bills / Resolutions</h3>
+                <ul>
+                    {% for bill, position in bills.items %}
+                        <li>{{ position }}: <a href="{{ bill.url }}" target="_blank">{{ bill }}</a></li>
+                    {% endfor %}
+                    {% if not bills %} N/A {% endif %}
+                </ul>
+
+                <h3>Firms</h3>
                 <ul>
                     {% for firm in firms %}
                         <li><a href="/firms/{{ firm.id }}">{{ firm }}</a></li>
