@@ -1,7 +1,10 @@
 from django.db import models
 import datetime
 
-STATE_CHOICES = (('PA','Pennsylvania'),)
+STATE_CHOICES = (
+    ('PA','Pennsylvania'),
+    ('TX','Texas'),
+)
 
 class Lobbyist(models.Model):
     name = models.CharField(max_length=75)
@@ -89,7 +92,8 @@ class Filing(models.Model):
     year = models.DateField(null=False, blank=False, default=datetime.date.today)
     total_exp_direct_comm = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     total_exp_indirect_comm = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
-    total_exp_other = models.DecimalField(max_digits=12, decimal_places=2, default=0.00) 
+    total_exp_other = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    source = models.URLField(blank=True, null=True)
 
     principal = models.ForeignKey(Principal, null=True, blank=True)
     firms = models.ManyToManyField(Firm, null=True, blank=True)
