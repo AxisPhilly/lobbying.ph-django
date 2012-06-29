@@ -90,7 +90,7 @@ class Principal(models.Model):
 POSITION_CHOICE = (
     (1, 'Support'),
     (2, 'Oppose'),
-    (3, 'Ammend'),
+    (3, 'Amend'),
     (4, 'Proposed'),
     (5, 'Other'),
     (6, 'Monitor'),
