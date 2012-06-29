@@ -39,13 +39,17 @@ class FirmDetail(DetailView):
         for c in clients:
             client.append(c.principal)
 
+        topic = []
+
+        # FIX: Distinct needs to be executed on the whole filing set,
+        # not just row by row. Shouldn't have to do list membership test
         for row in self.object.filing_set.all():
             # the lobbying categories
             topics = row.exp_direct_comm_set.distinct('category')
-            topic = []
 
             for t in topics: 
-                topic.append(t.category)
+                if (t.category not in topic):
+                    topic.append(t.category)
 
         context['clients'] = client
         context['topics'] = topic
@@ -84,7 +88,7 @@ class PrincipalDetail(DetailView):
 
             # the lobbying categories
             topics = row.exp_direct_comm_set.distinct('category')
-            
+
             for t in topics: 
                 topic.append(t.category)
 
