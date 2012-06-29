@@ -157,13 +157,16 @@ class Bill(models.Model):
     url = models.URLField(blank=False, null=False, default="http://legislation.phila.gov/detailreport/?key=")
 
     class Meta:
-        ordering = ['name']
+        ordering = ['number']
 
     def __unicode__(self):
         return self.number
 
 class Issue(models.Model):
     description = models.TextField(blank=False, null=False)
+
+    class Meta:
+        ordering = ['description']
 
     def __unicode__(self):
         return self.description
