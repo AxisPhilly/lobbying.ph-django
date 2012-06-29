@@ -2,8 +2,24 @@ from django.db import models
 import datetime
 
 STATE_CHOICES = (
+    ('AL','Alabama'),
+    ('AR','Arkansas'),
+    ('CA','Calfornia'),
+    ('CO','Colorado'),
+    ('DC','District of Columbia'),
+    ('DE','Delaware'),
+    ('IL','Illinois'),
+    ('FL','Florida'),
+    ('MA','Massachusetts'),
+    ('MD','Maryland'),
+    ('NC','North Carolina'),
+    ('NJ','New Jersey'),
+    ('NY','New York'),
     ('PA','Pennsylvania'),
+    ('VA','Virginia'),
+    ('TN','Tennessee'),
     ('TX','Texas'),
+    ('WA','Washington'),
 )
 
 class Lobbyist(models.Model):
