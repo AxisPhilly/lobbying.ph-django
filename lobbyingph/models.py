@@ -110,7 +110,6 @@ class Filing(models.Model):
     total_exp_indirect_comm = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     total_exp_other = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     source = models.URLField(blank=True, null=True)
-
     principal = models.ForeignKey(Principal, null=True, blank=True)
     firms = models.ManyToManyField(Firm, null=True, blank=True)
     lobbyists = models.ManyToManyField(Lobbyist, null=True, blank=True)
@@ -124,7 +123,6 @@ class Exp_Direct_Comm(models.Model):
     bill = models.ForeignKey('Bill', blank=True, null=True)
     position = models.SmallIntegerField(choices=POSITION_CHOICE, blank=True, null=True)
     other_desc = models.CharField(max_length=100, blank=True, null=True)
-    
     agencies = models.ManyToManyField('Agency', blank=True, null=True)
     officials = models.ManyToManyField('Official', blank=True, null=True)
     filing = models.ForeignKey(Filing)
@@ -136,14 +134,19 @@ class Exp_Indirect_Comm(models.Model):
     position = models.SmallIntegerField(choices=POSITION_CHOICE)
     other_desc = models.CharField(max_length=100, blank=True, null=True)
     agency = models.ForeignKey('Agency', blank=True, null=True)
-
     officials = models.ManyToManyField('Official', blank=True, null=True)
     methods = models.ManyToManyField('Communication_Method', blank=True, null=True)
     groups = models.ManyToManyField('Receipent_Group', blank=True, null=True)
     filing = models.ForeignKey(Filing)
 
 class Exp_Other(models.Model):
-
+    official = models.ForeignKey('Official', null=True)
+    agency = models.ForeignKey('Agency', null=True)
+    description = models.TextField(blank=True, null=True)
+    value = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    date = models.DateField(blank=True, null=True)
+    place = models.CharField(max_length=100, null=True, blank=True)
+    source = models.ForeignKey(Principal, null=True)
     filing = models.ForeignKey(Filing)
 
 class Official(models.Model):
