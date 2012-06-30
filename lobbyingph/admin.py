@@ -5,13 +5,17 @@ class Exp_Direct_CommInline(admin.TabularInline):
     model = Exp_Direct_Comm
     filter_horizontal = ['officials',]
 
+class Exp_OtherInline(admin.TabularInline):
+    model = Exp_Other
+
 class Exp_Indirect_CommInline(admin.TabularInline):
     model = Exp_Indirect_Comm
 
 class FilingAdmin(admin.ModelAdmin):
     inlines = [
         Exp_Direct_CommInline,
-        Exp_Indirect_CommInline  
+        Exp_Indirect_CommInline, 
+        Exp_OtherInline
     ]
 
 admin.site.register(Lobbyist)
