@@ -17,16 +17,16 @@
             <th>Name</th>
             <th>Address</th>
             <th>Phone</th>
+            <th>Email</th>
         <tr>
     </thead>
     <tbody>
         {% for object in object_list %}
             <tr>
-                <td> <a href="{{ request.get_full_path}}{{ object.id }}">{{ object.name }}</a></td>
-                <td> {{ object.phone }} </td>
-                <td>
-                    {{ object.email }} 
-                </td>
+                <td><a href="{{ request.get_full_path}}{{ object.id }}">{{ object.name }}</a></td>
+                <td>{{ object.get_address }}</td>
+                <td>{{ object.phone }}</td>
+                <td>{{ object.email }}</td>
             </tr>
         {% endfor %}
     </tbody>
