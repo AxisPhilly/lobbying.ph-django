@@ -109,7 +109,6 @@ class Filing(models.Model):
     total_exp_direct_comm = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     total_exp_indirect_comm = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     total_exp_other = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
-    source = models.URLField(blank=True, null=True)
     principal = models.ForeignKey(Principal, null=True, blank=True)
     firms = models.ManyToManyField(Firm, null=True, blank=True)
     lobbyists = models.ManyToManyField(Lobbyist, null=True, blank=True)
@@ -174,6 +173,17 @@ BILL_TYPE_CHOICES = (
     (0, 'Bill'),
     (1, 'Resolution')
 )
+
+class Source(models.Model):
+    name = models.CharField(max_length=100, blank=False, null=True)
+    url = models.URLField(blank=False, null=True)
+    filing = models.ForeignKey(Filing, blank=True, null=True)
+
+    class Meta:
+        ordering = ['name']
+
+    def __unicode__(self):
+        return self.name
 
 class Bill(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)

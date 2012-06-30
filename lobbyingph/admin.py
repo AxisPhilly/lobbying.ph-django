@@ -1,6 +1,9 @@
 from django.contrib import admin
 from lobbyingph.models import *
 
+class SourceInline(admin.TabularInline):
+    model = Source
+
 class Exp_Direct_CommInline(admin.TabularInline):
     model = Exp_Direct_Comm
     filter_horizontal = ['officials',]
@@ -13,6 +16,7 @@ class Exp_Indirect_CommInline(admin.TabularInline):
 
 class FilingAdmin(admin.ModelAdmin):
     inlines = [
+        SourceInline,
         Exp_Direct_CommInline,
         Exp_Indirect_CommInline, 
         Exp_OtherInline
@@ -29,3 +33,4 @@ admin.site.register(Agency)
 admin.site.register(Category)
 admin.site.register(Communication_Method)
 admin.site.register(Receipent_Group)
+admin.site.register(Source)
