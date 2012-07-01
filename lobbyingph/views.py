@@ -1,6 +1,6 @@
 from django.views.generic import ListView
 from django.views.generic import DetailView
-from lobbyingph.models import Lobbyist, Firm, Principal
+from lobbyingph.models import Lobbyist, Firm, Principal, Issue
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404, render, render_to_response
 
@@ -16,6 +16,9 @@ def index(request):
     }
 
     return render(request, 'lobbyingph/index.html', context)
+
+class IssueDetail(DetailView):
+    model = Issue
 
 class LobbyistList(ListView):
     model = Lobbyist

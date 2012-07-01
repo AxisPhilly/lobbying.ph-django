@@ -3,6 +3,7 @@ from lobbyingph.views import index
 from lobbyingph.views import LobbyistList, LobbyistDetail
 from lobbyingph.views import FirmList, FirmDetail
 from lobbyingph.views import PrincipalList, PrincipalDetail
+from lobbyingph.views import IssueDetail
 
 from django.contrib import admin
 admin.autodiscover()
@@ -16,5 +17,6 @@ urlpatterns = patterns('',
     url(r'^firms/(?P<pk>\d+)/$', FirmDetail.as_view()),
     url(r'^principals/$', PrincipalList.as_view()),
     url(r'^principals/(?P<pk>\d+)/$', PrincipalDetail.as_view()),
+    url(r'^issues/(?P<pk>\d+)/$', IssueDetail.as_view()),
     url(r'^api/', include('api.urls'))
 )
