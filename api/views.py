@@ -11,24 +11,24 @@ def index(request, pk):
         'links': []
     }
 
-    for i, x in enumerate(issue.exp_direct_comm_set.all()): 
+    for exp in issue.exp_direct_comm_set.all(): 
         
         p = {
             'type': 'principal',
-            'name': x.filing.principal.name,
-            'position': x.position,
-            'size': 10
+            'name': exp.filing.principal.name,
+            'position': exp.position,
+            'size': 20
         }
 
         response['nodes'].append(p)
 
         links = []
 
-        for c, o in enumerate(x.officials.all()):
+        for o in exp.officials.all():
             item = {
                 'type': 'official',
-                'last_name': o.last_name,
-                'size': 5
+                'name': o.last_name,
+                'size': 10
             }
 
             if item not in response['nodes']:
@@ -40,7 +40,7 @@ def index(request, pk):
             response['links'].append({
                 'source': response['nodes'].index(p),
                 'target': link,
-                'value': 10
+                'value': 30
             })
 
     return HttpResponse(json.dumps(response), mimetype="application/json")
