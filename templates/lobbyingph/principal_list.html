@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block head %}
+    <link href="{{ STATIC_URL }}css/themes/blue/style.css" media="screen" rel="stylesheet" type="text/css" />
+{% endblock %}
+
 {% block header %}
     {% include "_header.html" %}
 {% endblock %}

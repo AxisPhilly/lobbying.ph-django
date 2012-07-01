@@ -4,9 +4,11 @@
     <title>Lobbying.ph - Who's Lobbying in Philadelphia?</title>
     <meta name="description" content="Lobbying.ph seeks to catalog information about Philadelphia lobbying efforts, make such data more accesible, and host visualizations to help citizens better understand the influence of local lobbying." />
     <meta name="keywords" content="Philadelphia, Board of Ethics, lobbying, lobbyists, Code for America, civic engagement, politics, transparency" />
-    <link href="{{ STATIC_URL }}/css/base.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="{{ STATIC_URL }}/css/themes/blue/style.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}css/base.css" media="screen" rel="stylesheet" type="text/css" />
     <link href='http://fonts.googleapis.com/css?family=Nixie+One' rel='stylesheet' type='text/css'>
+    {% block head %}
+
+    {% endblock %}
   </head>
   <body>
     <header id="header">
@@ -26,7 +28,6 @@
     <div class="container">
       {% block content %}
 
-
       {% endblock %}
     </div>
     <footer>
@@ -45,6 +46,7 @@
       </div>
       <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.7.2.min.js"></script>
       {% block scripts %}
+
       {% endblock %}
       <script type="text/javascript">
 
