@@ -16,4 +16,5 @@ urlpatterns = patterns('',
     url(r'^firms/(?P<pk>\d+)/$', FirmDetail.as_view()),
     url(r'^principals/$', PrincipalList.as_view()),
     url(r'^principals/(?P<pk>\d+)/$', PrincipalDetail.as_view()),
+    url(r'^api/', include('api.urls'))
 )
