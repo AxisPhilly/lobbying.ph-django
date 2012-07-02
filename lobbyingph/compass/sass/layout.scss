@@ -1,0 +1,14 @@
+header, section.content, footer {
+  width: 960px;
+  margin: 0 auto;
+}
+
+.column {
+  width: 50%;
+  float: left;
+  overflow: hidden;
+
+  p, h1, h2 {
+    width: 90%;
+  }
+}

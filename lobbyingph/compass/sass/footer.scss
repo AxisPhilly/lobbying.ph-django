@@ -1,0 +1,11 @@
+@import './variables';
+
+footer {
+  padding-top: 15px;
+  border-top: 2px solid $primary_font_color;
+  h3 {
+    font-size: 14px; 
+    font-weight: bold;
+    text-transform: none;
+  }
+}
