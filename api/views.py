@@ -28,7 +28,8 @@ def index(request, pk):
             item = {
                 'type': 'official',
                 'name': o.last_name,
-                'size': 10
+                'size': 10,
+                'agency': 'agency_' + str(o.agency.pk)
             }
 
             if item not in response['nodes']:

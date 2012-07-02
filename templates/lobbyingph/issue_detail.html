@@ -38,7 +38,7 @@
     <script type='text/javascript' src="{{ STATIC_URL }}js/underscore-1.3.3.min.js"></script>
     <script type='text/javascript'>
         $(document).ready(function() {
-            var width = 850,
+            var width = 940,
                 height = 500;
 
             var color = d3.scale.category20();
@@ -66,9 +66,7 @@
              
                 var node = svg.selectAll(".node")
                     .data(json.nodes)
-                  .enter().append("circle")
-                    .attr("cx", function(d) { return d.x; })
-                    .attr("cy", function(d) { return d.y; })
+                  .enter().append("g")
                     .attr("class", function(d) {
                         if (d.type === 'principal') {
                             if (d.position == 2) {
@@ -76,16 +74,23 @@
                             } else {
                                 return 'node support';
                             }
-                        } else {
-                            return 'node official'
+                        } else if (d.type === 'official') {
+                            return 'node official ' + d.agency;
                         }
                     })
-                    .attr("r", function(d) { return d.size; })
                     .call(force.drag);
+
+                node.append("circle")
+                    .attr("r", function(d) { return d.size; })
              
                 node.append("title")
                     .text(function(d) { return d.name; });
 
+                node.append("text")
+                    .attr("dx", 12)
+                    .attr("dy", ".35em")
+                    .text(function(d) { return d.name; });
+                
                 force.on("tick", function(e) {
                     var k = 20 * e.alpha;
 
@@ -99,14 +104,14 @@
                             node.y += k;
                         }
                     });
-
-                    node.attr("cx", function(d) { return d.x; })
-                        .attr("cy", function(d) { return d.y; });
+                    
+                    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
                     link.attr("x1", function(d) { return d.source.x; })
                         .attr("y1", function(d) { return d.source.y; })
                         .attr("x2", function(d) { return d.target.x; })
                         .attr("y2", function(d) { return d.target.y; });
+                    
                 });
             });
         }); 
