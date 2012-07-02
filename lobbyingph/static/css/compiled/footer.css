@@ -1,0 +1,11 @@
+/* line 3, ../../../compass/sass/footer.scss */
+footer {
+  padding-top: 15px;
+  border-top: 2px solid black;
+}
+/* line 6, ../../../compass/sass/footer.scss */
+footer h3 {
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: none;
+}
