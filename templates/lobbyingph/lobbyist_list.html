@@ -1,39 +1,15 @@
 {% extends "base.html" %}
 
 {% block head %}
-    <link href="{{ STATIC_URL }}css/themes/blue/style.css" media="screen" rel="stylesheet" type="text/css" />
-{% endblock %}
-
-{% block header %}
-    {% include "_header.html" %}
+  <link href="{{ STATIC_URL }}css/themes/blue/style.css" media="screen" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block content %}
-<ol class="path">
-    <li><a href="/">Home</a></li> / 
-    <li>Lobbyists</li>
-</ol>
-    
-    <h1 class="name">Lobbyists</h1>
-    <div class="detail container">      
-        <article>  
-            <div class="article">
-                <p>Lobbyists work for <a href="/firms">firms</a> and meet with City officials on the behalf of <a href="/principals">principals</a>.</p>
-            </div>
-        </article>
-
-        <aside>
-            <div class="aside">
-
-            </div>
-        </aside>
-    </div>
-
-    <div class="filings container">
-
-        {% include 'lobbyingph/partials/_list_table.html' %}
-
-    </div>
+  <h2 class="name">Lobbyists</h2>
+  <p>Lobbyists work for <a href="/firms">firms</a> and meet with City officials on the behalf of <a href="/principals">principals</a>.</p>
+  <div class="filings container">
+    {% include 'lobbyingph/partials/_list_table.html' %}
+  </div>
 {% endblock %}
 
 {% block scripts %}
