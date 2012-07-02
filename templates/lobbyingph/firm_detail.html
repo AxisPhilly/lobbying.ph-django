@@ -1,57 +1,38 @@
 {% extends "base.html" %}
 {% load humanize %}
 
-{% block header %}
-    {% include "_header.html" %}
-{% endblock %}
-
 {% block content %}
-    <ol class="path">
-        <li><a href="/">Home</a></li> / 
-        <li><a href="/firms">Firms</a></li> / 
-        <li>Firm Detail: {{ firm.name }}</li>
-    </ol>
-
-    <h1 class="name">{{ firm.name }}</h1>
-    <div class="detail container">
-        <article>
-            <div class="article">
-                <ul class="contact">
-                    <li class="address"> {{ firm.get_address }} </li>
-                    <li class="phone"> {{ firm.phone }} </li>
-                    <li class="email"> {{ firm.email }} </li>
-                </ul>
-
-            <h3>Staff</h3>
-            <ul>
-                {% for staff in firm.lobbyist_set.all %}
-                <li>
-                    <a href="/lobbyists/{{ staff.id }}">{{ staff.name }}</a>
-                </li>
-                {% endfor %}
-            </ul>
-        </article>
-
-        <aside>
-            <div class="aside">
-                <h3>Clients</h3>
-                <ul>
-                    {% for client in clients %}
-                    <li>
-                        <a href="/principals/{{ client.id }}">{{ client.name }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-
-               <h3>Topics</h3>
-                <ul>
-                    {% for topic in topics %}
-                        <li><a href="/topic/{{ topic.id }}">{{ topic.name }}</a></li>
-                    {% endfor %}
-                    {% if not topics %} N/A {% endif %}
-                </ul>
-            </div>
-        </aside>
-    </div>
-
+  <h2 class="name">{{ firm.name }}</h2>
+  <ul class="contact">
+    <li class="address"> {{ firm.get_address }} </li>
+    <li class="phone"> {{ firm.phone }} </li>
+    <li class="email"> {{ firm.email }} </li>
+  </ul>
+  <div class="column">
+    <h3>Staff</h3>
+    <ul class="details">
+      {% for staff in firm.lobbyist_set.all %}
+        <li>
+          <a href="/lobbyists/{{ staff.id }}">{{ staff.name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <h3>Clients</h3>
+    <ul class="details">
+      {% for client in clients %}
+        <li>
+          <a href="/principals/{{ client.id }}">{{ client.name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <h3>Topics</h3>
+    <ul class="details">
+      {% for topic in topics %}
+        <li><a href="/topic/{{ topic.id }}">{{ topic.name }}</a></li>
+      {% endfor %}
+      {% if not topics %}
+        <li>N/A</li>
+      {% endif %}
+    </ul>
+  </div>
 {% endblock %}
