@@ -1,36 +1,37 @@
 /* line 3, ../../../compass/sass/content.scss */
 .content {
-  padding-top: 20px;
+  padding: 20px 0;
+  overflow: hidden;
   min-height: 400px;
 }
 
-/* line 8, ../../../compass/sass/content.scss */
+/* line 9, ../../../compass/sass/content.scss */
 .contact {
   border-bottom: 1px solid #eeeeee;
   padding-bottom: 15px;
   margin-bottom: 15px;
 }
-/* line 13, ../../../compass/sass/content.scss */
+/* line 14, ../../../compass/sass/content.scss */
 .contact li {
   margin-bottom: 5px;
 }
 
-/* line 18, ../../../compass/sass/content.scss */
+/* line 19, ../../../compass/sass/content.scss */
 .details {
   margin-bottom: 15px;
   font-weight: bold;
 }
-/* line 22, ../../../compass/sass/content.scss */
+/* line 23, ../../../compass/sass/content.scss */
 .details a {
   font-weight: bold;
 }
 
-/* line 28, ../../../compass/sass/content.scss */
+/* line 29, ../../../compass/sass/content.scss */
 .bar-graph li {
   margin-bottom: 15px;
   font-weight: bold;
 }
-/* line 33, ../../../compass/sass/content.scss */
+/* line 34, ../../../compass/sass/content.scss */
 .bar-graph .total {
   width: 100%;
   height: 40px;
@@ -39,7 +40,7 @@
   position: relative;
   margin-top: 5px;
 }
-/* line 42, ../../../compass/sass/content.scss */
+/* line 43, ../../../compass/sass/content.scss */
 .bar-graph .percentage {
   position: absolute;
   height: 40px;
@@ -47,7 +48,7 @@
   display: block;
   line-height: 40px;
 }
-/* line 49, ../../../compass/sass/content.scss */
+/* line 50, ../../../compass/sass/content.scss */
 .bar-graph .percentage em {
   text-align: right;
   display: block;
