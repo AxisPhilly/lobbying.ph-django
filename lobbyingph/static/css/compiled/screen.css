@@ -2,19 +2,19 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-/* line 1, ../../../compass/sass/layout.scss */
+/* line 1, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/layout.scss */
 header, section.content, footer {
   width: 960px;
   margin: 0 auto;
 }
 
-/* line 6, ../../../compass/sass/layout.scss */
+/* line 6, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/layout.scss */
 .column {
   width: 50%;
   float: left;
   overflow: hidden;
 }
-/* line 11, ../../../compass/sass/layout.scss */
+/* line 11, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/layout.scss */
 .column p, .column h1, .column h2 {
   width: 90%;
 }
@@ -89,25 +89,25 @@ input {
   display: block;
 }
 
-/* line 3, ../../../compass/sass/header.scss */
+/* line 3, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/header.scss */
 header {
   padding-top: 20px;
 }
-/* line 6, ../../../compass/sass/header.scss */
+/* line 6, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/header.scss */
 header h1 {
   float: left;
   overflow: hidden;
   margin-bottom: 10px;
   width: 50%;
 }
-/* line 12, ../../../compass/sass/header.scss */
+/* line 12, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/header.scss */
 header h1 a {
   font-size: 16px;
   text-decoration: none;
   font-weight: bold;
   line-height: 20px;
 }
-/* line 18, ../../../compass/sass/header.scss */
+/* line 18, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/header.scss */
 header h1 a b {
   text-indent: -5000px;
   width: 40px;
@@ -118,38 +118,38 @@ header h1 a b {
   float: left;
   margin-right: 10px;
 }
-/* line 29, ../../../compass/sass/header.scss */
+/* line 29, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/header.scss */
 header h1 a span {
   display: block;
   color: #999999;
 }
-/* line 37, ../../../compass/sass/header.scss */
+/* line 37, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/header.scss */
 header .utility-nav {
   float: right;
   margin-top: 20px;
 }
-/* line 41, ../../../compass/sass/header.scss */
+/* line 41, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/header.scss */
 header .utility-nav ul li {
   display: inline-block;
   margin-left: 15px;
 }
-/* line 45, ../../../compass/sass/header.scss */
+/* line 45, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/header.scss */
 header .utility-nav ul li a {
   font-size: 11px;
   font-weight: bold;
   color: #999999;
 }
-/* line 53, ../../../compass/sass/header.scss */
+/* line 53, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/header.scss */
 header section {
   padding-top: 15px;
   clear: both;
   border-top: 2px solid black;
 }
-/* line 58, ../../../compass/sass/header.scss */
+/* line 58, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/header.scss */
 header section .search {
   padding-bottom: 15px;
 }
-/* line 61, ../../../compass/sass/header.scss */
+/* line 61, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/header.scss */
 header section .search input {
   border: none;
   font-size: 22px;
@@ -158,18 +158,18 @@ header section .search input {
   width: 50%;
   border: 1px solid #eeeeee;
 }
-/* line 71, ../../../compass/sass/header.scss */
+/* line 71, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/header.scss */
 header section .primary-nav {
   border-top: 1px solid #cccccc;
   border-bottom: 1px solid #cccccc;
   overflow: hidden;
   height: 35px;
 }
-/* line 77, ../../../compass/sass/header.scss */
+/* line 77, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/header.scss */
 header section .primary-nav ul li {
   float: left;
 }
-/* line 80, ../../../compass/sass/header.scss */
+/* line 80, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/header.scss */
 header section .primary-nav ul li a {
   display: block;
   line-height: 35px;
@@ -178,7 +178,7 @@ header section .primary-nav ul li a {
   margin-right: 20px;
   position: relative;
 }
-/* line 89, ../../../compass/sass/header.scss */
+/* line 89, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/header.scss */
 header section .primary-nav ul li a.current:before {
   content: '.';
   text-indent: -50000px;
@@ -192,7 +192,7 @@ header section .primary-nav ul li a.current:before {
   border-right: 6px solid transparent;
   border-bottom: 6px solid black;
 }
-/* line 105, ../../../compass/sass/header.scss */
+/* line 105, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/header.scss */
 header section .primary-nav ul li a:hover:before {
   content: '.';
   text-indent: -50000px;
@@ -207,39 +207,40 @@ header section .primary-nav ul li a:hover:before {
   border-bottom: 6px solid #cccccc;
 }
 
-/* line 3, ../../../compass/sass/content.scss */
+/* line 3, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/content.scss */
 .content {
-  padding-top: 20px;
+  padding: 20px 0;
+  overflow: hidden;
   min-height: 400px;
 }
 
-/* line 8, ../../../compass/sass/content.scss */
+/* line 9, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/content.scss */
 .contact {
   border-bottom: 1px solid #eeeeee;
   padding-bottom: 15px;
   margin-bottom: 15px;
 }
-/* line 13, ../../../compass/sass/content.scss */
+/* line 14, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/content.scss */
 .contact li {
   margin-bottom: 5px;
 }
 
-/* line 18, ../../../compass/sass/content.scss */
+/* line 19, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/content.scss */
 .details {
   margin-bottom: 15px;
   font-weight: bold;
 }
-/* line 22, ../../../compass/sass/content.scss */
+/* line 23, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/content.scss */
 .details a {
   font-weight: bold;
 }
 
-/* line 28, ../../../compass/sass/content.scss */
+/* line 29, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/content.scss */
 .bar-graph li {
   margin-bottom: 15px;
   font-weight: bold;
 }
-/* line 33, ../../../compass/sass/content.scss */
+/* line 34, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/content.scss */
 .bar-graph .total {
   width: 100%;
   height: 40px;
@@ -248,7 +249,7 @@ header section .primary-nav ul li a:hover:before {
   position: relative;
   margin-top: 5px;
 }
-/* line 42, ../../../compass/sass/content.scss */
+/* line 43, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/content.scss */
 .bar-graph .percentage {
   position: absolute;
   height: 40px;
@@ -256,7 +257,7 @@ header section .primary-nav ul li a:hover:before {
   display: block;
   line-height: 40px;
 }
-/* line 49, ../../../compass/sass/content.scss */
+/* line 50, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/content.scss */
 .bar-graph .percentage em {
   text-align: right;
   display: block;
@@ -265,12 +266,12 @@ header section .primary-nav ul li a:hover:before {
   font-weight: bold;
 }
 
-/* line 3, ../../../compass/sass/footer.scss */
+/* line 3, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/footer.scss */
 footer {
   padding-top: 15px;
   border-top: 2px solid black;
 }
-/* line 6, ../../../compass/sass/footer.scss */
+/* line 6, /Users/mball0001/git/lobbying.ph-django/lobbyingph/compass/sass/footer.scss */
 footer h3 {
   font-size: 14px;
   font-weight: bold;
