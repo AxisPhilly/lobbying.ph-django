@@ -5,29 +5,41 @@
     <meta name="description" content="Lobbying.ph seeks to catalog information about Philadelphia lobbying efforts, make such data more accesible, and host visualizations to help citizens better understand the influence of local lobbying." />
     <meta name="keywords" content="Philadelphia, Board of Ethics, lobbying, lobbyists, Code for America, civic engagement, politics, transparency" />
     <link href="{{ STATIC_URL }}css/base.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href='http://fonts.googleapis.com/css?family=Nixie+One' rel='stylesheet' type='text/css'>
     {% block head %}
 
     {% endblock %}
   </head>
   <body>
     <header id="header">
-      <nav>
+      <h1>
+        <a class="logo" href="/">
+          <b></b>Lobbying.ph
+          <span>Who's Lobbying in Philadelphia?</span>
+        </a>
+      </h1>
+      <nav class="utility-nav">
         <ul>
-          <li {% if request.path == '/' %} class="current" {% endif %} ><a href="/">Home</a></li>
-          <li {% if 'lobbyist' in request.path %} class="current" {% endif %}><a href="/lobbyists">Lobbyists</a></li>
-          <li {% if 'principal' in request.path %} class="current" {% endif %}><a href="/principals">Principals</a></li>
-          <li {% if 'firm' in request.path %} class="current" {% endif %}><a href="/firms">Firms</a></li>
           <li><a href="#about">About</a></li>
+          <li><a href="http://github.com/caseypt/lobbying.ph-django">Source Code</a></li>
         </ul>
       </nav>
+      <section>
+        <form class="search">
+          <input placeholder="Search for firms and principals" type="text"/>
+        </form>
+        <nav class="primary-nav">
+          <ul>
+            <li {% if 'lobbyist' in request.path %} class="current" {% endif %}><a href="/lobbyists">Lobbyists</a></li>
+            <li {% if 'principal' in request.path %} class="current" {% endif %}><a href="/principals">Principals</a></li>
+            <li {% if 'principal' in request.path %} class="current" {% endif %}><a href="/firms">Firms</a></li>
+          </ul>
+        </nav>
+      </section>
       {% block header %}
-
       {% endblock %}
     </header>
     <div class="container">
       {% block content %}
-
       {% endblock %}
     </div>
     <footer>
@@ -50,17 +62,17 @@
       {% endblock %}
       <script type="text/javascript">
 
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-29512200-1']);
-      _gaq.push(['_trackPageview']);
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-29512200-1']);
+        _gaq.push(['_trackPageview']);
 
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
 
-    </script>
+      </script>
     </footer>
   </body>
 </html>
