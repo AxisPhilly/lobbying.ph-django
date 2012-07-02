@@ -1,108 +1,109 @@
 {% extends "base.html" %}
 {% load humanize %}
 
-{% block header %}
-    {% include "_header.html" %}
-{% endblock %}
-
 {% block content %}
-    <ol class="path">
-        <li><a href="/">Home</a></li> / 
-        <li><a href="/principals">Principals</a></li> / 
-        <li>Principal Detail: {{ principal.name }}</li>
-    </ol>
-
-    <h1 class="name">{{ principal.name }}</h1>
-    <div class="detail container">
-        <article>
-            <div class="article">
-                <ul class="contact">
-                    <li class="address"> {{ principal.get_address }} </li>
-                    <li class="phone"> {{ principal.phone }} </li>
-                    <li class="email"> {{ principal.email }} </li>
-                </ul>
-
-                <div class="spending">
-                    <div>
-                        <h4>Total Expenditures To Date</h4>
-                        <span class="total">${{ totals.exp|floatformat:0|intcomma }}</span>
-                    </div>
-                    <div>
-                        <h4>Direct Communications</h4>
-                        <span>${{ totals.exp_direct_comm|floatformat:0|intcomma }}</span>
-                    </div>
-                    <div>
-                        <h4>Indirect Communications</h4>
-                        <span>${{ totals.exp_indirect_comm|floatformat:0|intcomma }}</span>
-                    </div>
-                    <div>
-                        <h4>Gifts, Hospitality, Transportation, and Lodging</h4>
-                        <span>${{ totals.exp_other|floatformat:0|intcomma }}</span>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        <aside>
-            <div class="aside">
-                <h3>Topics</h3>
-                <ul>
-                    {% for topic in topics %}
-                        <li><a href="/topic/{{ topic.id }}">{{ topic.name }}</a></li>
-                    {% endfor %}
-                    {% if not topics %} N/A {% endif %}
-                </ul>
-
-                <h3>Issues</h3>
-                <ul>
-                    {% for issue, position in issues.items %}
-                        <li>{{ position }}: <a href="/issue/{{ issue.id }}">{{ issue }}</a></li>
-                    {% endfor %}
-                    {% if not issues %} N/A {% endif %}
-                </ul>
-
-                <h3>Bills / Resolutions</h3>
-                <ul>
-                    {% for bill, position in bills.items %}
-                        <li>{{ position }}: <a href="{{ bill.url }}" target="_blank">{{ bill }}</a></li>
-                    {% endfor %}
-                    {% if not bills %} N/A {% endif %}
-                </ul>
-
-                <h3>Firms</h3>
-                <ul>
-                    {% for firm in firms %}
-                        <li><a href="/firms/{{ firm.id }}">{{ firm }}</a></li>
-                    {% endfor %}
-                    {% if not firms %} N/A {% endif %}
-                </ul>
-            </div>
-        </aside>
-    </div>
-
-    <div class="filings container">
-        <h3>Filings</h3>
-        <table id="filings" class="tablesorter">
-            <thead> 
-                <tr> 
-                    <th>Quarter</th>
-                    <th>Year</th>
-                    <th>Direct Communication</th> 
-                    <th>Indirect Communication</th> 
-                </tr>
-            </thead>
-            <tbody>
-            {% for filing in principal.filing_set.all %}
-                <tr>
-                    <td>{{ filing.quarter }}</td>
-                    <td>{{ filing.year|date:"Y" }}</td>
-                    <td>${{ filing.total_exp_direct_comm|intcomma }}</td>
-                    <td>${{ filing.total_exp_indirect_comm|intcomma }}</td>
-                </tr>   
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+  <h2 class="name">{{ principal.name }}</h2>
+  <ul class="contact">
+    <li class="address">{{ principal.get_address }}</li>
+    <li class="phone">{{ principal.phone }}</li>
+    <li class="email"><a href="mailto:{{ principal.email }}">{{ principal.email }}</a></li>
+  </ul>
+  <div class="column">
+    <h3>Topics</h3>
+    <ul class="details">
+      {% for topic in topics %}
+        <li><a href="/topic/{{ topic.id }}">{{ topic.name }}</a></li>
+      {% endfor %}
+      {% if not topics %}
+        <li>N/A</li>
+      {% endif %}
+    </ul>
+    <h3>Issues</h3>
+    <ul class="details">
+      {% for issue, position in issues.items %}
+        <li>{{ position }}: <a href="/issue/{{ issue.id }}">{{ issue }}</a></li>
+      {% endfor %}
+      {% if not issues %}
+        <li>N/A</li>
+      {% endif %}
+    </ul>
+    <h3>Bills / Resolutions</h3>
+    <ul class="details">
+      {% for bill, position in bills.items %}
+        <li>{{ position }}: <a href="{{ bill.url }}" target="_blank">{{ bill }}</a></li>
+      {% endfor %}
+      {% if not bills %}
+        <li>N/A</li>
+      {% endif %}
+    </ul>
+    <h3>Firms</h3>
+    <ul class="details">
+      {% for firm in firms %}
+        <li><a href="/firms/{{ firm.id }}">{{ firm }}</a></li>
+      {% endfor %}
+      {% if not firms %}
+        <li>N/A</li>
+      {% endif %}
+    </ul>
+  </div>
+  <div class="column">
+    <h3>Expenditures</h3>
+    <ul class="bar-graph">
+      <li>
+        Total Expenditures to Date
+        <span class="total">
+          <span style="width: 100%;" class="percentage">
+            <em>${{ totals.exp|floatformat:0|intcomma }}</em>
+          </span>
+        </span>
+      </li>
+      <li>
+        Direct Communications
+        <span class="total">
+          <span style="width: 50%;" class="percentage">
+            <em>${{ totals.exp_direct_comm|floatformat:0|intcomma }}</em>
+          </span>
+        </span>
+      </li>
+      <li>
+        Indirect Communications
+        <span class="total">
+          <span style="width: 50%;" class="percentage">
+            <em>${{ totals.exp_indirect_comm|floatformat:0|intcomma }}</em>
+          </span>
+        </span>
+      </li>
+      <li>
+        Gifts, Hospitality, Transportation, and Lodging
+        <span class="total">
+          <span style="width: 50%;" class="percentage">
+            <em>${{ totals.exp_other|floatformat:0|intcomma }}</em>
+          </span>
+        </span>
+      </li>
+    </ul>
+    <h3>Filings</h3>
+    <table id="filings" class="tablesorter">
+      <thead> 
+        <tr> 
+          <th>Quarter</th>
+          <th>Year</th>
+          <th>Direct Communication</th> 
+          <th>Indirect Communication</th> 
+        </tr>
+      </thead>
+      <tbody>
+        {% for filing in principal.filing_set.all %}
+          <tr>
+            <td>{{ filing.quarter }}</td>
+            <td>{{ filing.year|date:"Y" }}</td>
+            <td>${{ filing.total_exp_direct_comm|intcomma }}</td>
+            <td>${{ filing.total_exp_indirect_comm|intcomma }}</td>
+          </tr>   
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}
 
 {% block scripts %}
