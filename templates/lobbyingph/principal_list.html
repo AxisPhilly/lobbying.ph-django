@@ -4,36 +4,12 @@
     <link href="{{ STATIC_URL }}css/themes/blue/style.css" media="screen" rel="stylesheet" type="text/css" />
 {% endblock %}
 
-{% block header %}
-    {% include "_header.html" %}
-{% endblock %}
-
 {% block content %}
-<ol class="path">
-    <li><a href="/">Home</a></li> / 
-    <li>Principals</li>
-</ol>
-    
-    <h1 class="name">Principals</h1>
-    <div class="detail container">      
-        <article>  
-            <div class="article">
-                <p>Principals are the companies, organizations, and groups that pay for lobbying services. They are required to fill out quarterly reports detailing their expenditures lobbying firms.</p>
-            </div>
-        </article>
-
-        <aside>
-            <div class="aside">
-
-            </div>
-        </aside>
-    </div>
-
-    <div class="filings container">
-
-       {% include 'lobbyingph/partials/_list_table.html' %}
-       
-    </div>
+  <h2 class="name">Principals</h2>
+  <p>Principals are the companies, organizations, and groups that pay for lobbying services. They are required to fill out quarterly reports detailing their expenditures lobbying firms.</p>
+  <div class="filings container">
+    {% include 'lobbyingph/partials/_list_table.html' %}
+  </div>
 {% endblock %}
 
 {% block scripts %}
