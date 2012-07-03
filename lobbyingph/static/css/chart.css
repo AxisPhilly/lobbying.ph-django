@@ -1,48 +1,85 @@
 circle.node {
-  stroke: #fff;
-  stroke-width: 1.5px;
+  stroke: #888;
+  stroke-width: 2px;
+  pointer: cursor;
 }
 
 .node text {
   pointer-events: none;
-  font: 10px sans-serif;
-  stroke: black;
+  font: 11px sans-serif;
+  stroke: #222;
 }
 
 .node.oppose {
-  fill: red;
+  fill: #B2182B;
+  opacity: 0.9;
 }
 
 .node.support {
-  fill: green;
+  fill: #2166AC;
+  opacity: 0.9;
 }
 
 .node.official.agency_1 {
-  fill: blue;
+  fill: #FFFFB2;
+  opacity: 0.9;
 }
 
 .node.official.agency_2 {
-  fill: yellow;
+  fill: #FFFFB2;
+  opacity: 0.9;
 }
 
 .node.official.agency_3 {
-  fill: grey;
+  fill: #FFFFB2;
+  opacity: 0.9;
 }
 
 .node.official.agency_4 {
-  fill: orange;
+  fill: #FFFFB2;
+  opacity: 0.9;
 }
 
 .node.official.agency_5 {
-  fill: purple;
+  fill: #FFFFB2;
+  opacity: 0.9;
 }
 
 .node.official.agency_6 {
-  fill: maroon;
+  fill: #FFFFB2;
+  opacity: 0.9;
 }
 
 
 line.link {
-  stroke: #999;
+  stroke: #333;
   stroke-opacity: .6;
+  stroke-width: 2px;
+  stroke-dasharray: "1,1"
+}
+
+.tooltip {
+  color: #313131;
+  position: absolute;
+  text-align: center;
+  padding: 4px;
+  top: 0px;
+  left: 0px;
+  width: 100px;
+  border: solid 2px #414141;
+  background-color: #fff;
+  display: none;
+  z-index: 10;
+}
+
+.tooltip h2 {
+  font-size: 14px;
+  display: inline-block;
+  margin: 0px;
+  text-transform: capitalize;
+}
+
+.tooltip p {
+  margin: 0px;
+  font-size: 12px;
 }

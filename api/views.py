@@ -17,7 +17,8 @@ def index(request, pk):
             'type': 'principal',
             'name': exp.filing.principal.name,
             'position': exp.position,
-            'size': 20
+            'size': 15,
+            'content': exp.filing.principal.name
         }
 
         response['nodes'].append(p)
@@ -28,8 +29,9 @@ def index(request, pk):
             item = {
                 'type': 'official',
                 'name': o.last_name,
-                'size': 10,
-                'agency': 'agency_' + str(o.agency.pk)
+                'size': 7,
+                'agency': 'agency_' + str(o.agency.pk),
+                'content': o.first_name + ' ' + o.last_name + ' ' + o.title
             }
 
             if item not in response['nodes']:
