@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load humanize %}
 
+{% block head %}
+    <link href="{{ STATIC_URL }}css/themes/blue/style.css" media="screen" rel="stylesheet" type="text/css" />
+{% endblock %}
+
 {% block content %}
   <h2 class="name">{{ principal.name }}</h2>
   <ul class="contact">
@@ -33,6 +37,15 @@
         <li>{{ position }}: <a href="{{ bill.url }}" target="_blank">{{ bill }}</a></li>
       {% endfor %}
       {% if not bills %}
+        <li>N/A</li>
+      {% endif %}
+    </ul>
+    <h3>Staff Lobbyists</h3>
+    <ul class="details">
+      {% for s in staff %}
+        <li><a href="/lobbyists/{{ s.id }}">{{ s.name }}</a></li>
+      {% endfor %}
+      {% if not staff %}
         <li>N/A</li>
       {% endif %}
     </ul>
@@ -111,7 +124,8 @@
     <script type='text/javascript'>
 
     $(document).ready(function() { 
-        $("#filings").tablesorter(); 
+        $("#filings")
+          .tablesorter({widgets: ['zebra']});
     }); 
 
     </script>   
