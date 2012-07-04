@@ -19,8 +19,8 @@
     <script type='text/javascript'>
         $(document).ready(function() {
             lobby.d3.force = d3.layout.force()
-                .charge(-200)
-                .linkDistance(200)
+                .charge(-150)
+                .linkDistance(250)
                 .size([900, 500]);
 
             lobby.d3.svg = d3.select("#graph").append("svg")
@@ -47,10 +47,10 @@
                     .attr("class", function(d) { return lobby.d3.getNodeClass(d); })
                     .attr("r", function(d) { return d.size; })
 
-                /*lobby.d3.node.append("text")
+                lobby.d3.node.append("text")
                     .attr("dx", 12)
                     .attr("dy", ".35em")
-                    .text(function(d) { return d.name; });*/
+                    .text(function(d) { return d.name; });
 
                 lobby.d3.svg.selectAll('.node')
                     .on("mouseover", function(d) {
@@ -71,6 +71,10 @@
                             node.x += -k;
                         } else if (node.position === 3) {
                             node.y += k;
+                        }
+
+                        if (node.type === 'official') {
+                            node.x = 350;
                         }
                     });
                     

@@ -4,10 +4,12 @@ circle.node {
   pointer: cursor;
 }
 
-.node text {
+g text {
   pointer-events: none;
-  font: 11px sans-serif;
-  stroke: #222;
+  font: 12px sans-serif;
+  fill: #888;
+  stroke: #444;
+  stroke-width: 1px;  
 }
 
 .node.oppose {
@@ -16,7 +18,7 @@ circle.node {
 }
 
 .node.support {
-  fill: #2166AC;
+  fill: #ADDD8E;
   opacity: 0.9;
 }
 
@@ -54,8 +56,8 @@ circle.node {
 line.link {
   stroke: #333;
   stroke-opacity: .6;
-  stroke-width: 2px;
-  stroke-dasharray: "1,1"
+  stroke-width: 1px;
+  stroke-dasharray: 5, 5;
 }
 
 .tooltip {
