@@ -2,6 +2,7 @@ if (typeof lobby === 'undefined' || !lobby) {
     var lobby = {};
 }
 
+// Helper functions for d3 visualizations
 lobby.d3 = {
     showTooltip: function(d) {
         if($('.tooltip').length) {
