@@ -4,7 +4,14 @@
 {% block content %}
   <h2 class="name">
     {{ lobbyist.name }}
-    <span><a href="/firms/{{ lobbyist.firm.id }}">{{ lobbyist.firm }}</a></span>
+
+    {% if lobbyist.firm %}
+        <span><a href="/firms/{{ lobbyist.firm.id }}">{{ lobbyist.firm }}</a></span>
+    {% elif lobbyist.principal %}
+        {% for principal in lobbyist.principal.all %}
+            <span><a href="/principals/{{ principal.id }}">{{ principal }}</a></span>
+        {% endfor %}
+    {% endif %}
   </h2>
   <ul class="contact">
     <li class="address">{{ lobbyist.get_address }}</li>
