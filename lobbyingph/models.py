@@ -34,7 +34,7 @@ class Lobbyist(models.Model):
     email = models.CharField(max_length=75)
 
     firm = models.ForeignKey('Firm', null=True, blank=True)
-    principal = models.ForeignKey('Principal', null=True, blank=True)
+    principal = models.ManyToManyField('Principal', null=True, blank=True)
 
     class Meta:
         ordering = ['name']
