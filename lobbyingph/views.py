@@ -86,6 +86,7 @@ class PrincipalDetail(DetailView):
         issue = {}
         bill = {}
         firms = None
+        staff = self.object.lobbyist_set.all()
 
         for row in self.object.filing_set.all():
 
@@ -116,5 +117,6 @@ class PrincipalDetail(DetailView):
         context['firms'] = firms
         context['issues'] = issue
         context['bills'] = bill
+        context['staff'] = staff
         
         return context
