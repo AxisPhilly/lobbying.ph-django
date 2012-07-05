@@ -17,8 +17,7 @@
         <h3>News coverage</h2>
         <div id="articles">
             {% for article in issue.article_set.all %}
-                <h4><a href="{{ article.url }}">{{ article.headline }}</a></h4>
-                <span><i>{{ article.date }}</i>: {{ article.get_publisher_display }}</span>
+                <h4><a href="{{ article.url }}">{{ article.headline }}</a></h4><span>{{ article.get_publisher_display }}, <i>{{ article.date }}</i></span>
             {% endfor %}
         </div>
     </div>
@@ -29,16 +28,18 @@
     <script type='text/javascript' src="{{ STATIC_URL }}js/lobby.d3.js"></script>
     <script type='text/javascript'>
         $(document).ready(function() {
-            lobby.d3.force = d3.layout.force()
-                .charge(-150)
-                .linkDistance(250)
-                .size([900, 500]);
-
-            lobby.d3.svg = d3.select("#graph").append("svg")
-                .attr("width", 900)
-                .attr("height", 500);
-
             d3.json('/api/issue/{{ issue.pk }}', function(json) {
+                var height = lobby.d3.getHeight(json.nodes);
+
+                lobby.d3.force = d3.layout.force()
+                    .charge(-150)
+                    .linkDistance(250)
+                    .size([900, height]);
+
+                lobby.d3.svg = d3.select("#graph").append("svg")
+                    .attr("width", 900)
+                    .attr("height", height);
+
                 lobby.d3.force
                    .nodes(json.nodes)
                    .links(json.links)

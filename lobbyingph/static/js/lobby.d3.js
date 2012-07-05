@@ -19,7 +19,7 @@ lobby.d3 = {
         $(document).mousemove(function(e){
              $('.tooltip').css({
                 left: e.pageX - offset.left + 90,
-                top: e.pageY - offset.top + 160
+                top: e.pageY - offset.top + 220
             });
         });
     },
@@ -30,7 +30,17 @@ lobby.d3 = {
     },
 
     createTooltipContent: function(d) {
+        
+    },
 
+    // Dynamically set the height based on the number of official nodes
+    getHeight: function(nodes) {
+        var officials = _.filter(nodes, function(node){
+           var type = (node.type === 'official') ? true : false; 
+           return type;
+        });
+
+        return Math.log(officials.length) * 200;
     },
 
     getNodeClass: function(d) {
@@ -44,5 +54,4 @@ lobby.d3 = {
             return 'node official ' + d.agency;
         }
     }
-
 };
