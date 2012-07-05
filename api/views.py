@@ -28,10 +28,11 @@ def index(request, pk):
         for o in exp.officials.all():
             item = {
                 'type': 'official',
-                'name': o.last_name,
+                'last_name': o.last_name,
+                'first_name': o.first_name,
+                'title': o.title,
                 'size': 7,
-                'agency': 'agency_' + str(o.agency.pk),
-                'content': o.first_name + ' ' + o.last_name + ' ' + o.title
+                'agency': 'agency_' + str(o.agency.pk)
             }
 
             if item not in response['nodes']:

@@ -79,38 +79,22 @@
                         lobby.d3.hideTooltip();
                     });
                 
-                var supportBounds = [100, 150];
-                var opposeBounds = [650, 700];
+                // Set x bounds for principal nodes based on their
+                // issue position
+                lobby.d3.bounds = {
+                    1: [100, 150],
+                    2: [650, 700]
+                }
 
                 lobby.d3.force.on("tick", function(e) {
                     var k = 20 * e.alpha;
 
                     // position is position on issue, i.e support (1), oppose (2), ammend (3)
                     _.each(lobby.d3.force.nodes(), function(node, i){
-                        if (node.position === 2) {
-                            //node.x += k;
-                            if (node.x < opposeBounds[0]) {
-                                node.x = opposeBounds[0];
-                            }
-
-                            if (node.x > opposeBounds[1]) {
-                                node.x = opposeBounds[1];
-                            }
-                        } else if (node.position === 1) {
-                            //node.x += -k;
-                            if (node.x < supportBounds[0]) {
-                                node.x = supportBounds[0];
-                            }
-
-                            if (node.x > supportBounds[1]) {
-                                node.x = supportBounds[1];
-                            }
-                        } else if (node.position === 3) {
-                            node.y += k;
-                        }
-
                         if (node.type === 'official') {
                             node.x = 350;
+                        } else {
+                            node.x = lobby.d3.checkBounds(node);
                         }
                     });
                     
