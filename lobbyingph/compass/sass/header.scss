@@ -1,4 +1,5 @@
 @import './variables';
+@import './font-awesome';
 
 header {
   padding-top: 20px;
@@ -15,15 +16,16 @@ header {
       font-weight: bold;
       line-height: 20px;
 
-      b {
-        text-indent: -5000px;
-        width: 40px;
+      &:before {
+        width: 44px;
         display: block;
         height: 40px;
-        background: $primary_font_color;
-        border-radius: 30px;
+        font-family: FontAwesome;
+        color: $primary_font_color !important;
         float: left;
-        margin-right: 10px;
+        margin-right: 17px;
+        font-size: 50px;
+        line-height: 40px;
       }
 
       span {
@@ -51,12 +53,14 @@ header {
   }
 
   section {
-    padding-top: 15px;
     clear: both;
     border-top: 2px solid $primary_font_color;
 
     .search {
+      padding-top: 15px;
       padding-bottom: 15px;
+      border-bottom: 1px solid $pale_border;
+      overflow: hidden;
 
       input {
         border: none;
@@ -65,11 +69,23 @@ header {
         padding: 5px 10px;
         width: 50%;
         border: 1px solid $extra_pale_border;
+        float: left;
+      }
+
+      .icon-search {
+        float: left;
+        font-size: 25px;
+        padding: 5px 0;
+        margin-left: -40px;
+      }
+
+      .icon-search:before {
+          color: #ccc;
       }
     }
 
     .primary-nav {
-      border-top: 1px solid $pale_border;
+      clear: left;
       border-bottom: 1px solid $pale_border;
       overflow: hidden;
       height: 35px;
