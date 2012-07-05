@@ -6,6 +6,7 @@
 // @import "compass/reset";
 @import './variables';
 @import './layout';
+@import './font-awesome';
 
 * {
   margin: 0;  
@@ -64,6 +65,14 @@ h3 {
 input {
   font-family: inherit;
   display: block;
+}
+
+// font-awesome custome styles
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  color: $secondary_font_color;
+  font-weight: bold;
+  margin-right: 7px;
 }
 
 @import './header';

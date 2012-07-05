@@ -8,9 +8,9 @@
 {% block content %}
   <h2 class="name">{{ principal.name }}</h2>
   <ul class="contact">
-    <li class="address">{{ principal.get_address }}</li>
-    <li class="phone">{{ principal.phone }}</li>
-    <li class="email"><a href="mailto:{{ principal.email }}">{{ principal.email }}</a></li>
+    <li class="address icon-envelope-alt">{{ principal.get_address }}</li>
+    <li class="phone icon-phone">{{ principal.phone }}</li>
+    <li class="email icon-email"><a href="mailto:{{ principal.email }}">{{ principal.email }}</a></li>
   </ul>
   <div class="column">
     <h3>Topics</h3>
