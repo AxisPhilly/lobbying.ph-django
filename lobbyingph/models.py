@@ -200,6 +200,9 @@ class Bill(models.Model):
 
 class Issue(models.Model):
     description = models.TextField(blank=False, null=False)
+    bill = models.ForeignKey(Bill, blank=True, null=True)
+    summary = models.TextField(blank=True, null=True)
+    detail_view = models.BooleanField(blank=False, null=False, default=False)
 
     class Meta:
         ordering = ['description']
@@ -234,3 +237,8 @@ class Receipent_Group(models.Model):
     def __unicode__(self):
         return self.name
 
+class Article(models.Model):
+    headline = models.CharField(max_length=200, blank=False, null=False)
+    url = models.URLField(blank=False, null=False)
+    date = models.DateField(blank=False, null=False, default=datetime.date.today())
+    quote = models.TextField(blank=True, null=True)
