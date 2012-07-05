@@ -8,9 +8,14 @@
 {% block content %}
     <h2 class="name">{{ issue.description }}</h1>
     <div class="detail container">
-        <p>{{ issue.summary }}</p>
+        <p>
+            {% if issue.summary %}
+                {{ issue.summary }}
+            {% endif %}
+        </p>
 
         <h3>Lobbyists and City Officials</h2>
+        <p>The chart below shows which lobbyists met with which city officials.</p>
         <div id="graph">
         </div>
 
@@ -30,10 +35,12 @@
         $(document).ready(function() {
             d3.json('/api/issue/{{ issue.pk }}', function(json) {
                 var height = lobby.d3.getHeight(json.nodes);
+                var linkDistance = lobby.d3.getLinkDistance(json.links)
 
                 lobby.d3.force = d3.layout.force()
-                    .charge(-150)
-                    .linkDistance(250)
+                    .charge(-200)
+                    .linkDistance(linkDistance)
+                    .friction(.8)
                     .size([900, height]);
 
                 lobby.d3.svg = d3.select("#graph").append("svg")
@@ -72,15 +79,32 @@
                         lobby.d3.hideTooltip();
                     });
                 
+                var supportBounds = [100, 150];
+                var opposeBounds = [650, 700];
+
                 lobby.d3.force.on("tick", function(e) {
                     var k = 20 * e.alpha;
 
-                    // position is position on issue, i.e support(1), oppose(2), ammend(3)
+                    // position is position on issue, i.e support (1), oppose (2), ammend (3)
                     _.each(lobby.d3.force.nodes(), function(node, i){
                         if (node.position === 2) {
-                            node.x += k;
+                            //node.x += k;
+                            if (node.x < opposeBounds[0]) {
+                                node.x = opposeBounds[0];
+                            }
+
+                            if (node.x > opposeBounds[1]) {
+                                node.x = opposeBounds[1];
+                            }
                         } else if (node.position === 1) {
-                            node.x += -k;
+                            //node.x += -k;
+                            if (node.x < supportBounds[0]) {
+                                node.x = supportBounds[0];
+                            }
+
+                            if (node.x > supportBounds[1]) {
+                                node.x = supportBounds[1];
+                            }
                         } else if (node.position === 3) {
                             node.y += k;
                         }
@@ -98,7 +122,6 @@
                         .attr("y1", function(d) { return d.source.y; })
                         .attr("x2", function(d) { return d.target.x; })
                         .attr("y2", function(d) { return d.target.y; });
-                    
                 });
             });
         }); 

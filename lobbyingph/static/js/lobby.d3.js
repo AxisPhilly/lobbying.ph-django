@@ -30,7 +30,7 @@ lobby.d3 = {
     },
 
     createTooltipContent: function(d) {
-        
+
     },
 
     // Dynamically set the height based on the number of official nodes
@@ -41,6 +41,10 @@ lobby.d3 = {
         });
 
         return Math.log(officials.length) * 200;
+    },
+
+    getLinkDistance: function(links) {
+        return Math.log(links.length) * 85;
     },
 
     getNodeClass: function(d) {
