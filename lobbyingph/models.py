@@ -191,6 +191,7 @@ class Bill(models.Model):
     number = models.CharField(max_length=10, blank=False, null=False, default=0)
     bill_type = models.SmallIntegerField(blank=False, null=False, default=0, choices=BILL_TYPE_CHOICES)
     url = models.URLField(blank=False, null=False, default="http://legislation.phila.gov/detailreport/?key=")
+    article = models.ManyToManyField('Article', blank=True, null=True)
 
     class Meta:
         ordering = ['number']
