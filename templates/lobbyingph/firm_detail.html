@@ -24,6 +24,9 @@
           <a href="/principals/{{ client.id }}">{{ client.name }}</a>
         </li>
       {% endfor %}
+      {% if not clients %}
+        <li>N/A</li>
+      {% endif %}
     </ul>
     <h3>Topics</h3>
     <ul class="details">
