@@ -14,6 +14,9 @@ class Exp_OtherInline(admin.TabularInline):
 class Exp_Indirect_CommInline(admin.TabularInline):
     model = Exp_Indirect_Comm
 
+class ArticleInline(admin.TabularInline):
+    model = Article
+
 class FilingAdmin(admin.ModelAdmin):
     inlines = [
         SourceInline,
@@ -22,11 +25,16 @@ class FilingAdmin(admin.ModelAdmin):
         Exp_OtherInline
     ]
 
+class IssueAdmin(admin.ModelAdmin):
+    inlines = [
+        ArticleInline
+    ]
+
 admin.site.register(Lobbyist)
 admin.site.register(Firm)
 admin.site.register(Principal)
 admin.site.register(Filing, FilingAdmin)
-admin.site.register(Issue)
+admin.site.register(Issue, IssueAdmin)
 admin.site.register(Bill)
 admin.site.register(Official)
 admin.site.register(Agency)

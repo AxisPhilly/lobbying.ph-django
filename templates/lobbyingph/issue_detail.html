@@ -8,7 +8,18 @@
 {% block content %}
     <h2 class="name">{{ issue.description }}</h1>
     <div class="detail container">
+        <p>{{ issue.summary }}</p>
+
+        <h3>Lobbyists and City Officials</h2>
         <div id="graph">
+        </div>
+
+        <h3>News coverage</h2>
+        <div id="articles">
+            {% for article in issue.article_set.all %}
+                <h4><a href="{{ article.url }}">{{ article.headline }}</a></h4>
+                <span><i>{{ article.date }}</i>: {{ article.get_publisher_display }}</span>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

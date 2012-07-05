@@ -191,7 +191,6 @@ class Bill(models.Model):
     number = models.CharField(max_length=10, blank=False, null=False, default=0)
     bill_type = models.SmallIntegerField(blank=False, null=False, default=0, choices=BILL_TYPE_CHOICES)
     url = models.URLField(blank=False, null=False, default="http://legislation.phila.gov/detailreport/?key=")
-    article = models.ManyToManyField('Article', blank=True, null=True)
 
     class Meta:
         ordering = ['number']
@@ -238,8 +237,26 @@ class Receipent_Group(models.Model):
     def __unicode__(self):
         return self.name
 
+PUBLISHER_CHOICES = (
+    (0, 'Inquirer'),
+    (1, 'Daily News'),
+    (2, 'CBS Philly'),
+    (3, 'Philadelphia Weekly'),
+    (4, 'City Paper'),
+    (5, 'Bloomberg'),
+    (6, 'PhillyMag'),
+)
+
 class Article(models.Model):
     headline = models.CharField(max_length=200, blank=False, null=False)
+    publisher = models.SmallIntegerField(blank=False, null=True, choices=PUBLISHER_CHOICES)
     url = models.URLField(blank=False, null=False)
     date = models.DateField(blank=False, null=False, default=datetime.date.today())
     quote = models.TextField(blank=True, null=True)
+    issue = models.ForeignKey(Issue, blank=True, null=True)
+
+    class Meta:
+        ordering = ['-date']
+
+    def __unicode__(self):
+        return self.headline
