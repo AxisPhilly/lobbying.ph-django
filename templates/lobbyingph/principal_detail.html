@@ -25,7 +25,7 @@
     <h3>Issues</h3>
     <ul class="details">
       {% for issue, position in issues.items %}
-        <li>{{ position }}: <a href="/issue/{{ issue.id }}">{{ issue }}</a></li>
+        <li>{{ position }}: <a href="/issues/{{ issue.id }}">{{ issue }}</a></li>
       {% endfor %}
       {% if not issues %}
         <li>N/A</li>
