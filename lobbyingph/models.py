@@ -1,5 +1,6 @@
 from django.db import models
 import datetime
+from django.db.models import Sum
 
 STATE_CHOICES = (
     ('AL','Alabama'),
@@ -87,6 +88,37 @@ class Principal(models.Model):
     def get_address(self):
         add_list = [self.address1, self.city, self.state, self.zipcode]
         return ', '.join(add_list)
+
+    def get_total_direct(self):
+        total = self.filing_set.aggregate(val=Sum('total_exp_direct_comm'))
+        if total['val'] == None:
+            return {'val': 0.00}
+        else:
+            return total
+
+    def get_total_indirect(self):
+        total = self.filing_set.aggregate(val=Sum('total_exp_indirect_comm'))
+        if total['val'] == None:
+            return {'val': 0.00}
+        else:
+            return total
+        
+    def get_total_other(self):
+        total = self.filing_set.aggregate(val=Sum('total_exp_other'))
+        if total['val'] == None:
+            return {'val': 0.00}
+        else:
+            return total
+
+    def get_total_exp(self):
+        direct = self.get_total_direct()
+        indirect = self.get_total_indirect()
+        other = self.get_total_other()
+
+        exp = direct['val'] + indirect['val'] + other['val']
+        
+        return exp 
+
 
 POSITION_CHOICE = (
     (1, 'Support'),

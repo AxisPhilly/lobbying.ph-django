@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load humanize %}
 
 {% block head %}
     <link href="{{ STATIC_URL }}css/themes/blue/style.css" media="screen" rel="stylesheet" type="text/css" />
@@ -6,12 +7,69 @@
 
 {% block content %}
   <h2 class="name">Principals</h2>
-  <p>Principals are the companies, organizations, and groups that pay for lobbying services. They are required to fill out quarterly reports detailing their expenditures lobbying firms.</p>
+  
+  <p>Principals are the companies, organizations, and groups that pay for lobbying services. They are required to fill out quarterly reports detailing their expenditures.</p>
+
   <div class="filings container">
-    {% include 'lobbyingph/partials/_list_table.html' %}
+    <table id="list" class="tablesorter"> 
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Total $ Spent</th>
+                <th>Total Direct Spending</th>
+                <th>Total Indirect Spending</th>
+                <th>Total Other Spending</th>
+                <th># of Staff Lobbyists</th>
+            <tr>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+                <tr>
+                    <td><a href="{{ request.get_full_path}}{{ object.id }}">{{ object.name }}</a></td>
+                    <td>${{ object.get_total_exp|floatformat:2|intcomma }}</td>
+                    <td>${{ object.get_total_direct.val|floatformat:2|intcomma }}</td>
+                    <td>${{ object.get_total_indirect.val|floatformat:2|intcomma }}</td>
+                    <td>${{ object.get_total_other.val|floatformat:2|intcomma }}</td>
+                    <td>{{ object.lobbyist_set.count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
   </div>
 {% endblock %}
 
 {% block scripts %}
-    {% include 'lobbyingph/partials/_table_scripts.html' %}  
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.pager.js"></script>
+    <script type='text/javascript'>
+
+    $(document).ready(function() { 
+        // http://stackoverflow.com/questions/9027438/jquery-tablesorter-not-sorting-column-with-formatted-currency-value
+        $.tablesorter.addParser({ 
+            // set a unique id 
+            id: 'thousands',
+            is: function(s) { 
+                // return false so this parser is not auto detected 
+                return false; 
+            }, 
+            format: function(s) {
+                // format your data for normalization 
+                return s.replace('$','').replace(/,/g,'');
+            }, 
+            // set type, either numeric or text 
+            type: 'numeric' 
+        }); 
+
+        $("#list").tablesorter({
+            widgets: ['zebra'],
+            headers: { 
+                2: { sorter:'thousands' },
+                3: { sorter:'thousands' },
+                4: { sorter:'thousands' },
+                5: { sorter:'thousands' }
+            }, 
+        });
+    }); 
+
+    </script>
 {% endblock %}

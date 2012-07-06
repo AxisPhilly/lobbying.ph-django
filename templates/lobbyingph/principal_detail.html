@@ -42,10 +42,10 @@
     </ul>
     <h3>Staff Lobbyists</h3>
     <ul class="details">
-      {% for s in staff %}
-        <li><a href="/lobbyists/{{ s.id }}">{{ s.name }}</a></li>
+      {% for staff in principal.lobbyist_set.all %}
+        <li><a href="/lobbyists/{{ staff.id }}">{{ staff.name }}</a></li>
       {% endfor %}
-      {% if not staff %}
+      {% if not principal.lobbyist_set.all %}
         <li>N/A</li>
       {% endif %}
     </ul>
@@ -66,7 +66,7 @@
         Total Expenditures to Date
         <span class="total">
           <span style="width: 100%;" class="percentage">
-            <em>${{ totals.exp|floatformat:0|intcomma }}</em>
+            <em>${{ principal.get_total_exp|floatformat:2|intcomma }}</em>
           </span>
         </span>
       </li>
@@ -74,7 +74,7 @@
         Direct Communications
         <span class="total">
           <span style="width: 50%;" class="percentage">
-            <em>${{ totals.exp_direct_comm|floatformat:0|intcomma }}</em>
+            <em>${{ principal.get_total_direct.val|floatformat:2|intcomma }}</em>
           </span>
         </span>
       </li>
@@ -82,7 +82,7 @@
         Indirect Communications
         <span class="total">
           <span style="width: 50%;" class="percentage">
-            <em>${{ totals.exp_indirect_comm|floatformat:0|intcomma }}</em>
+            <em>${{ principal.get_total_indirect.val|floatformat:2|intcomma }}</em>
           </span>
         </span>
       </li>
@@ -90,7 +90,7 @@
         Gifts, Hospitality, Transportation, and Lodging
         <span class="total">
           <span style="width: 50%;" class="percentage">
-            <em>${{ totals.exp_other|floatformat:0|intcomma }}</em>
+            <em>${{ principal.get_total_other.val|floatformat:0|intcomma }}</em>
           </span>
         </span>
       </li>

@@ -63,38 +63,17 @@ class FirmDetail(DetailView):
 class PrincipalList(ListView):
     model = Principal
 
+
 class PrincipalDetail(DetailView):
     model = Principal
 
     def get_context_data(self, **kwargs):
         context = super(PrincipalDetail, self).get_context_data()
         
-        # the money
-        exp_direct_comm = self.object.filing_set.aggregate(val=Sum('total_exp_direct_comm'))
-        exp_indirect_comm = self.object.filing_set.aggregate(val=Sum('total_exp_indirect_comm'))
-        exp_other = self.object.filing_set.aggregate(val=Sum('total_exp_other'))
-
-        exp = Decimal(exp_direct_comm['val'] or 0) + Decimal(exp_indirect_comm['val'] or 0) + Decimal(exp_other['val'] or 0)
-        
-        context['totals'] = {
-            'exp': exp if exp else 0,
-            'exp_direct_comm' : exp_direct_comm['val'] if exp_direct_comm['val'] else 0,
-            'exp_indirect_comm' : exp_indirect_comm['val'] if exp_indirect_comm['val'] else 0,
-            'exp_other' : exp_other['val'] if exp_other['val'] else 0,
-        }
-
-        if exp:
-            context['percents'] = {
-                'direct': ((exp_direct_comm['val'] / exp) * 100),
-                'indirect': ((exp_indirect_comm['val'] / exp) * 100),
-                'other': ((exp_other['val'] / exp) * 100)
-            }
-        
         topic = []
         issue = {}
         bill = {}
         firms = None
-        staff = self.object.lobbyist_set.all()
 
         for row in self.object.filing_set.all():
 
@@ -125,6 +104,5 @@ class PrincipalDetail(DetailView):
         context['firms'] = firms
         context['issues'] = issue
         context['bills'] = bill
-        context['staff'] = staff
         
         return context
