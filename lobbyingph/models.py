@@ -100,7 +100,10 @@ class Principal(models.Model):
         direct = self.get_direct_total()
         total = self.get_exp_total()
 
-        return (direct['val'] / total) * 100
+        if total != 0:
+            return (direct['val'] / total) * 100
+        else:
+            return 0
 
     def get_indirect_total(self):
         total = self.filing_set.aggregate(val=Sum('total_exp_indirect_comm'))
@@ -113,7 +116,10 @@ class Principal(models.Model):
         indirect = self.get_indirect_total()
         total = self.get_exp_total()
 
-        return (indirect['val'] / total) * 100
+        if total != 0:
+            return (indirect['val'] / total) * 100
+        else:
+            return 0
         
     def get_other_total(self):
         total = self.filing_set.aggregate(val=Sum('total_exp_other'))
@@ -126,7 +132,10 @@ class Principal(models.Model):
         other = self.get_other_total()
         total = self.get_exp_total()
 
-        return (other['val'] / total) * 100
+        if total != 0:
+            return (other['val'] / total) * 100
+        else:
+            return 0
 
     def get_exp_total(self):
         direct = self.get_direct_total()
@@ -142,10 +151,16 @@ class Principal(models.Model):
 
         for row in self.filing_set.all():
             
-            unique_topics = row.exp_direct_comm_set.distinct('category')
+            direct = row.exp_direct_comm_set.distinct('category')
+            indirect = row.exp_indirect_comm_set.distinct('category')
 
-            for t in unique_topics: 
-                topics.append(t.category)
+            for row in direct:
+                if (row.category not in topics): 
+                    topics.append(row.category)
+
+            for row in indirect:
+                if (row.category not in topics): 
+                    topics.append(row.category)
 
         return topics
 
@@ -165,11 +180,16 @@ class Principal(models.Model):
 
         for row in self.filing_set.all():
 
-            unique_issues = row.exp_direct_comm_set.distinct('issue')
+            direct = row.exp_direct_comm_set.distinct('issue')
+            indirect = row.exp_indirect_comm_set.distinct('issue')
             
-            for i in unique_issues:
-                if i.issue != None:
-                    issues[i.issue] = i.get_position_display()
+            for row in direct:
+                if row.issue != None:
+                    issues[row.issue] = row.get_position_display()
+
+            for row in indirect:
+                if row.issue != None:
+                    issues[row.issue] = row.get_position_display()
 
         return issues;
 
