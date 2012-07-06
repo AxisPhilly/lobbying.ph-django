@@ -119,6 +119,55 @@ class Principal(models.Model):
         
         return exp 
 
+    def get_topics(self):
+        topics = []
+
+        for row in self.filing_set.all():
+            
+            unique_topics = row.exp_direct_comm_set.distinct('category')
+
+            for t in unique_topics: 
+                topics.append(t.category)
+
+        return topics
+
+    def get_firms(self):
+        firms = []
+        for row in self.filing_set.all():
+
+            unique_firms = row.firms.distinct('name')
+
+            for f in unique_firms: 
+                firms.append(f.name)
+
+        return firms
+
+    def get_issues(self):
+        issues = {}
+
+        for row in self.filing_set.all():
+
+            unique_issues = row.exp_direct_comm_set.distinct('issue')
+            
+            for i in unique_issues:
+                if i.issue != None:
+                    issues[i.issue] = i.get_position_display()
+
+        return issues;
+
+    def get_bills(self):
+        bills = {}
+
+        for row in self.filing_set.all():
+
+            unique_bills = row.exp_direct_comm_set.distinct('bill')
+            
+            for b in unique_bills:
+                if b.bill != None:
+                    bills[b.bill] = b.get_position_display()
+
+        return bills;
+
 
 POSITION_CHOICE = (
     (1, 'Support'),

@@ -63,46 +63,5 @@ class FirmDetail(DetailView):
 class PrincipalList(ListView):
     model = Principal
 
-
 class PrincipalDetail(DetailView):
     model = Principal
-
-    def get_context_data(self, **kwargs):
-        context = super(PrincipalDetail, self).get_context_data()
-        
-        topic = []
-        issue = {}
-        bill = {}
-        firms = None
-
-        for row in self.object.filing_set.all():
-
-            # the lobbying categories
-            topics = row.exp_direct_comm_set.distinct('category')
-
-            for t in topics: 
-                topic.append(t.category)
-
-            # the lobbying firms
-            firms = row.firms.distinct('name')
-
-            # the issues
-            issues = row.exp_direct_comm_set.distinct('issue')
-            
-            for i in issues:
-                if i.issue != None:
-                    issue[i.issue] = i.get_position_display()
-
-            # the bills
-            bills = row.exp_direct_comm_set.distinct('bill')
-            
-            for b in bills:
-                if b.bill != None:
-                    bill[b.bill] = b.get_position_display()
-
-        context['topics'] = topic
-        context['firms'] = firms
-        context['issues'] = issue
-        context['bills'] = bill
-        
-        return context

@@ -15,28 +15,28 @@
   <div class="column">
     <h3>Topics</h3>
     <ul class="details">
-      {% for topic in topics %}
+      {% for topic in principal.get_topics %}
         <li><a href="/topic/{{ topic.id }}">{{ topic.name }}</a></li>
       {% endfor %}
-      {% if not topics %}
+      {% if not principal.get_topics %}
         <li>N/A</li>
       {% endif %}
     </ul>
     <h3>Issues</h3>
     <ul class="details">
-      {% for issue, position in issues.items %}
+      {% for issue, position in principal.get_issues.items %}
         <li>{{ position }}: <a href="/issues/{{ issue.id }}">{{ issue }}</a></li>
       {% endfor %}
-      {% if not issues %}
+      {% if not principal.get_issues %}
         <li>N/A</li>
       {% endif %}
     </ul>
     <h3>Bills / Resolutions</h3>
     <ul class="details">
-      {% for bill, position in bills.items %}
+      {% for bill, position in principal.get_bills.items %}
         <li>{{ position }}: <a href="{{ bill.url }}" target="_blank">{{ bill }}</a></li>
       {% endfor %}
-      {% if not bills %}
+      {% if not principal.get_bills %}
         <li>N/A</li>
       {% endif %}
     </ul>
@@ -51,10 +51,10 @@
     </ul>
     <h3>Firms</h3>
     <ul class="details">
-      {% for firm in firms %}
+      {% for firm in principal.get_firms %}
         <li><a href="/firms/{{ firm.id }}">{{ firm }}</a></li>
       {% endfor %}
-      {% if not firms %}
+      {% if not principal.get_firms %}
         <li>N/A</li>
       {% endif %}
     </ul>
