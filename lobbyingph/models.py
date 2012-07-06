@@ -68,6 +68,35 @@ class Firm(models.Model):
         add_list = [self.address1, self.city, self.state, self.zipcode]
         return ', '.join(add_list)
 
+    def get_clients(self):
+        unique_clients = self.filing_set.distinct('principal')
+        clients = []
+
+        for row in unique_clients:
+            clients.append(row.principal)
+
+        clients.sort(key=str)
+        return clients
+
+    def get_topics(self):
+        topics = []
+
+        for row in self.filing_set.all():
+            direct = row.exp_direct_comm_set.distinct('category')
+            indirect = row.exp_direct_comm_set.distinct('category')
+
+            for row in indirect: 
+                if (row.category not in topics):
+                    topics.append(row.category)
+
+            for row in direct: 
+                if (row.category not in topics):
+                    topics.append(row.category)
+
+        topics.sort(key=str)
+        return topics
+
+
 class Principal(models.Model):
     name = models.CharField(max_length=150)
     address1 = models.CharField(max_length=100)

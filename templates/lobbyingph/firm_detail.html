@@ -19,21 +19,23 @@
     </ul>
     <h3>Clients</h3>
     <ul class="details">
-      {% for client in clients %}
+      {% for client in firm.get_clients %}
         <li>
           <a href="/principals/{{ client.id }}">{{ client.name }}</a>
         </li>
       {% endfor %}
-      {% if not clients %}
+      {% if not firm.get_clients %}
         <li>N/A</li>
       {% endif %}
     </ul>
+  </div>
+  <div class="column">
     <h3>Topics</h3>
     <ul class="details">
-      {% for topic in topics %}
+      {% for topic in firm.get_topics %}
         <li><a href="/topic/{{ topic.id }}">{{ topic.name }}</a></li>
       {% endfor %}
-      {% if not topics %}
+      {% if not firm.get_topics %}
         <li>N/A</li>
       {% endif %}
     </ul>
