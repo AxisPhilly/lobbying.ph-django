@@ -12,97 +12,103 @@
     <li class="phone icon-phone">{{ principal.phone }}</li>
     <li class="email icon-envelope"><a href="mailto:{{ principal.email }}">{{ principal.email }}</a></li>
   </ul>
-  <div class="column">
-    <h3>Topics</h3>
-    <ul class="details">
-      {% for topic in principal.get_topics %}
-        <li><a href="/topic/{{ topic.id }}">{{ topic.name }}</a></li>
-      {% endfor %}
-      {% if not principal.get_topics %}
-        <li>N/A</li>
-      {% endif %}
-    </ul>
-    <h3>Issues</h3>
-    <ul class="details">
-      {% for issue, position in principal.get_issues.items %}
-        <li>{{ position }}: <a href="/issues/{{ issue.id }}">{{ issue }}</a></li>
-      {% endfor %}
-      {% if not principal.get_issues %}
-        <li>N/A</li>
-      {% endif %}
-    </ul>
-    <h3>Bills / Resolutions</h3>
-    <ul class="details">
-      {% for bill, position in principal.get_bills.items %}
-        <li>{{ position }}: <a href="{{ bill.url }}" target="_blank">{{ bill }}</a></li>
-      {% endfor %}
-      {% if not principal.get_bills %}
-        <li>N/A</li>
-      {% endif %}
-    </ul>
-    <h3>Staff Lobbyists</h3>
-    <ul class="details">
-      {% for staff in principal.lobbyist_set.all %}
-        <li><a href="/lobbyists/{{ staff.id }}">{{ staff.name }}</a></li>
-      {% endfor %}
-      {% if not principal.lobbyist_set.all %}
-        <li>N/A</li>
-      {% endif %}
-    </ul>
-    <h3>Firms</h3>
-    <ul class="details">
-      {% for firm in principal.get_firms %}
-        <li><a href="/firms/{{ firm.id }}">{{ firm }}</a></li>
-      {% endfor %}
-      {% if not principal.get_firms %}
-        <li>N/A</li>
-      {% endif %}
-    </ul>
+  <div class="column-container">
+    <div class="column">
+      <h3>Topics</h3>
+      <ul class="details">
+        {% for topic in principal.get_topics %}
+          <li><a href="/topic/{{ topic.id }}">{{ topic.name }}</a></li>
+        {% endfor %}
+        {% if not principal.get_topics %}
+          <li>N/A</li>
+        {% endif %}
+      </ul>
+      <h3>Issues</h3>
+      <ul class="details">
+        {% for issue, position in principal.get_issues.items %}
+          <li>{{ position }}: <a href="/issues/{{ issue.id }}">{{ issue }}</a></li>
+        {% endfor %}
+        {% if not principal.get_issues %}
+          <li>N/A</li>
+        {% endif %}
+      </ul>
+      <h3>Bills / Resolutions</h3>
+      <ul class="details">
+        {% for bill, position in principal.get_bills.items %}
+          <li>{{ position }}: <a href="{{ bill.url }}" target="_blank">{{ bill }}</a></li>
+        {% endfor %}
+        {% if not principal.get_bills %}
+          <li>N/A</li>
+        {% endif %}
+      </ul>
+      <h3>Staff Lobbyists</h3>
+      <ul class="details">
+        {% for staff in principal.lobbyist_set.all %}
+          <li><a href="/lobbyists/{{ staff.id }}">{{ staff.name }}</a></li>
+        {% endfor %}
+        {% if not principal.lobbyist_set.all %}
+          <li>N/A</li>
+        {% endif %}
+      </ul>
+      <h3>Firms</h3>
+      <ul class="details">
+        {% for firm in principal.get_firms %}
+          <li><a href="/firms/{{ firm.id }}">{{ firm }}</a></li>
+        {% endfor %}
+        {% if not principal.get_firms %}
+          <li>N/A</li>
+        {% endif %}
+      </ul>
+    </div>
+    <div class="column">
+      <h3>Expenditures</h3>
+      <ul class="bar-graph">
+        <li>
+          Total Expenditures to Date
+          <span class="total">
+            <span style="width: 100%;" class="percentage">
+              <em>${{ principal.get_exp_total|floatformat:2|intcomma }}</em>
+            </span>
+          </span>
+        </li>
+        <li>
+          Direct Communications
+          <span class="total">
+            <span style="width: {{ principal.get_direct_percent }}%;" class="percentage">
+              <em>${{ principal.get_direct_total.val|floatformat:2|intcomma }}</em>
+            </span>
+          </span>
+        </li>
+        <li>
+          Indirect Communications
+          <span class="total">
+            <span style="width: {{ principal.get_indirect_percent }}%;" class="percentage">
+              <em>${{ principal.get_indirect_total.val|floatformat:2|intcomma }}</em>
+            </span>
+          </span>
+        </li>
+        <li>
+          Gifts, Hospitality, Transportation, and Lodging
+          <span class="total">
+            <span style="width: {{ principal.get_other_percent }}%;" class="percentage">
+              <em>${{ principal.get_other_total.val|floatformat:2|intcomma }}</em>
+            </span>
+          </span>
+        </li>
+      </ul>
+    </div>
   </div>
-  <div class="column">
-    <h3>Expenditures</h3>
-    <ul class="bar-graph">
-      <li>
-        Total Expenditures to Date
-        <span class="total">
-          <span style="width: 100%;" class="percentage">
-            <em>${{ principal.get_exp_total|floatformat:2|intcomma }}</em>
-          </span>
-        </span>
-      </li>
-      <li>
-        Direct Communications
-        <span class="total">
-          <span style="width: {{ principal.get_direct_percent }}%;" class="percentage">
-            <em>${{ principal.get_direct_total.val|floatformat:2|intcomma }}</em>
-          </span>
-        </span>
-      </li>
-      <li>
-        Indirect Communications
-        <span class="total">
-          <span style="width: {{ principal.get_indirect_percent }}%;" class="percentage">
-            <em>${{ principal.get_indirect_total.val|floatformat:2|intcomma }}</em>
-          </span>
-        </span>
-      </li>
-      <li>
-        Gifts, Hospitality, Transportation, and Lodging
-        <span class="total">
-          <span style="width: {{ principal.get_other_percent }}%;" class="percentage">
-            <em>${{ principal.get_other_total.val|floatformat:0|intcomma }}</em>
-          </span>
-        </span>
-      </li>
-    </ul>
-    <h3>Filings</h3>
+  <div class="filings">
+  <h3>Filings</h3>
     <table id="filings" class="tablesorter">
       <thead> 
         <tr> 
           <th>Quarter</th>
           <th>Year</th>
           <th>Direct Communication</th> 
-          <th>Indirect Communication</th> 
+          <th>Indirect Communication</th>
+          <th>Gifts, Travel, Lodging</th> 
+          <th>Source Document(s)</th>
         </tr>
       </thead>
       <tbody>
@@ -112,6 +118,12 @@
             <td>{{ filing.year|date:"Y" }}</td>
             <td>${{ filing.total_exp_direct_comm|intcomma }}</td>
             <td>${{ filing.total_exp_indirect_comm|intcomma }}</td>
+            <td>${{ filing.total_exp_other|intcomma }}</td>
+            <td>
+                {% for source in filing.source_set.all %}
+                  <a href="{{ source.url }}">{{ source.name }}</a>,
+                {% endfor %}
+            </td>
           </tr>   
         {% endfor %}
       </tbody>

@@ -3,6 +3,10 @@ header, section.content, footer {
   margin: 0 auto;
 }
 
+.column-container {
+  overflow: hidden;
+}
+
 .column {
   width: 50%;
   float: left;
@@ -11,4 +15,19 @@ header, section.content, footer {
   p, h1, h2 {
     width: 90%;
   }
+}
+
+.intro {
+  float: left;
+  width: 50%;
+}
+
+.tally {
+  float: left;
+  width: 50%
+}
+
+.list {
+  float: left;
+  margin: 20px;
 }
