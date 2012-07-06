@@ -1,10 +1,62 @@
 {% extends "base.html" %}
 {% block content %}
   <div class="container">
-    <div class="tally">
-      <p>{{ lobbyists }} Lobbyists</p>
-      <p>{{ firms }} Firms</p>
-      <p>{{ principals }} Principals</p>
+    <div class="index-header">
+        <div class="intro">
+            <p>
+                Beginning in 2012, organizations paying for lobbying services in Philadelphia are required to register and file quarterly reports of their expenses with the City of Philadelphia Board of Ethics. This application seeks to catalog that data, make it more accesible, and host visualizations to help citizens better understand the influence of lobbying in Philadelphia.
+            </p>
+            <p>
+                Expenditure data through March, 2012 has been imported.
+            </p>
+        </div>
+        <div class="tally">
+          <h2>{{ lobbyists }} Lobbyists</h2>
+          <h2>{{ firms }} Firms</h2>
+          <h2>{{ principals }} Principals</h2>
+        </div>
+    </div>
+    <div class="totals">
+        <div class="list">
+            <h3>List header</h3>
+            <ol>
+                <li>Foo</li>
+                <li>Bar</li>
+                <li>Blah</li>
+                <li>Bla</li>
+                <li>Blah</li>
+            </ol>
+        </div>
+        <div class="list">
+            <h3>List header</h3>
+            <ol>
+                <li>Foo</li>
+                <li>Bar</li>
+                <li>Blah</li>
+                <li>Bla</li>
+                <li>Blah</li>
+            </ol>
+        </div>
+        <div class="list">
+            <h3>List header</h3>
+            <ol>
+                <li>Foo</li>
+                <li>Bar</li>
+                <li>Blah</li>
+                <li>Bla</li>
+                <li>Blah</li>
+            </ol>
+        </div>
+        <div class="list">
+            <h3>List header</h3>
+            <ol>
+                <li>Foo</li>
+                <li>Bar</li>
+                <li>Blah</li>
+                <li>Bla</li>
+                <li>Blah</li>
+            </ol>
+        </div>
     </div>
   </div>
 {% endblock %}

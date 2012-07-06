@@ -19,7 +19,7 @@
       </h1>
       <nav class="utility-nav">
         <ul>
-          <li><a href="#about">About</a></li>
+          <li><a href="/about/">About</a></li>
           <li><a href="http://github.com/caseypt/lobbying.ph-django">Source Code</a></li>
         </ul>
       </nav>
@@ -44,16 +44,10 @@
       {% endblock %}
     </section>
     <footer>
-      <div id="about" class="column">
-        <h3>About Lobbying.ph</h3>
-        <p>Beginning in 2012, organizations paying for lobbying services in Philadelphia are required to register and file quarterly reports of their expenses with the <a href="http://www.phila.gov/ethicsboard/lobbying.html">City of Philadelphia Board of Ethics</a>. This application seeks to catalog that data, make it more accesible, and host visualizations to help citizens better understand the influence of lobbying in Philadelphia.</p>
-        <p><em>Updated June 29th, 2012</em></p>
+      <div id="footer" class="column">
+        <h3><a href="http://www.ppiin.org">Philadelphia Public Interest Information Network</a></h3>
       </div>
       <div class="column">
-        <h3>Developers</h3>
-        <p>This app was originally created at Code Across America: Philadelphia's Civic Hackathon on February 25, 2012 by <a href="https://twitter.com/caseypt">@caseypt</a>, <a href="http://www.mikeball.us">Mike Ball</a>, <a href="https://twitter.com/#!/">@ahinz</a>, and <a href="https://twitter.com/#!/dannyJF">@DannyJF</a>.</p>
-        <p>The source code is availabe on <a href="http://github.com/caseypt/lobbying.ph-django">Github</a></p>
-        <p><a href="#header">Return to top</a></p>
       </div>
       <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.7.2.min.js"></script>
       {% block scripts %}
