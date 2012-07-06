@@ -33,7 +33,7 @@
     <h3>Topics</h3>
     <ul class="details">
       {% for topic in firm.get_topics %}
-        <li><a href="/topic/{{ topic.id }}">{{ topic.name }}</a></li>
+        <li>{{ topic.name }}</li>
       {% endfor %}
       {% if not firm.get_topics %}
         <li>N/A</li>

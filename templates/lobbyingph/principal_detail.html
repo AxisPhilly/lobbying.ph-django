@@ -17,7 +17,7 @@
       <h3>Topics</h3>
       <ul class="details">
         {% for topic in principal.get_topics %}
-          <li><a href="/topic/{{ topic.id }}">{{ topic.name }}</a></li>
+          <li>{{ topic.name }}</li>
         {% endfor %}
         {% if not principal.get_topics %}
           <li>N/A</li>
@@ -26,7 +26,7 @@
       <h3>Issues</h3>
       <ul class="details">
         {% for issue, position in principal.get_issues.items %}
-          <li>{{ position }}: <a href="/issues/{{ issue.id }}">{{ issue }}</a></li>
+          <li>{{ position }}: {{ issue }}</li>
         {% endfor %}
         {% if not principal.get_issues %}
           <li>N/A</li>
@@ -35,7 +35,7 @@
       <h3>Bills / Resolutions</h3>
       <ul class="details">
         {% for bill, position in principal.get_bills.items %}
-          <li>{{ position }}: <a href="{{ bill.url }}" target="_blank">{{ bill }}</a></li>
+          <li>{{ position }}: <a href="{{ bill.url }}" target="_blank">{{ bill }} <i class="icon-external-link"></i></a></li>
         {% endfor %}
         {% if not principal.get_bills %}
           <li>N/A</li>
