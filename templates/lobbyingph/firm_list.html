@@ -7,11 +7,56 @@
 {% block content %}
   <h2 class="name">Firms</h2>
   <p>Firms are the companies that employ lobbyists. They are paid by <a href="/principals">principals</a> to lobby on certain issues.</p>
-  <div class="filings container">
-    {% include 'lobbyingph/partials/_list_table.html' %}
+  <div>
+    <div class="pager-container">
+    <div id="pager" class="pager">
+        <span class="prev"/>Prev</span>
+        <span class="pagedisplay"/></span>
+        <span class="next"/>Next</span>
+        <select class="pagesize">
+            <option selected="selected"  value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+    </div>
+</div>
+
+<table id="list" class="tablesorter"> 
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th># of Registered Lobbyists</th>
+            <th># of Clients</th>
+            <th># of Topics</th>
+        <tr>
+    </thead>
+    <tbody>
+        {% for object in object_list %}
+            <tr>
+                <td><a href="{{ request.get_full_path}}{{ object.id }}">{{ object.name }}</a></td>
+                <td>{{ object.lobbyist_set.count }}</td>
+                <td>{{ object.get_clients|length }}</td>
+                <td>{{ object.get_topics|length }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
   </div>
 {% endblock %}
 
 {% block scripts %}
-    {% include 'lobbyingph/partials/_table_scripts.html' %}  
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.pager.js"></script>
+    <script type='text/javascript'>
+
+        $(document).ready(function() { 
+            $("#list")
+                .tablesorter({
+                    widgets: ['zebra'],
+                    widthFixed: true
+                }) 
+                .tablesorterPager({container: $("#pager")}); 
+        }); 
+
+    </script> 
 {% endblock %}

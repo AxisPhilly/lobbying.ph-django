@@ -6,7 +6,7 @@
   <ul class="contact">
     <li class="address icon-home"> {{ firm.get_address }} </li>
     <li class="phone icon-phone"> {{ firm.phone }} </li>
-    <li class="email icon-envelope"> {{ firm.email }} </li>
+    <li class="email icon-envelope"><a href="mailto:{{ firm.email }}">{{ firm.email }}</a></li>
   </ul>
   <div class="column">
     <h3>Staff</h3>
