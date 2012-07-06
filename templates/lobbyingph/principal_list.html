@@ -11,14 +11,26 @@
   <p>Principals are the companies, organizations, and groups that pay for lobbying services. They are required to fill out quarterly reports detailing their expenditures.</p>
 
   <div class="filings container">
+    <div class="pager-container">
+        <div id="pager" class="pager">
+            <span class="prev"/>Prev</span>
+            <span class="pagedisplay"/></span>
+            <span class="next"/>Next</span>
+            <select class="pagesize">
+                <option selected="selected"  value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+    </div>
     <table id="list" class="tablesorter"> 
         <thead>
             <tr>
                 <th>Name</th>
                 <th>Total $ Spent</th>
-                <th>Total Spending: Direct Communications</th>
-                <th>Total Spending: Indrect Communications</th>
-                <th>Total Spending: Gifts, Travel, Lodging</th>
+                <th>Direct Communications</th>
+                <th>Indrect Communications</th>
+                <th>Gifts, Travel, Lodging</th>
                 <th># of Staff Lobbyists</th>
             <tr>
         </thead>
@@ -68,7 +80,8 @@
                 4: { sorter:'thousands' },
                 5: { sorter:'thousands' }
             }, 
-        });
+            widthFixed: true
+        }).tablesorterPager({container: $("#pager")});
     }); 
 
     </script>
