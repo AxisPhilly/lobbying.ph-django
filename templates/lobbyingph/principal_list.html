@@ -38,10 +38,10 @@
             {% for object in object_list %}
                 <tr>
                     <td><a href="{{ request.get_full_path}}{{ object.id }}">{{ object.name }}</a></td>
-                    <td>${{ object.get_total_exp|floatformat:2|intcomma }}</td>
-                    <td>${{ object.get_total_direct.val|floatformat:2|intcomma }}</td>
-                    <td>${{ object.get_total_indirect.val|floatformat:2|intcomma }}</td>
-                    <td>${{ object.get_total_other.val|floatformat:2|intcomma }}</td>
+                    <td>${{ object.get_exp_total|floatformat:2|intcomma }}</td>
+                    <td>${{ object.get_direct_total.val|floatformat:2|intcomma }}</td>
+                    <td>${{ object.get_indirect_total.val|floatformat:2|intcomma }}</td>
+                    <td>${{ object.get_other_total.val|floatformat:2|intcomma }}</td>
                     <td>{{ object.lobbyist_set.count }}</td>
                 </tr>
             {% endfor %}

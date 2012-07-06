@@ -89,31 +89,49 @@ class Principal(models.Model):
         add_list = [self.address1, self.city, self.state, self.zipcode]
         return ', '.join(add_list)
 
-    def get_total_direct(self):
+    def get_direct_total(self):
         total = self.filing_set.aggregate(val=Sum('total_exp_direct_comm'))
         if total['val'] == None:
             return {'val': 0.00}
         else:
             return total
 
-    def get_total_indirect(self):
+    def get_direct_percent(self):
+        direct = self.get_direct_total()
+        total = self.get_exp_total()
+
+        return (direct['val'] / total) * 100
+
+    def get_indirect_total(self):
         total = self.filing_set.aggregate(val=Sum('total_exp_indirect_comm'))
         if total['val'] == None:
             return {'val': 0.00}
         else:
             return total
+
+    def get_indirect_percent(self):
+        indirect = self.get_indirect_total()
+        total = self.get_exp_total()
+
+        return (indirect['val'] / total) * 100
         
-    def get_total_other(self):
+    def get_other_total(self):
         total = self.filing_set.aggregate(val=Sum('total_exp_other'))
         if total['val'] == None:
             return {'val': 0.00}
         else:
             return total
 
-    def get_total_exp(self):
-        direct = self.get_total_direct()
-        indirect = self.get_total_indirect()
-        other = self.get_total_other()
+    def get_other_percent(self):
+        other = self.get_other_total()
+        total = self.get_exp_total()
+
+        return (other['val'] / total) * 100
+
+    def get_exp_total(self):
+        direct = self.get_direct_total()
+        indirect = self.get_indirect_total()
+        other = self.get_other_total()
 
         exp = direct['val'] + indirect['val'] + other['val']
         
@@ -138,7 +156,7 @@ class Principal(models.Model):
             unique_firms = row.firms.distinct('name')
 
             for f in unique_firms: 
-                firms.append(f.name)
+                firms.append(f)
 
         return firms
 
