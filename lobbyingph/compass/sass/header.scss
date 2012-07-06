@@ -9,6 +9,7 @@ header {
     overflow: hidden;
     margin-bottom: 10px;
     width: 50%;
+    padding-top: 5px;
     
     a {
       font-size: 16px;
@@ -61,6 +62,7 @@ header {
       padding-bottom: 15px;
       border-bottom: 1px solid $pale_border;
       overflow: hidden;
+      display: none;
 
       input {
         border: none;
