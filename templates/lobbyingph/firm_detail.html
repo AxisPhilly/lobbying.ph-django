@@ -16,6 +16,9 @@
           <a href="/lobbyists/{{ staff.id }}">{{ staff.name }}</a>
         </li>
       {% endfor %}
+      {% if not firm.lobbyist_set.all %}
+        <li>N/A</li>
+      {% endif %}
     </ul>
     <h3>Clients</h3>
     <ul class="details">
