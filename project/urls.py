@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     url(r'^api/', include('api.urls')),
     url(r'^search/', include('haystack.urls')),
     url(r'^about/', include(urls.urlpatterns)),
+    url(r'^admin/', include(admin.site.urls)),
 )
