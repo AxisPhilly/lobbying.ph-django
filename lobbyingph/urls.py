@@ -20,5 +20,6 @@ urlpatterns = patterns('',
     url(r'^principals/(?P<pk>\d+)/$', PrincipalDetail.as_view()),
     url(r'^issues/(?P<pk>\d+)/$', IssueDetail.as_view()),
     url(r'/about', include(urls.urlpatterns)),
-    url(r'^api/', include('api.urls'))
+    url(r'^api/', include('api.urls')),
+    url(r'^search/', include('haystack.urls')),
 )
