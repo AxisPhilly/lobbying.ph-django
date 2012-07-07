@@ -5,12 +5,35 @@ header, section.content, footer {
 }
 
 /* line 6, ../../../compass/sass/layout.scss */
+.column-container {
+  overflow: hidden;
+}
+
+/* line 10, ../../../compass/sass/layout.scss */
 .column {
   width: 50%;
   float: left;
   overflow: hidden;
 }
-/* line 11, ../../../compass/sass/layout.scss */
+/* line 15, ../../../compass/sass/layout.scss */
 .column p, .column h1, .column h2 {
   width: 90%;
+}
+
+/* line 20, ../../../compass/sass/layout.scss */
+.intro {
+  float: left;
+  width: 50%;
+}
+
+/* line 25, ../../../compass/sass/layout.scss */
+.tally {
+  float: left;
+  width: 50%;
+}
+
+/* line 30, ../../../compass/sass/layout.scss */
+.list {
+  float: left;
+  margin: 20px;
 }
