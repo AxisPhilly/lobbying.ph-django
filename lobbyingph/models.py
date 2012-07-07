@@ -1,6 +1,7 @@
 from django.db import models
 import datetime
 from django.db.models import Sum
+from decimal import *
 
 STATE_CHOICES = (
     ('AL','Alabama'),
@@ -118,12 +119,24 @@ class Principal(models.Model):
         add_list = [self.address1, self.city, self.state, self.zipcode]
         return ', '.join(add_list)
 
-    def get_direct_total(self):
-        total = self.filing_set.aggregate(val=Sum('total_exp_direct_comm'))
-        if total['val'] == None:
-            return {'val': 0.00}
-        else:
-            return total
+    def get_total_exp(self):
+        totals = self.get_exp_totals()
+        return sum(totals.itervalues())
+
+    def get_exp_totals(self):
+        totals = self.filing_set.aggregate(
+            direct=Sum('total_exp_direct_comm'),
+            indirect=Sum('total_exp_indirect_comm'),
+            other=Sum('total_exp_other')
+        )
+
+        # patched until this is released:
+        # https://code.djangoproject.com/ticket/10929
+        for k, v in totals.items():
+            if not v:
+                totals[k] = Decimal(0.00)
+
+        return totals
 
     def get_direct_percent(self):
         direct = self.get_direct_total()
@@ -134,13 +147,6 @@ class Principal(models.Model):
         else:
             return 0
 
-    def get_indirect_total(self):
-        total = self.filing_set.aggregate(val=Sum('total_exp_indirect_comm'))
-        if total['val'] == None:
-            return {'val': 0.00}
-        else:
-            return total
-
     def get_indirect_percent(self):
         indirect = self.get_indirect_total()
         total = self.get_exp_total()
@@ -150,13 +156,6 @@ class Principal(models.Model):
         else:
             return 0
         
-    def get_other_total(self):
-        total = self.filing_set.aggregate(val=Sum('total_exp_other'))
-        if total['val'] == None:
-            return {'val': 0.00}
-        else:
-            return total
-
     def get_other_percent(self):
         other = self.get_other_total()
         total = self.get_exp_total()
@@ -165,15 +164,6 @@ class Principal(models.Model):
             return (other['val'] / total) * 100
         else:
             return 0
-
-    def get_exp_total(self):
-        direct = self.get_direct_total()
-        indirect = self.get_indirect_total()
-        other = self.get_other_total()
-
-        exp = direct['val'] + indirect['val'] + other['val']
-        
-        return {'val': exp}
 
     def get_topics(self):
         topics = []
