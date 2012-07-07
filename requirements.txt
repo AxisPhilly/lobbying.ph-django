@@ -3,7 +3,7 @@ South==0.7.5
 argparse==1.2.1
 distribute==0.6.24
 dj-database-url==0.2.1
-django-haystack==2.0.0-beta
+django-haystack>=1.2.7
 psycopg2==2.4.5
 -e git+git://github.com/toastdriven/pyelasticsearch.git#egg=pyelasticsearch
 python-ptrace==0.6.4
