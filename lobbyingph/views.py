@@ -19,28 +19,35 @@ def index(request):
         'principal_count': principal_count,
     }
 
-    return render(request, 'lobbyingph/index.html', context)
+    return render(request, 'index.html', context)
 
 class IssueDetail(DetailView):
     model = Issue
+    template_name = 'issue_detail.html'
 
 class LobbyistList(ListView):
     model = Lobbyist
+    template_name = 'lobbyist_list.html'
 
 class LobbyistDetail(DetailView):
     model = Lobbyist
+    template_name = 'lobbyist_detail.html'
 
 class FirmList(ListView):
     model = Firm
+    template_name = 'firm_list.html'
 
 class FirmDetail(DetailView):
     model = Firm
+    template_name = 'firm_detail.html'
 
 class PrincipalList(ListView):
     model = Principal
+    template_name = 'principal_list.html'
 
 class PrincipalDetail(DetailView):
     model = Principal
+    template_name = 'principal_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(PrincipalDetail, self).get_context_data(**kwargs)
