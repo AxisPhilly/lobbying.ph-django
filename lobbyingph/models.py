@@ -173,7 +173,7 @@ class Principal(models.Model):
 
         exp = direct['val'] + indirect['val'] + other['val']
         
-        return exp 
+        return {'val': exp}
 
     def get_topics(self):
         topics = []
