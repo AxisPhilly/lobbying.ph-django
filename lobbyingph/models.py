@@ -69,7 +69,7 @@ class Firm(models.Model):
         return ', '.join(add_list)
 
     def get_clients(self):
-        unique_clients = self.filing_set.distinct('principal')
+        unique_clients = self.filing_set.distinct('principal').only('principal').select_related('principal')
         clients = []
 
         for row in unique_clients:
