@@ -4,22 +4,14 @@ from lobbyingph.views import LobbyistList, LobbyistDetail
 from lobbyingph.views import FirmList, FirmDetail
 from lobbyingph.views import PrincipalList, PrincipalDetail
 from lobbyingph.views import IssueDetail
-from django.contrib.flatpages import urls
-
-from django.contrib import admin
-admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', index),
-    url(r'^admin/', include(admin.site.urls)),
     url(r'^lobbyists/$', LobbyistList.as_view()),
     url(r'^lobbyists/(?P<pk>\d+)/$', LobbyistDetail.as_view()),
     url(r'^firms/$', FirmList.as_view()),
     url(r'^firms/(?P<pk>\d+)/$', FirmDetail.as_view()),
     url(r'^principals/$', PrincipalList.as_view()),
     url(r'^principals/(?P<pk>\d+)/$', PrincipalDetail.as_view()),
-    url(r'^issues/(?P<pk>\d+)/$', IssueDetail.as_view()),
-    url(r'/about', include(urls.urlpatterns)),
-    url(r'^api/', include('api.urls')),
-    url(r'^search/', include('haystack.urls')),
+    url(r'^issues/(?P<pk>\d+)/$', IssueDetail.as_view())
 )
