@@ -24,16 +24,17 @@
         </ul>
       </nav>
       <section>
-        <form class="search">
-          <input placeholder="Search for firms and principals" type="text"/>
-          <b class="icon-search"></b>
-        </form>
         <nav class="primary-nav">
           <ul>
             <li><a {% if 'principal' in request.path %} class="current" {% endif %} href="/principals">Principals</a></li>
             <li><a {% if 'firms' in request.path %} class="current" {% endif %} href="/firms">Firms</a></li>
             <li><a {% if 'lobbyist' in request.path %} class="current" {% endif %} href="/lobbyists">Lobbyists</a></li>
           </ul>
+          <form class="search" action="/search/" method="post">
+            {% csrf_token %}
+            <input placeholder="Search" type="text"/>
+            <input type="submit" value="Search">
+          </form>
         </nav>
       </section>
       {% block header %}

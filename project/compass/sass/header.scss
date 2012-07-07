@@ -58,27 +58,26 @@ header {
     border-top: 2px solid $primary_font_color;
 
     .search {
-      padding-top: 15px;
-      padding-bottom: 15px;
-      border-bottom: 1px solid $pale_border;
+      float: right;
       overflow: hidden;
-      display: none;
 
       input {
-        border: none;
-        font-size: 22px;
-        border-radius: 25px;
-        padding: 5px 10px;
-        width: 50%;
-        border: 1px solid $extra_pale_border;
+        display: inline;
+        font-size: 12px;
+        margin-top: 5px;
+        padding: 2px 10px;
+        border: 1px solid $pale_border;
         float: left;
       }
 
+      input[type="submit"] {
+        margin: 8px 5px;
+        border: 2px outset buttonface;
+      }
+
       .icon-search {
-        float: left;
         font-size: 25px;
         padding: 5px 0;
-        margin-left: -40px;
       }
 
       .icon-search:before {
