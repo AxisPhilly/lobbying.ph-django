@@ -138,32 +138,18 @@ class Principal(models.Model):
 
         return totals
 
-    def get_direct_percent(self):
-        direct = self.get_direct_total()
-        total = self.get_exp_total()
+    def get_exp_percents(self):
+        totals = self.get_exp_totals()
+        total = sum(totals.itervalues())
 
         if total != 0:
-            return (direct['val'] / total) * 100
+            return {
+                'direct': (totals['direct'] / total) * 100,
+                'indirect': (totals['indirect'] / total) * 100,
+                'other': (totals['other'] / total) * 100
+            }
         else:
-            return 0
-
-    def get_indirect_percent(self):
-        indirect = self.get_indirect_total()
-        total = self.get_exp_total()
-
-        if total != 0:
-            return (indirect['val'] / total) * 100
-        else:
-            return 0
-        
-    def get_other_percent(self):
-        other = self.get_other_total()
-        total = self.get_exp_total()
-
-        if total != 0:
-            return (other['val'] / total) * 100
-        else:
-            return 0
+            return {}
 
     def get_topics(self):
         topics = []

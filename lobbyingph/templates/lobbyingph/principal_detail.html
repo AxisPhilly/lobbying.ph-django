@@ -67,31 +67,31 @@
           Total Expenditures to Date
           <span class="total">
             <span style="width: 100%;" class="percentage">
-              <em>${{ principal.get_exp_total.val|floatformat:2|intcomma }}</em>
+              <em>${{ principal.get_total_exp|floatformat:2|intcomma }}</em>
             </span>
           </span>
         </li>
         <li>
           Direct Communications
           <span class="total">
-            <span style="width: {{ principal.get_direct_percent }}%;" class="percentage">
-              <em>${{ principal.get_direct_total.val|floatformat:2|intcomma }}</em>
+            <span style="width: {{ exp_percents.direct }}%;" class="percentage">
+              <em>${{ exp_totals.direct|floatformat:2|intcomma }}</em>
             </span>
           </span>
         </li>
         <li>
           Indirect Communications
           <span class="total">
-            <span style="width: {{ principal.get_indirect_percent }}%;" class="percentage">
-              <em>${{ principal.get_indirect_total.val|floatformat:2|intcomma }}</em>
+            <span style="width: {{ exp_percents.indirect }}%;" class="percentage">
+              <em>${{ exp_totals.indirect|floatformat:2|intcomma }}</em>
             </span>
           </span>
         </li>
         <li>
           Gifts, Hospitality, Transportation, and Lodging
           <span class="total">
-            <span style="width: {{ principal.get_other_percent }}%;" class="percentage">
-              <em>${{ principal.get_other_total.val|floatformat:2|intcomma }}</em>
+            <span style="width: {{ exp_percents.other }}%;" class="percentage">
+              <em>${{ exp_totals.other|floatformat:2|intcomma }}</em>
             </span>
           </span>
         </li>
