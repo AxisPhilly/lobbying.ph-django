@@ -3,7 +3,7 @@ from django.core import serializers
 from lobbyingph.models import Issue, Bill
 import json
 
-def index(request, pk):
+def issue(request, pk):
     issue = get_object_or_404(Issue, pk=pk)
 
     response = {
