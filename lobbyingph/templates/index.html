@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load humanize %}
+
 {% block content %}
   <div class="container">
     <div class="index-header">
@@ -11,50 +13,35 @@
             </p>
         </div>
         <div class="tally">
-          <h2>{{ lobbyist_count }} Lobbyists</h2>
-          <h2>{{ firm_count }} Firms</h2>
-          <h2>{{ principal_count }} Principals</h2>
+            <h2>Total spent on Lobbying through March 2012: ${{ total_spending|intcomma }}</h2>
+            <h2>{{ lobbyist_count }} Lobbyists</h2>
+            <h2>{{ firm_count }} Firms</h2>
+            <h2>{{ principal_count }} Principals</h2>
         </div>
     </div>
     <div class="totals">
         <div class="list">
-            <h3>List header</h3>
+            <h3>Firms by clients</h3>
             <ol>
-                <li>Foo</li>
-                <li>Bar</li>
-                <li>Blah</li>
-                <li>Bla</li>
-                <li>Blah</li>
+                {% for f in top_firms %}
+                    <li><a href="/firms/{{ f.id }}">{{ f.name }}</a>, {{ f.get_num_clients }}</li>
+                {% endfor %}
             </ol>
         </div>
         <div class="list">
-            <h3>List header</h3>
+            <h3>Principals by spending</h3>
             <ol>
-                <li>Foo</li>
-                <li>Bar</li>
-                <li>Blah</li>
-                <li>Bla</li>
-                <li>Blah</li>
+                {% for p in top_principals_by_spending %}
+                    <li><a href="/principals/{{ p.id }}">{{ p.name }}</a>, ${{ p.get_total_exp|intcomma }}</li>
+                {% endfor %}
             </ol>
         </div>
         <div class="list">
-            <h3>List header</h3>
+            <h3>Principals by issue + bill count</h3>
             <ol>
-                <li>Foo</li>
-                <li>Bar</li>
-                <li>Blah</li>
-                <li>Bla</li>
-                <li>Blah</li>
-            </ol>
-        </div>
-        <div class="list">
-            <h3>List header</h3>
-            <ol>
-                <li>Foo</li>
-                <li>Bar</li>
-                <li>Blah</li>
-                <li>Bla</li>
-                <li>Blah</li>
+                {% for p in top_principals_by_issues %}
+                    <li><a href="/principals/{{ p.id }}">{{ p.name }}</a>, {{ p.get_issue_bill_count }}</li>
+                {% endfor %}
             </ol>
         </div>
     </div>

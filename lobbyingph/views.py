@@ -1,6 +1,6 @@
 from django.views.generic import ListView
 from django.views.generic import DetailView
-from lobbyingph.models import Lobbyist, Firm, Principal, Issue
+from lobbyingph.models import Lobbyist, Firm, Principal, Issue, Filing
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404, render, render_to_response
 from decimal import *
@@ -9,14 +9,35 @@ from django.db import connection
 print connection.queries
 
 def index(request):
-    lobbyist_count = Lobbyist.objects.count()
-    firm_count = Firm.objects.count()
-    principal_count = Principal.objects.count()
+    lobbyists = Lobbyist.objects.all()
+    firms = Firm.objects.all()
+    principals = Principal.objects.all()
+
+    # Count up the top level models
+    lobbyist_count = lobbyists.count()
+    firm_count = firms.count()
+    principal_count = principals.count()
+
+    # Count up all the money
+    filings = Filing.objects.all()
+    total_spending = 0
+    for filing in filings:
+        total_spending += filing.get_total_exp()
+
+    # Top 5 lists
+    # http://stackoverflow.com/questions/930865/how-to-sort-by-a-computed-value-in-django
+    top_firms = sorted(firms, key = lambda f: -f.get_client_count())
+    top_principals_by_spending = sorted(principals, key = lambda p: -p.get_total_exp())
+    top_principals_by_issues = sorted(principals, key = lambda p: -p.get_issue_bill_count())
 
     context = {
         'lobbyist_count': lobbyist_count,
         'firm_count': firm_count,
         'principal_count': principal_count,
+        'total_spending': total_spending,
+        'top_firms': top_firms[:5],
+        'top_principals_by_spending': top_principals_by_spending[:5],
+        'top_principals_by_issues': top_principals_by_issues[:5]
     }
 
     return render(request, 'index.html', context)

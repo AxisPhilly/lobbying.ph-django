@@ -79,6 +79,10 @@ class Firm(models.Model):
         clients.sort(key=str)
         return clients
 
+    def get_client_count(self):
+        c = self.get_clients()
+        return len(c)
+
     def get_topics(self):
         topics = []
 
@@ -198,6 +202,10 @@ class Principal(models.Model):
 
         return issues;
 
+    def get_issue_count(self):
+        issues = self.get_issues()
+        return len(issues)
+
     def get_bills(self):
         bills = {}
 
@@ -211,6 +219,15 @@ class Principal(models.Model):
 
         return bills;
 
+    def get_bill_count(self):
+        bills = self.get_bills()
+        return len(bills)
+
+    def get_issue_bill_count(self):
+        bills = self.get_bill_count()
+        issues = self.get_issue_count()
+
+        return (bills + issues)
 
 POSITION_CHOICE = (
     (1, 'Support'),
@@ -240,6 +257,13 @@ class Filing(models.Model):
 
     def __unicode__(self):
         return str(self.year.year) + self.quarter + ': ' + self.principal.name
+
+    def get_total_exp(self):
+        total = (self.total_exp_direct_comm + 
+                    self.total_exp_indirect_comm + 
+                    self.total_exp_other)
+
+        return total
 
 class Exp_Direct_Comm(models.Model):
     category = models.ForeignKey('Category')
