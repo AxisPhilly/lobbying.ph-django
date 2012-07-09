@@ -153,7 +153,11 @@ class Principal(models.Model):
                 'other': '%.2f' % ((totals['other'] / total) * 100)
             }
         else:
-            return {}
+            return {
+                'direct': 0,
+                'indirect': 0,
+                'other': 0
+            }
 
     def get_topics(self):
         topics = []
