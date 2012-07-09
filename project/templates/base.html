@@ -31,7 +31,7 @@
             <li><a {% if 'lobbyist' in request.path %} class="current" {% endif %} href="/lobbyists">Lobbyists</a></li>
           </ul>
           <form class="search" action="/search/?q=" method="get">
-            <input placeholder="Search" name="q" id="id_q" type="text"/>
+            <input placeholder="Search by name" name="q" id="id_q" type="text"/>
             <input type="submit" value="Search">
           </form>
         </nav>
