@@ -144,9 +144,9 @@ class Principal(models.Model):
 
         if total != 0:
             return {
-                'direct': (totals['direct'] / total) * 100,
-                'indirect': (totals['indirect'] / total) * 100,
-                'other': (totals['other'] / total) * 100
+                'direct': '%.2f' % ((totals['direct'] / total) * 100),
+                'indirect': '%.2f' % ((totals['indirect'] / total) * 100),
+                'other': '%.2f' % ((totals['other'] / total) * 100)
             }
         else:
             return {}
