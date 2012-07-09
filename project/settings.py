@@ -38,6 +38,9 @@ HAYSTACK_CONNECTIONS = {
         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
         'URL': os.environ['BONSAI_INDEX_URL'],
         'INDEX_NAME': 'haystack',
+        'EXCLUDED_INDEXES': [
+            'lobbyingph.search_indexes.PrincipalIndex',
+        ]
     },
 }
 
@@ -152,6 +155,7 @@ INSTALLED_APPS = (
     'api',
     'south',
     'lobbyingph',
+    'search',
 )
 
 # A sample logging configuration. The only tangible logging
