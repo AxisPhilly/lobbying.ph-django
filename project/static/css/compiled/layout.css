@@ -19,21 +19,3 @@ header, section.content, footer {
 .column p, .column h1, .column h2 {
   width: 90%;
 }
-
-/* line 20, ../../../compass/sass/layout.scss */
-.intro {
-  float: left;
-  width: 50%;
-}
-
-/* line 25, ../../../compass/sass/layout.scss */
-.tally {
-  float: left;
-  width: 50%;
-}
-
-/* line 30, ../../../compass/sass/layout.scss */
-.list {
-  float: left;
-  margin: 20px;
-}

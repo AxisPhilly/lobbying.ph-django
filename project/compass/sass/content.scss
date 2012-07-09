@@ -6,6 +6,35 @@
   min-height: 400px;
 }
 
+.intro {
+  float: left;
+  width: 50%;
+}
+
+.totals {
+
+}
+
+.totals div {
+  padding: 5px;
+  margin: 5px 25px;
+  display: inline-block;
+}
+
+.tally {
+  float: left;
+  width: 50%;
+
+  h4 {
+    border-bottom: 1px solid gray;
+    font-size: 16px;
+  }
+
+  h2 {
+    font-size: 40px;
+  }
+}
+
 .contact {
   border-bottom: 1px solid $extra_pale_border;
   padding-bottom: 15px;
@@ -48,6 +77,7 @@
     line-height: 40px;
 
     em {
+     color: $primary_font_color;
      text-align: right; 
      display: block;
      margin-right: 5px;

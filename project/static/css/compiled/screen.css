@@ -24,24 +24,6 @@ header, section.content, footer {
   width: 90%;
 }
 
-/* line 20, ../../../compass/sass/layout.scss */
-.intro {
-  float: left;
-  width: 50%;
-}
-
-/* line 25, ../../../compass/sass/layout.scss */
-.tally {
-  float: left;
-  width: 50%;
-}
-
-/* line 30, ../../../compass/sass/layout.scss */
-.list {
-  float: left;
-  margin: 20px;
-}
-
 /*  Font Awesome
     the iconic font designed for use with Twitter Bootstrap
     -------------------------------------------------------
@@ -100,19 +82,22 @@ a [class*=" icon-"] {
 }
 
 /* line 63, ../../../compass/sass/font-awesome.scss */
-.btn [class^="icon-"], .btn [class*=" icon-"], .nav-tabs [class^="icon-"], .nav-tabs [class*=" icon-"] {
+.btn [class^="icon-"],
+.btn [class*=" icon-"], .nav-tabs [class^="icon-"], .nav-tabs [class*=" icon-"] {
   /* keeps button heights with and without icons the same */
   line-height: .9em;
 }
 
 /* line 71, ../../../compass/sass/font-awesome.scss */
-li [class^="icon-"], li [class*=" icon-"] {
+li [class^="icon-"],
+li [class*=" icon-"] {
   display: inline-block;
   width: 1.25em;
   text-align: center;
 }
 /* line 77, ../../../compass/sass/font-awesome.scss */
-li .icon-large:before, li .icon-large:before {
+li .icon-large:before,
+li .icon-large:before {
   /* 1.5 increased font size for icon-large * 1.25 width */
   width: 1.875em;
 }
@@ -124,11 +109,13 @@ ul.icons {
   text-indent: -0.8em;
 }
 /* line 90, ../../../compass/sass/font-awesome.scss */
-ul.icons li [class^="icon-"], ul.icons li [class*=" icon-"] {
+ul.icons li [class^="icon-"],
+ul.icons li [class*=" icon-"] {
   width: .8em;
 }
 /* line 94, ../../../compass/sass/font-awesome.scss */
-ul.icons li .icon-large:before, ul.icons li .icon-large:before {
+ul.icons li .icon-large:before,
+ul.icons li .icon-large:before {
   /* 1.5 increased font size for icon-large * 1.25 width */
   vertical-align: initial;
 }
@@ -2551,32 +2538,60 @@ header section .primary-nav ul li a:hover:before {
 }
 
 /* line 9, ../../../compass/sass/content.scss */
+.intro {
+  float: left;
+  width: 50%;
+}
+
+/* line 18, ../../../compass/sass/content.scss */
+.totals div {
+  padding: 5px;
+  margin: 5px 25px;
+  display: inline-block;
+}
+
+/* line 24, ../../../compass/sass/content.scss */
+.tally {
+  float: left;
+  width: 50%;
+}
+/* line 28, ../../../compass/sass/content.scss */
+.tally h4 {
+  border-bottom: 1px solid gray;
+  font-size: 16px;
+}
+/* line 33, ../../../compass/sass/content.scss */
+.tally h2 {
+  font-size: 40px;
+}
+
+/* line 38, ../../../compass/sass/content.scss */
 .contact {
   border-bottom: 1px solid #eeeeee;
   padding-bottom: 15px;
   margin-bottom: 15px;
 }
-/* line 14, ../../../compass/sass/content.scss */
+/* line 43, ../../../compass/sass/content.scss */
 .contact li {
   margin-bottom: 5px;
 }
 
-/* line 19, ../../../compass/sass/content.scss */
+/* line 48, ../../../compass/sass/content.scss */
 .details {
   margin-bottom: 15px;
   font-weight: bold;
 }
-/* line 23, ../../../compass/sass/content.scss */
+/* line 52, ../../../compass/sass/content.scss */
 .details a {
   font-weight: bold;
 }
 
-/* line 29, ../../../compass/sass/content.scss */
+/* line 58, ../../../compass/sass/content.scss */
 .bar-graph li {
   margin-bottom: 15px;
   font-weight: bold;
 }
-/* line 34, ../../../compass/sass/content.scss */
+/* line 63, ../../../compass/sass/content.scss */
 .bar-graph .total {
   width: 100%;
   height: 40px;
@@ -2585,7 +2600,7 @@ header section .primary-nav ul li a:hover:before {
   position: relative;
   margin-top: 5px;
 }
-/* line 43, ../../../compass/sass/content.scss */
+/* line 72, ../../../compass/sass/content.scss */
 .bar-graph .percentage {
   position: absolute;
   height: 40px;
@@ -2593,8 +2608,9 @@ header section .primary-nav ul li a:hover:before {
   display: block;
   line-height: 40px;
 }
-/* line 50, ../../../compass/sass/content.scss */
+/* line 79, ../../../compass/sass/content.scss */
 .bar-graph .percentage em {
+  color: #333333;
   text-align: right;
   display: block;
   margin-right: 5px;
