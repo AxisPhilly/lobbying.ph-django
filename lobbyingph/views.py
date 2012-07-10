@@ -16,7 +16,6 @@ def index(request):
     lobbyist_count = lobbyists.count()
     firm_count = firms.count()
     principal_count = principals.count()
-    bill_count = Bill.objects.count()
 
     # Count up all the money
     filings = Filing.objects.all()
@@ -61,7 +60,6 @@ def index(request):
         'firm_count': firm_count,
         'principal_count': principal_count,
         'total_spending': total_spending,
-        'bill_count': bill_count,
         'top_firms': top_firms,
         'top_principals_by_spending': top_p_spending,
         'top_principals_by_issues_bills': top_p_issue_bill
