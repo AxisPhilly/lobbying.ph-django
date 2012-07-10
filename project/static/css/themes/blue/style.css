@@ -129,9 +129,12 @@ table.tablesorter select.tablesorter-filter.disabled {
 }
 
 .pager-container {
+	float: right;
+	display: inline-block;
+	padding-top: 6px;
   overflow: auto;
   height: 30px;
-  width: 100%;
+  width: 50%;
 }
 
 .pager {

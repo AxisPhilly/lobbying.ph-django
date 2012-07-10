@@ -65,6 +65,18 @@
   }
 }
 
+
+.list-header {
+  overflow: hidden;
+
+  p {
+    width: 50%;
+    display: inline-block;
+    float: left;
+    margin-bottom: 0px;
+  }
+}
+
 .contact {
   padding-bottom: 8px;
   margin-bottom: 8px;

@@ -7,9 +7,9 @@
 {% block content %}
     <h2 class="name">Lobbyists</h2>
     
-    <p>Lobbyists work for <a href="/firms">firms</a> hired by principals, or directly for <a href="/principals">principals</a>.</p>
+    <div class="list-header">
+        <p>Lobbyists work for <a href="/firms">firms</a> hired by principals, or directly for <a href="/principals">principals</a>.</p>
     
-    <div>
         <div class="pager-container">
             <div id="pager" class="pager">
                 <a href class="prev"/>Prev</a>
@@ -22,7 +22,9 @@
                 </select>
             </div>
         </div>
+    </div>
 
+    <div>
         <table id="list" class="tablesorter"> 
             <thead>
                 <tr>

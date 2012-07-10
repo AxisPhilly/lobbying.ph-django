@@ -7,9 +7,9 @@
 {% block content %}
     <h2 class="name">Firms</h2>
 
-    <p>Firms are the companies that employ lobbyists. They are paid by <a href="/principals">principals</a> to lobby on certain issues.</p>
+    <div class="list-header">
+        <p>Firms are the companies that employ lobbyists. They are paid by <a href="/principals">principals</a> to lobby on certain issues.</p>
 
-    <div>
         <div class="pager-container">
             <div id="pager" class="pager">
                 <a href class="prev"/>Prev</a>
@@ -22,7 +22,9 @@
                 </select>
             </div>
         </div>
+    </div>
 
+    <div>
         <table id="list" class="tablesorter"> 
             <thead>
                 <tr>
