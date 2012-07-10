@@ -264,8 +264,8 @@ class Filing(models.Model):
 
     def get_total_exp(self):
         total = (self.total_exp_direct_comm + 
-                    self.total_exp_indirect_comm + 
-                    self.total_exp_other)
+                self.total_exp_indirect_comm + 
+                self.total_exp_other)
 
         return total
 
