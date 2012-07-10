@@ -36,7 +36,7 @@
                         <a href="/firms/{{ f.object.id }}">{{ f.object.name }}</a>
                         <span class="total">
                             <span class="percentage" style="width: {{ f.percent }};">
-                                <em>{{ f.count }}</em>
+                                <em>{{ f.count }} {% if forloop.first %} Clients {% endif %}</em>
                             </span>
                         </span>
                     </li>
@@ -44,14 +44,14 @@
             </ul>
         </div>
         <div>
-            <h3>Top Principals ($)</h3>
+            <h3>Top Principals by Spending</h3>
             <ul class="bar-graph">
                 {% for p in top_principals_by_spending %}
                     <li>
                         <a href="/principals/{{ p.object.id }}">{{ p.object.name }}</a>
                         <span class="total">
                             <span class="percentage" style="width: {{ p.percent }};">
-                                <em>${{ p.count|intcomma }}</em>
+                                <em>${{ p.count|intcomma }} {% if forloop.first %} Spent {% endif %}</em>
                             </span>
                         </span>
                     </li>
@@ -59,14 +59,14 @@
             </ul>
         </div>
         <div>
-            <h3>Top Principals (Issues/Bills Lobbied)</h3>
+            <h3>Top Principals by Activity</h3>
             <ul class="bar-graph">
                 {% for p in top_principals_by_issues_bills %}
                     <li>
                         <a href="/principals/{{ p.object.id }}">{{ p.object.name }}</a>
                         <span class="total">
                             <span class="percentage" style="width: {{ p.percent }};">
-                                <em>{{ p.count }}</em>
+                                <em>{{ p.count }} {% if forloop.first %} Issues Lobbied {% endif %}</em>
                             </span>
                         </span>
                     </li>
