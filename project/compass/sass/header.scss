@@ -66,13 +66,14 @@ header {
         font-size: 12px;
         margin-top: 5px;
         padding: 2px 10px;
+      }
+
+      input[type="text"] {
         border: 1px solid $pale_border;
-        float: left;
       }
 
       input[type="submit"] {
         margin: 8px 5px;
-        border: 2px outset buttonface;
       }
 
       .icon-search {

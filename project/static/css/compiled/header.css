@@ -1215,35 +1215,36 @@ header section .search input {
   font-size: 12px;
   margin-top: 5px;
   padding: 2px 10px;
-  border: 1px solid #cccccc;
-  float: left;
 }
-/* line 73, ../../../compass/sass/header.scss */
+/* line 71, ../../../compass/sass/header.scss */
+header section .search input[type="text"] {
+  border: 1px solid #cccccc;
+}
+/* line 75, ../../../compass/sass/header.scss */
 header section .search input[type="submit"] {
   margin: 8px 5px;
-  border: 2px outset buttonface;
 }
-/* line 78, ../../../compass/sass/header.scss */
+/* line 79, ../../../compass/sass/header.scss */
 header section .search .icon-search {
   font-size: 25px;
   padding: 5px 0;
 }
-/* line 83, ../../../compass/sass/header.scss */
+/* line 84, ../../../compass/sass/header.scss */
 header section .search .icon-search:before {
   color: #ccc;
 }
-/* line 88, ../../../compass/sass/header.scss */
+/* line 89, ../../../compass/sass/header.scss */
 header section .primary-nav {
   clear: left;
   border-bottom: 1px solid #cccccc;
   overflow: hidden;
   height: 35px;
 }
-/* line 94, ../../../compass/sass/header.scss */
+/* line 95, ../../../compass/sass/header.scss */
 header section .primary-nav ul li {
   float: left;
 }
-/* line 97, ../../../compass/sass/header.scss */
+/* line 98, ../../../compass/sass/header.scss */
 header section .primary-nav ul li a {
   display: block;
   line-height: 35px;
@@ -1252,7 +1253,7 @@ header section .primary-nav ul li a {
   margin-right: 20px;
   position: relative;
 }
-/* line 106, ../../../compass/sass/header.scss */
+/* line 107, ../../../compass/sass/header.scss */
 header section .primary-nav ul li a.current:before {
   content: '.';
   text-indent: -50000px;
@@ -1266,7 +1267,7 @@ header section .primary-nav ul li a.current:before {
   border-right: 6px solid transparent;
   border-bottom: 6px solid #333333;
 }
-/* line 122, ../../../compass/sass/header.scss */
+/* line 123, ../../../compass/sass/header.scss */
 header section .primary-nav ul li a:hover:before {
   content: '.';
   text-indent: -50000px;
