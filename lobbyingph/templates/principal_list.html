@@ -10,79 +10,77 @@
   
   <p>Principals are the companies, organizations, and groups that pay for lobbying services. They are required to fill out quarterly reports detailing their expenditures.</p>
 
-  <div>
-    <div class="pager-container">
-        <div id="pager" class="pager">
-            <span class="prev"/>Prev</span>
-            <span class="pagedisplay"/></span>
-            <span class="next"/>Next</span>
-            <select class="pagesize">
-                <option selected="selected"  value="20">20</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
+    <div>
+        <div class="pager-container">
+            <div id="pager" class="pager">
+                <a href class="prev"/>Prev</a>
+                <span class="pagedisplay"/></span>
+                <a href class="next"/>Next</a>
+                <select class="pagesize">
+                    <option selected="selected"  value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
         </div>
-    </div>
-    <table id="list" class="tablesorter"> 
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Total $ Spent</th>
-                <th>Direct Communications</th>
-                <th>Indrect Communications</th>
-                <th>Gifts, Travel, Lodging</th>
-                <th># of Staff Lobbyists</th>
-            <tr>
-        </thead>
-        <tbody>
-            {% for object in object_list %}
+        <table id="list" class="tablesorter"> 
+            <thead>
                 <tr>
-                    <td><a href="{{ request.get_full_path}}{{ object.id }}">{{ object.name }}</a></td>
-                    <td>${{ object.get_total_exp|floatformat:2|intcomma }}</td>
-                    <td>${{ object.get_exp_totals.direct|floatformat:2|intcomma }}</td>
-                    <td>${{ object.get_exp_totals.indirect|floatformat:2|intcomma }}</td>
-                    <td>${{ object.get_exp_totals.other|floatformat:2|intcomma }}</td>
-                    <td>{{ object.lobbyist_set.count }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-  </div>
+                    <th>Name</th>
+                    <th>Total $ Spent</th>
+                    <th>Direct Communications</th>
+                    <th>Indrect Communications</th>
+                    <th>Gifts, Travel, Lodging</th>
+                    <th># of Staff Lobbyists</th>
+                <tr>
+            </thead>
+            <tbody>
+                {% for object in object_list %}
+                    <tr>
+                        <td><a href="{{ request.get_full_path}}{{ object.id }}">{{ object.name }}</a></td>
+                        <td>${{ object.get_total_exp|floatformat:2|intcomma }}</td>
+                        <td>${{ object.get_exp_totals.direct|floatformat:2|intcomma }}</td>
+                        <td>${{ object.get_exp_totals.indirect|floatformat:2|intcomma }}</td>
+                        <td>${{ object.get_exp_totals.other|floatformat:2|intcomma }}</td>
+                        <td>{{ object.lobbyist_set.count }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
 
 {% block scripts %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.pager.js"></script>
     <script type='text/javascript'>
+        $(document).ready(function() { 
+            // http://stackoverflow.com/questions/9027438/jquery-tablesorter-not-sorting-column-with-formatted-currency-value
+            $.tablesorter.addParser({ 
+                // set a unique id 
+                id: 'thousands',
+                is: function(s) { 
+                    // return false so this parser is not auto detected 
+                    return false; 
+                }, 
+                format: function(s) {
+                    // format your data for normalization 
+                    return s.replace('$','').replace(/,/g,'');
+                }, 
+                // set type, either numeric or text 
+                type: 'numeric' 
+            }); 
 
-    $(document).ready(function() { 
-        // http://stackoverflow.com/questions/9027438/jquery-tablesorter-not-sorting-column-with-formatted-currency-value
-        $.tablesorter.addParser({ 
-            // set a unique id 
-            id: 'thousands',
-            is: function(s) { 
-                // return false so this parser is not auto detected 
-                return false; 
-            }, 
-            format: function(s) {
-                // format your data for normalization 
-                return s.replace('$','').replace(/,/g,'');
-            }, 
-            // set type, either numeric or text 
-            type: 'numeric' 
+            $("#list").tablesorter({
+                widgets: ['zebra'],
+                headers: { 
+                    2: { sorter:'thousands' },
+                    3: { sorter:'thousands' },
+                    4: { sorter:'thousands' },
+                    5: { sorter:'thousands' }
+                }, 
+                widthFixed: true
+            }).tablesorterPager({container: $("#pager")});
         }); 
-
-        $("#list").tablesorter({
-            widgets: ['zebra'],
-            headers: { 
-                2: { sorter:'thousands' },
-                3: { sorter:'thousands' },
-                4: { sorter:'thousands' },
-                5: { sorter:'thousands' }
-            }, 
-            widthFixed: true
-        }).tablesorterPager({container: $("#pager")});
-    }); 
-
     </script>
 {% endblock %}

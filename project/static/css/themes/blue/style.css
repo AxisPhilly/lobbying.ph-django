@@ -138,20 +138,22 @@ table.tablesorter select.tablesorter-filter.disabled {
   float: right;
 }
 
-.prev {
+.pagedisplay {
+	font-weight: bold;
+	margin: 0px 5px;
+}
+
+.prev, .next {
   background-color: #E6EEEE;
+  font-weight: normal;
   display: inline-block;
   border-radius: 3px;
-  padding: 5px;
+  padding: 3px 10px;
   cursor: pointer;
 }
 
-.next {
-  background-color: #E6EEEE;
-  display: inline-block;
-  border-radius: 3px;
-  padding: 5px;
-  cursor: pointer;
+.prev:hover, .next:hover {
+	background-color: #8CB3D9;
 }
 
 .pagesize {

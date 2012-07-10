@@ -1,47 +1,49 @@
 {% extends "base.html" %}
 
 {% block head %}
-  <link href="{{ STATIC_URL }}css/themes/blue/style.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}css/themes/blue/style.css" media="screen" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block content %}
-  <h2 class="name">Lobbyists</h2>
-  <p>Lobbyists work for <a href="/firms">firms</a> hired by principals, or directly for <a href="/principals">principals</a>.</p>
-  <div class="filings container">
-    <div class="pager-container">
-    <div id="pager" class="pager">
-        <span class="prev"/>Prev</span>
-        <span class="pagedisplay"/></span>
-        <span class="next"/>Next</span>
-        <select class="pagesize">
-            <option selected="selected"  value="20">20</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-        </select>
-    </div>
-    </div>
+    <h2 class="name">Lobbyists</h2>
+    
+    <p>Lobbyists work for <a href="/firms">firms</a> hired by principals, or directly for <a href="/principals">principals</a>.</p>
+    
+    <div>
+        <div class="pager-container">
+            <div id="pager" class="pager">
+                <a href class="prev"/>Prev</a>
+                <span class="pagedisplay"/></span>
+                <a href class="next"/>Next</a>
+                <select class="pagesize">
+                    <option selected="selected"  value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+        </div>
 
-    <table id="list" class="tablesorter"> 
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Phone</th>
-                <th>Email</th>
-            <tr>
-        </thead>
-        <tbody>
-            {% for object in object_list %}
+        <table id="list" class="tablesorter"> 
+            <thead>
                 <tr>
-                    <td><a href="{{ request.get_full_path}}{{ object.id }}">{{ object.name }}</a></td>
-                    <td>{{ object.get_address }}</td>
-                    <td>{{ object.phone }}</td>
-                    <td>{{ object.email }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-  </div>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                <tr>
+            </thead>
+            <tbody>
+                {% for object in object_list %}
+                    <tr>
+                        <td><a href="{{ request.get_full_path}}{{ object.id }}">{{ object.name }}</a></td>
+                        <td>{{ object.get_address }}</td>
+                        <td>{{ object.phone }}</td>
+                        <td>{{ object.email }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
 
 {% block scripts %}
