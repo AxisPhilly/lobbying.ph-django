@@ -198,11 +198,19 @@ class Principal(models.Model):
             
             for row in direct:
                 if row.issue != None:
-                    issues[row.issue] = row.get_position_display()
+                    issues[row.issue] = {
+                        'time': str(row.filing.year.year) + row.filing.quarter,
+                        'position': row.get_position_display(),
+                        'other': row.other_desc
+                    }
 
             for row in indirect:
                 if row.issue != None:
-                    issues[row.issue] = row.get_position_display()
+                    issues[row.issue] = {
+                        'time': str(row.filing.year.year) + row.filing.quarter,
+                        'position': row.get_position_display(),
+                        'other': row.other_desc
+                    }
 
         return issues;
 
@@ -215,11 +223,24 @@ class Principal(models.Model):
 
         for row in self.filing_set.all():
 
-            unique_bills = row.exp_direct_comm_set.distinct('bill')
+            direct = row.exp_direct_comm_set.distinct('bill')
+            indirect = row.exp_indirect_comm_set.distinct('bill')
             
-            for b in unique_bills:
-                if b.bill != None:
-                    bills[b.bill] = b.get_position_display()
+            for row in direct:
+                if row.bill != None:
+                    bills[row.bill] = {
+                        'time': str(row.filing.year.year) + row.filing.quarter,
+                        'position': row.get_position_display(),
+                        'other': row.other_desc
+                    }
+
+            for row in indirect:
+                if row.bill != None:
+                    bills[row.bill] = {
+                        'time': str(row.filing.year.year) + row.filing.quarter,
+                        'position': row.get_position_display(),
+                        'other': row.other_desc
+                    }
 
         return bills;
 
