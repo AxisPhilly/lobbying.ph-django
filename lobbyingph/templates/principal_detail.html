@@ -24,7 +24,7 @@
           <li><i>None listed</i></li>
         {% endif %}
       </ul>
-      <h4>Firms</h4>
+      <h4>Firm(s)</h4>
       <ul class="details">
         {% for firm in principal.get_firms %}
           <li><a href="/firms/{{ firm.id }}">{{ firm }}</a></li>
@@ -117,32 +117,36 @@
     {% endif %}
 
     <h3>Source Documents</h3>
-    <table id="filings" class="tablesorter">
-      <thead> 
-        <tr> 
-          <th>Year / Quarter</th>
-          <th>Direct Communication</th> 
-          <th>Indirect Communication</th>
-          <th>Gifts, Travel, Lodging</th> 
-          <th>Document Name(s)</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for filing in principal.filing_set.all %}
-          <tr>
-            <td>{{ filing.year|date:"Y" }}{{ filing.quarter }}</td>
-            <td>${{ filing.total_exp_direct_comm|intcomma }}</td>
-            <td>${{ filing.total_exp_indirect_comm|intcomma }}</td>
-            <td>${{ filing.total_exp_other|intcomma }}</td>
-            <td>
-                {% for source in filing.source_set.all %}
-                  <a href="{{ source.url }}">{{ source.name }}</a>,
-                {% endfor %}
-            </td>
-          </tr>   
-        {% endfor %}
-      </tbody>
-    </table>
+    {% if principal.filing_set.all %}
+      <table id="filings" class="tablesorter">
+        <thead> 
+          <tr> 
+            <th>Year / Quarter</th>
+            <th>Direct Communication</th> 
+            <th>Indirect Communication</th>
+            <th>Gifts, Travel, Lodging</th> 
+            <th>Document Name(s)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for filing in principal.filing_set.all %}
+            <tr>
+              <td>{{ filing.year|date:"Y" }}{{ filing.quarter }}</td>
+              <td>${{ filing.total_exp_direct_comm|intcomma }}</td>
+              <td>${{ filing.total_exp_indirect_comm|intcomma }}</td>
+              <td>${{ filing.total_exp_other|intcomma }}</td>
+              <td>
+                  {% for source in filing.source_set.all %}
+                    <a href="{{ source.url }}">{{ source.name }}</a>,
+                  {% endfor %}
+              </td>
+            </tr>   
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <i>Nothing has been filed for this principal</i>
+    {% endif %}
   </div>
 {% endblock %}
 
