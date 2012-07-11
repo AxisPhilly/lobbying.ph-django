@@ -36,8 +36,8 @@ DATABASES = {
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-        'URL': os.environ['BONSAI_INDEX_URL'],
-        'INDEX_NAME': '',
+        'URL': os.environ['BONSAI_URL'],
+        'INDEX_NAME': os.environ['BONSAI_INDEX'],
         'EXCLUDED_INDEXES': [
             'lobbyingph.search_indexes.PrincipalIndex',
         ]
