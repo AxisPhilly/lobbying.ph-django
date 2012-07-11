@@ -45,40 +45,19 @@
     </div>
     <div class="column">
       <h3>Expenditures</h3>
-      <ul class="bar-graph">
-        <li>
-          Total Expenditures to Date
-          <span class="total">
-            <span style="width:{% if principal.get_total_exp %}100{% else %}0{% endif %}%;" class="percentage">
-              <em>${{ principal.get_total_exp|floatformat:2|intcomma }}</em>
-            </span>
-          </span>
-        </li>
-        <li>
-          Direct Communications
-          <span class="total">
-            <span style="width: {{ exp_percents.direct }}%;" class="percentage">
-              <em>${{ exp_totals.direct|floatformat:2|intcomma }}</em>
-            </span>
-          </span>
-        </li>
-        <li>
-          Indirect Communications
-          <span class="total">
-            <span style="width: {{ exp_percents.indirect }}%;" class="percentage">
-              <em>${{ exp_totals.indirect|floatformat:2|intcomma }}</em>
-            </span>
-          </span>
-        </li>
-        <li>
-          Gifts, Hospitality, Transportation, and Lodging
-          <span class="total">
-            <span style="width: {{ exp_percents.other }}%;" class="percentage">
-              <em>${{ exp_totals.other|floatformat:2|intcomma }}</em>
-            </span>
-          </span>
-        </li>
-      </ul>
+      <span>Total Expenditures through March 31<sup>st</sup> : <span class="total">${{ principal.get_total_exp|floatformat:2|intcomma }}</span></span>
+      <div class="pie-container">
+        <div id="piechart"></div>
+        {% if principal.get_total_exp %}
+        <div class="legend">
+          <ul>
+            <li><span class="color direct"></span>Direct Communication: ${{ exp_totals.direct|floatformat:2|intcomma }}</li>
+            <li><span class="color indirect"></span>Indirect Communications: ${{ exp_totals.indirect|floatformat:2|intcomma }}</li>
+            <li><span class="color other"></span>Gifts, Transportation, Hospitality, Lodging: ${{ exp_totals.other|floatformat:2|intcomma }}</li>
+          </ul>
+        </div>
+        {% endif %}
+      </div>
     </div>
   </div>
   <div class="filings">
@@ -152,6 +131,7 @@
 
 {% block scripts %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
+    <script type='text/javascript' src="{{ STATIC_URL }}js/d3.v2.js"></script>
     <script type='text/javascript'>
 
     $(document).ready(function() { 
@@ -166,6 +146,55 @@
             widgets: ['zebra'],
             sortList: [[0,0]]
           });
+
+        if (typeof window.lobby === 'undefined' || !window.lobby) {
+          window.lobby = {};
+        }
+
+        lobby.d3 = {};
+        lobby.d3.opts = { w: 300, h: 180, r: 70 };
+        lobby.d3.pie = d3.layout.pie(),
+        lobby.d3.arc = d3.svg.arc().innerRadius(lobby.d3.opts.r * .5).outerRadius(lobby.d3.opts.r);
+
+        lobby.d3.exp_data = [
+                {
+                  "label": "${{ exp_totals.direct|intcomma }} (Direct)", 
+                  "val": {{ exp_percents.direct }},
+                  "class": 'direct'
+                }, 
+                {
+                  "label": "${{ exp_totals.indirect|intcomma }} (Indirect)", 
+                  "val": {{ exp_percents.indirect }},
+                  "class": 'indirect'
+                }, 
+                { 
+                  "label": "${{ exp_totals.other|intcomma }} (Other)", 
+                  "val": {{ exp_percents.other }},
+                  "class": 'other'
+                }
+              ];
+        
+        lobby.d3.svg = d3.select("#piechart")
+            .append("svg:svg") 
+            .data([lobby.d3.exp_data])
+                .attr("width", lobby.d3.opts.w)
+                .attr("height", lobby.d3.opts.h);
+
+        lobby.d3.arcs = lobby.d3.svg.selectAll("g.arc")
+            .data(lobby.d3.pie.value(function(d) { return d.val }))
+            .enter()
+              .append("svg:g")
+                .attr("class", "arc")
+                .attr("transform", "translate(" + (lobby.d3.opts.r + 85) 
+                                              + "," + (lobby.d3.opts.r + 20) + ")");
+
+        lobby.d3.arcs.append("svg:path")
+              .attr("class", function(d) { return d.data.class; })
+              .attr("d", lobby.d3.arc);
+
+        lobby.d3.arcs.append("title")
+              .text(function(d) { return d.value + '%'; });;
+
     }); 
 
     </script>   
