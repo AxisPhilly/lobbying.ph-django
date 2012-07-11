@@ -37,23 +37,17 @@ HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
         'URL': os.environ['BONSAI_INDEX_URL'],
-        'INDEX_NAME': 'haystack',
         'EXCLUDED_INDEXES': [
             'lobbyingph.search_indexes.PrincipalIndex',
         ]
     },
 }
 
+# CACHE
 from memcacheify import memcacheify
 
 CACHES = memcacheify()
 
-#CACHES = {
-#    'default': {
-#        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-#        'LOCATION': '127.0.0.1:11211',
-#    }
-#}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -113,8 +107,7 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 'y$bksnjd5)_9yi8uufrj(3-*tc5g14-j3zba1dbhb24g(qox*l'
+SECRET_KEY = ''
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
