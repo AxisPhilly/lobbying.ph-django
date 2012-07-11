@@ -11,4 +11,4 @@ python-ptrace==0.6.4
 requests==0.13.2
 wsgiref==0.1.2
 -e git+git://github.com/toastdriven/django-haystack.git#egg=django-haystack
--e git+git://github.com/caseypt/pyelasticsearch.git#egg=pyelasticsearch
+-e ../pyelasticsearch/
