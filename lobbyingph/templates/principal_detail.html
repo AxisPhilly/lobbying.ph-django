@@ -49,7 +49,7 @@
         <li>
           Total Expenditures to Date
           <span class="total">
-            <span style="width: 100%;" class="percentage">
+            <span style="width:{% if principal.get_total_exp %}100{% else %}0{% endif %}%;" class="percentage">
               <em>${{ principal.get_total_exp|floatformat:2|intcomma }}</em>
             </span>
           </span>
