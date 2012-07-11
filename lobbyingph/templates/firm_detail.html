@@ -17,7 +17,7 @@
         </li>
       {% endfor %}
       {% if not firm.lobbyist_set.all %}
-        <li><i>N/A</i></li>
+        <li><i>None Listed</i></li>
       {% endif %}
     </ul>
     <h3>Clients</h3>
@@ -28,7 +28,7 @@
         </li>
       {% endfor %}
       {% if not firm.get_clients %}
-        <li><i>N/A</i></li>
+        <li><i>None Listed</i></li>
       {% endif %}
     </ul>
   </div>
@@ -39,7 +39,7 @@
         <li>{{ topic.name }}</li>
       {% endfor %}
       {% if not firm.get_topics %}
-        <li><i>N/A</i></li>
+        <li><i>None Listed</i></li>
       {% endif %}
     </ul>
   </div>

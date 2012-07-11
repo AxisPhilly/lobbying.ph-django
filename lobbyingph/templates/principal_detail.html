@@ -21,7 +21,7 @@
           <li><a href="/lobbyists/{{ staff.id }}">{{ staff.name }}</a></li>
         {% endfor %}
         {% if not principal.lobbyist_set.all %}
-          <li><i>N/A</i></li>
+          <li><i>None listed</i></li>
         {% endif %}
       </ul>
       <h4>Firms</h4>
@@ -30,7 +30,7 @@
           <li><a href="/firms/{{ firm.id }}">{{ firm }}</a></li>
         {% endfor %}
         {% if not principal.get_firms %}
-          <li><i>N/A</i></li>
+          <li><i>None listed</i></li>
         {% endif %}
       </ul>
       <h3>Topics</h3>
@@ -39,7 +39,7 @@
           <li>{{ topic.name }}</li>
         {% endfor %}
         {% if not principal.get_topics %}
-          <li><i>N/A</i></li>
+          <li><i>None listed</i></li>
         {% endif %}
       </ul>
     </div>
@@ -113,7 +113,7 @@
         </tbody>
       </table>
     {% else %}
-      <i>N/A</i>
+      <i>None listed</i>
     {% endif %}
 
     <h3>Source Documents</h3>
