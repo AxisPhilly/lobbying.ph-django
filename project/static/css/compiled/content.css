@@ -39,83 +39,87 @@
 .intro p {
   font-size: 18px;
 }
+/* line 42, ../../../compass/sass/content.scss */
+.intro a {
+  font-size: 18px;
+}
 
-/* line 43, ../../../compass/sass/content.scss */
+/* line 47, ../../../compass/sass/content.scss */
 .totals div {
   padding: 5px;
   margin: 5px 25px;
   display: inline-block;
 }
-/* line 48, ../../../compass/sass/content.scss */
+/* line 52, ../../../compass/sass/content.scss */
 .totals div h3 {
   width: 100%;
 }
 
-/* line 53, ../../../compass/sass/content.scss */
+/* line 57, ../../../compass/sass/content.scss */
 .total {
   font-weight: bold;
 }
 
-/* line 57, ../../../compass/sass/content.scss */
+/* line 61, ../../../compass/sass/content.scss */
 .pie-container {
   overflow: hidden;
   width: 100%;
   height: 100%;
   /* pie chart slice classes */
 }
-/* line 67, ../../../compass/sass/content.scss */
+/* line 71, ../../../compass/sass/content.scss */
 .pie-container .direct {
   fill: #ff7f0e;
 }
-/* line 71, ../../../compass/sass/content.scss */
+/* line 75, ../../../compass/sass/content.scss */
 .pie-container .indirect {
   fill: #ffbb78;
 }
-/* line 75, ../../../compass/sass/content.scss */
+/* line 79, ../../../compass/sass/content.scss */
 .pie-container .other {
   fill: #d9d9d9;
 }
-/* line 83, ../../../compass/sass/content.scss */
+/* line 87, ../../../compass/sass/content.scss */
 .pie-container .color {
   display: inline-block;
   height: 12px;
   width: 12px;
   margin-right: 5px;
 }
-/* line 89, ../../../compass/sass/content.scss */
+/* line 93, ../../../compass/sass/content.scss */
 .pie-container .color.direct {
   background-color: #ff7f0e;
 }
-/* line 93, ../../../compass/sass/content.scss */
+/* line 97, ../../../compass/sass/content.scss */
 .pie-container .color.indirect {
   background-color: #ffbb78;
 }
-/* line 97, ../../../compass/sass/content.scss */
+/* line 101, ../../../compass/sass/content.scss */
 .pie-container .color.other {
   background-color: #d9d9d9;
 }
 
-/* line 103, ../../../compass/sass/content.scss */
+/* line 107, ../../../compass/sass/content.scss */
 .tally {
   float: left;
   width: 40%;
   padding: 10px 5px 5px 44px;
 }
-/* line 108, ../../../compass/sass/content.scss */
+/* line 112, ../../../compass/sass/content.scss */
 .tally h4 {
   border-top: 1px solid #CCC;
   font-size: 16px;
 }
-/* line 113, ../../../compass/sass/content.scss */
+/* line 117, ../../../compass/sass/content.scss */
 .tally h2 a {
   font-size: 29px;
 }
 
-/* line 119, ../../../compass/sass/content.scss */
+/* line 123, ../../../compass/sass/content.scss */
 .list-header {
   overflow: hidden;
 }
-/* line 122, ../../../compass/sass/content.scss */
+/* line 126, ../../../compass/sass/content.scss */
 .list-header p {
   width: 50%;
   display: inline-block;
@@ -123,32 +127,32 @@
   margin-bottom: 0px;
 }
 
-/* line 130, ../../../compass/sass/content.scss */
+/* line 134, ../../../compass/sass/content.scss */
 .contact {
   padding-bottom: 8px;
   margin-bottom: 8px;
 }
-/* line 134, ../../../compass/sass/content.scss */
+/* line 138, ../../../compass/sass/content.scss */
 .contact li {
   margin-bottom: 5px;
 }
 
-/* line 139, ../../../compass/sass/content.scss */
+/* line 143, ../../../compass/sass/content.scss */
 .details {
   margin-bottom: 15px;
   font-weight: bold;
 }
-/* line 143, ../../../compass/sass/content.scss */
+/* line 147, ../../../compass/sass/content.scss */
 .details a {
   font-weight: bold;
 }
 
-/* line 149, ../../../compass/sass/content.scss */
+/* line 153, ../../../compass/sass/content.scss */
 .bar-graph li {
   margin-bottom: 15px;
   font-weight: bold;
 }
-/* line 154, ../../../compass/sass/content.scss */
+/* line 158, ../../../compass/sass/content.scss */
 .bar-graph .total {
   width: 100%;
   height: 30px;
@@ -157,7 +161,7 @@
   position: relative;
   margin-top: 5px;
 }
-/* line 163, ../../../compass/sass/content.scss */
+/* line 167, ../../../compass/sass/content.scss */
 .bar-graph .percentage {
   position: absolute;
   height: 30px;
@@ -165,7 +169,7 @@
   display: block;
   line-height: 40px;
 }
-/* line 170, ../../../compass/sass/content.scss */
+/* line 174, ../../../compass/sass/content.scss */
 .bar-graph .percentage em {
   color: #333333;
   text-align: right;
