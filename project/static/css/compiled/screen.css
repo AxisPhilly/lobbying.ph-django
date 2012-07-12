@@ -2552,7 +2552,7 @@ header section .primary-nav ul li a:hover:before {
 
 /* line 22, ../../../compass/sass/content.scss */
 .index-header {
-  height: 280px;
+  height: 270px;
 }
 
 /* line 26, ../../../compass/sass/content.scss */
@@ -2564,7 +2564,7 @@ header section .primary-nav ul li a:hover:before {
 }
 /* line 32, ../../../compass/sass/content.scss */
 .intro .spent {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: bold;
   margin: 0px;
 }
