@@ -49,13 +49,13 @@
       <div class="pie-container">
         <div id="piechart"></div>
         {% if principal.get_total_exp %}
-        <div class="legend">
-          <ul>
-            <li><span class="color direct"></span>Direct Communication: ${{ exp_totals.direct|floatformat:2|intcomma }}</li>
-            <li><span class="color indirect"></span>Indirect Communications: ${{ exp_totals.indirect|floatformat:2|intcomma }}</li>
-            <li><span class="color other"></span>Gifts, Transportation, Hospitality, Lodging: ${{ exp_totals.other|floatformat:2|intcomma }}</li>
-          </ul>
-        </div>
+          <div class="legend">
+            <ul>
+              <li><span class="color direct"></span>Direct Communication: ${{ exp_totals.direct|floatformat:2|intcomma }}</li>
+              <li><span class="color indirect"></span>Indirect Communications: ${{ exp_totals.indirect|floatformat:2|intcomma }}</li>
+              <li><span class="color other"></span>Gifts, Transportation, Hospitality, Lodging: ${{ exp_totals.other|floatformat:2|intcomma }}</li>
+            </ul>
+          </div>
         {% endif %}
       </div>
     </div>
