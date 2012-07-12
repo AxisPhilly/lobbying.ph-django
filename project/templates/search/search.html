@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <h2>{{ page.object_list|length }} Search Result(s) for "{{ query }}"</h2>
+    <div class="column">
     {% if query %}
-        <h2>{{ page.object_list|length }} Search Result(s) for "{{ query }}"</h2>
         <h3>Principals: {{ result_count.principal }}</h3>
         {% if result_count.principal %}
             {% for result in page.object_list %}
@@ -43,5 +44,6 @@
         <h2>Search</h2>
         Enter a query in the above "Search" field and click search. Try searching for a principal or lobbyist by name. For example, "PECO" or "John".
     {% endif %}
+    </div>
     
 {% endblock %}
