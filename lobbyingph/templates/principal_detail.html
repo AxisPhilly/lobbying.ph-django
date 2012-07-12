@@ -131,7 +131,9 @@
 
 {% block scripts %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
+    {% if principal.get_total_exp %}
     <script type='text/javascript' src="{{ STATIC_URL }}js/d3.v2.js"></script>
+    {% endif %}
     <script type='text/javascript'>
 
     $(document).ready(function() { 
@@ -146,6 +148,8 @@
             widgets: ['zebra'],
             sortList: [[0,0]]
           });
+
+        {% if principal.get_total_exp %}
 
         if (typeof window.lobby === 'undefined' || !window.lobby) {
           window.lobby = {};
@@ -193,7 +197,8 @@
               .attr("d", lobby.d3.arc);
 
         lobby.d3.arcs.append("title")
-              .text(function(d) { return d.value + '%'; });;
+              .text(function(d) { return d.value + '%'; });
+        {% endif %}
 
     }); 
 
