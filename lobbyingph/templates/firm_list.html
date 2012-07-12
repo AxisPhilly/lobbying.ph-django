@@ -1,68 +1,68 @@
 {% extends "base.html" %}
 
 {% block head %}
-    <link href="{{ STATIC_URL }}css/themes/blue/style.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="{{ STATIC_URL }}css/themes/blue/style.css" media="screen" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block content %}
-    <h2 class="name">Firms</h2>
+  <h2 class="name">Firms</h2>
 
-    <div class="list-header">
-        <p>Firms employ <a href="/lobbyists">lobbyists</a> and are paid by <a href="/principals">principals</a> to lobby on certain issues.</p>
+  <div class="list-header">
+    <p>Firms employ <a href="/lobbyists">lobbyists</a> and are paid by <a href="/principals">principals</a> to lobby on certain issues.</p>
 
-        <div class="pager-container">
-            <div id="pager" class="pager">
-                <a href class="prev"/>Prev</a>
-                <span class="pagedisplay"/></span>
-                <a href class="next"/>Next</a>
-                <select class="pagesize">
-                    <option selected="selected"  value="20">20</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                </select>
-            </div>
-        </div>
+    <div class="pager-container">
+      <div id="pager" class="pager">
+        <a href class="prev"/>Prev</a>
+        <span class="pagedisplay"/></span>
+        <a href class="next"/>Next</a>
+        <select class="pagesize">
+          <option selected="selected"  value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
     </div>
+  </div>
 
-    <div>
-        <table id="list" class="tablesorter"> 
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th># of Registered Lobbyists</th>
-                    <th># of Clients</th>
-                    <th># of Topics</th>
-                <tr>
-            </thead>
-            <tbody>
-                {% for object in object_list %}
-                    <tr>
-                        <td><a href="{{ request.get_full_path}}{{ object.id }}">{{ object.name }}</a></td>
-                        <td>{{ object.lobbyist_set.count }}</td>
-                        <td>{{ object.get_clients|length }}</td>
-                        <td>{{ object.get_topics|length }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+  <div>
+    <table id="list" class="tablesorter"> 
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th># of Registered Lobbyists</th>
+          <th># of Clients</th>
+          <th># of Topics</th>
+        <tr>
+      </thead>
+      <tbody>
+        {% for object in object_list %}
+          <tr>
+            <td><a href="{{ request.get_full_path}}{{ object.id }}">{{ object.name }}</a></td>
+            <td>{{ object.lobbyist_set.count }}</td>
+            <td>{{ object.get_clients|length }}</td>
+            <td>{{ object.get_topics|length }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.pager.js"></script>
-    <script type='text/javascript'>
-        $(document).ready(function() { 
-            $("#list")
-                .tablesorter({
-                    widgets: ['zebra'],
-                    widthFixed: true
-                }) 
-                .tablesorterPager({container: $("#pager")}); 
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.pager.js"></script>
+  <script type='text/javascript'>
+    $(document).ready(function() { 
+      $("#list")
+        .tablesorter({
+          widgets: ['zebra'],
+          widthFixed: true
+        }) 
+        .tablesorterPager({container: $("#pager")}); 
 
-            $("#page span").click(function(e){
-                e.stopPropagation();
-            })
-        }); 
-    </script> 
+      $("#page span").click(function(e){
+        e.stopPropagation();
+      })
+    }); 
+  </script> 
 {% endblock %}
