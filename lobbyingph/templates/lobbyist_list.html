@@ -1,63 +1,63 @@
 {% extends "base.html" %}
 
 {% block head %}
-    <link href="{{ STATIC_URL }}css/themes/blue/style.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="{{ STATIC_URL }}css/themes/blue/style.css" media="screen" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block content %}
-    <h2 class="name">Lobbyists</h2>
-    
-    <div class="list-header">
-        <p>Lobbyists are individuals who work for <a href="/principals">principals</a>, or for <a href="/firms">firms</a> hired by principals.</p>
-    
-        <div class="pager-container">
-            <div id="pager" class="pager">
-                <a href class="prev"/>Prev</a>
-                <span class="pagedisplay"/></span>
-                <a href class="next"/>Next</a>
-                <select class="pagesize">
-                    <option selected="selected"  value="20">20</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                </select>
-            </div>
-        </div>
+  <h2 class="name">Lobbyists</h2>
+  
+  <div class="list-header">
+    <p>Lobbyists are individuals who work for <a href="/principals">principals</a>, or for <a href="/firms">firms</a> hired by principals.</p>
+  
+    <div class="pager-container">
+      <div id="pager" class="pager">
+        <a href class="prev"/>Prev</a>
+        <span class="pagedisplay"/></span>
+        <a href class="next"/>Next</a>
+        <select class="pagesize">
+          <option selected="selected"  value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
     </div>
+  </div>
 
-    <div>
-        <table id="list" class="tablesorter"> 
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                <tr>
-            </thead>
-            <tbody>
-                {% for object in object_list %}
-                    <tr>
-                        <td><a href="{{ request.get_full_path}}{{ object.id }}">{{ object.name }}</a></td>
-                        <td>{{ object.get_address }}</td>
-                        <td>{{ object.phone }}</td>
-                        <td>{{ object.email }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+  <div>
+    <table id="list" class="tablesorter"> 
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Phone</th>
+          <th>Email</th>
+        <tr>
+      </thead>
+      <tbody>
+        {% for object in object_list %}
+          <tr>
+            <td><a href="{{ request.get_full_path}}{{ object.id }}">{{ object.name }}</a></td>
+            <td>{{ object.get_address }}</td>
+            <td>{{ object.phone }}</td>
+            <td>{{ object.email }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.pager.js"></script>
-    <script type='text/javascript'>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.pager.js"></script>
+  <script type='text/javascript'>
 
-        $(document).ready(function() { 
-            $("#list")
-                .tablesorter({widgets: ['zebra']}) 
-                .tablesorterPager({container: $("#pager")}); 
-        }); 
+    $(document).ready(function() { 
+      $("#list")
+        .tablesorter({widgets: ['zebra']}) 
+        .tablesorterPager({container: $("#pager")}); 
+    }); 
 
-    </script>
+  </script>
 {% endblock %}
