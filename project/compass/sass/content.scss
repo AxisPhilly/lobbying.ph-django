@@ -5,7 +5,6 @@
   overflow: hidden;
   min-height: 400px;
 
-
   h3 {
     padding-top: 5px;
     margin-top: 10px;
@@ -22,13 +21,11 @@
 
 .intro {
   float: left;
-  padding: 5px;
-  margin-left: 25px;
-  width: 48%;
+  width: 70%;
 
   .spent {
-    font-size: 18px;
     font-weight: bold;
+    font-size: 18px;
     margin: 0px;
   }
 
@@ -41,10 +38,39 @@
   }
 }
 
-.totals div {
-  padding: 5px;
-  margin: 5px 25px;
-  display: inline-block;
+.tally {
+  float: left;
+  width: 26%;
+  padding: 0px 0px 5px 38px;
+
+  h2 a {
+    font-size: 29px;
+  }
+
+  h3 {
+    width: 100%;
+  }
+}
+
+.top-fives {
+
+  width: 100%;
+
+  .column-1 {
+    display: inline-block;
+    width: 55%;
+
+    div {
+      width: 46%;
+      margin-right: 17px;
+      display: inline-block;
+    }
+  } 
+
+  .column-2 {
+    display: inline-block;
+    width: 44%;
+  }
 
   h3 {
     width: 100%;
@@ -59,10 +85,6 @@
   overflow: hidden;
   width: 100%;
   height: 100%;
-  
-  #piechart {
-  
-  }
 
   /* pie chart slice classes */
   .direct {
@@ -75,10 +97,6 @@
 
   .other {
     fill: #d9d9d9;
-  }
-
-  .legend {
-  
   }
 
   .color {
@@ -100,22 +118,6 @@
     }
   }
 }
-
-.tally {
-  float: left;
-  width: 40%;
-  padding: 10px 5px 5px 44px;
-
-  h4 {
-    border-top: 1px solid #CCC;
-    font-size: 16px;
-  }
-
-  h2 a {
-    font-size: 29px;
-  }
-}
-
 
 .list-header {
   overflow: hidden;

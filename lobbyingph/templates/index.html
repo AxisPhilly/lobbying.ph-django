@@ -16,64 +16,71 @@
         </div>
         <div class="tally">
             <div>
-                <h4>Lobbyists</h4>
+                <h3>Lobbyists</h3>
                 <h2><a href="/lobbyists">{{ lobbyist_count }}</a></h2>
             </div>
             <div>
-                <h4>Firms</h4>
+                <h3>Firms</h3>
                 <h2><a href="/firms">{{ firm_count }}</a></h2>
             </div>
             <div>
-                <h4>Principals</h4>
+                <h3>Principals</h3>
                 <h2><a href="/principals">{{ principal_count }}</a></h2>
             </div>
         </div>
     </div>
-    <div class="totals">
-        <div>
-            <h3>Top Firms</h3>
-            <ul class="bar-graph">
-                {% for f in top_firms %}
-                    <li>
-                        <a href="/firms/{{ f.object.id }}">{{ f.object.name }}</a>
-                        <span class="total">
-                            <span class="percentage" style="width: {{ f.percent }};">
-                                <em>{{ f.count }} {% if forloop.first %} Clients {% endif %}</em>
-                            </span>
-                        </span>
-                    </li>
-                {% endfor %}
-            </ul>
+    <div class="top-fives">
+        <div class="column-1">
+            <div>
+                <h3>Top Firms</h3>
+                <ul class="bar-graph">
+                    {% for f in top_firms %}
+                        <li>
+                            <a href="/firms/{{ f.object.id }}">{{ f.object.name }}
+                                <span class="total">
+                                    <span class="percentage" style="width: {{ f.percent }};">
+                                        <em>{{ f.count }} {% if forloop.first %} Clients {% endif %}</em>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <h3>Top Principals by Spending</h3>
+                <ul class="bar-graph">
+                    {% for p in top_principals_by_spending %}
+                        <li>
+                            <a href="/principals/{{ p.object.id }}">{{ p.object.name }}
+                                <span class="total">
+                                    <span class="percentage" style="width: {{ p.percent }};">
+                                        <em>${{ p.count|intcomma }} {% if forloop.first %} Spent {% endif %}</em>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-        <div>
-            <h3>Top Principals by Spending</h3>
-            <ul class="bar-graph">
-                {% for p in top_principals_by_spending %}
-                    <li>
-                        <a href="/principals/{{ p.object.id }}">{{ p.object.name }}</a>
-                        <span class="total">
-                            <span class="percentage" style="width: {{ p.percent }};">
-                                <em>${{ p.count|intcomma }} {% if forloop.first %} Spent {% endif %}</em>
-                            </span>
-                        </span>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div>
-            <h3>Top Principals by Activity</h3>
-            <ul class="bar-graph">
-                {% for p in top_principals_by_issues_bills %}
-                    <li>
-                        <a href="/principals/{{ p.object.id }}">{{ p.object.name }}</a>
-                        <span class="total">
-                            <span class="percentage" style="width: {{ p.percent }};">
-                                <em>{{ p.count }} {% if forloop.first %} Issues Lobbied {% endif %}</em>
-                            </span>
-                        </span>
-                    </li>
-                {% endfor %}
-            </ul>
+        <div class="column-2">
+            <div>
+                <h3>Top Principals by Activity</h3>
+                <ul class="bar-graph">
+                    {% for p in top_principals_by_issues_bills %}
+                        <li>
+                            <a href="/principals/{{ p.object.id }}">{{ p.object.name }}
+                                <span class="total">
+                                    <span class="percentage" style="width: {{ p.percent }};">
+                                        <em>{{ p.count }} {% if forloop.first %} Issues Lobbied {% endif %}</em>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
   </div>
