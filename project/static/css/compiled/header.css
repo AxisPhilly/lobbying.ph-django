@@ -1179,72 +1179,76 @@ header h1 a:before {
   line-height: 40px;
 }
 /* line 32, ../../../compass/sass/header.scss */
+header h1 a:hover {
+  text-decoration: none;
+}
+/* line 36, ../../../compass/sass/header.scss */
 header h1 a span {
   display: block;
   color: #666666;
 }
-/* line 40, ../../../compass/sass/header.scss */
+/* line 44, ../../../compass/sass/header.scss */
 header .utility-nav {
   float: right;
   margin-top: 20px;
 }
-/* line 44, ../../../compass/sass/header.scss */
+/* line 48, ../../../compass/sass/header.scss */
 header .utility-nav ul li {
   display: inline-block;
   margin-left: 15px;
 }
-/* line 48, ../../../compass/sass/header.scss */
+/* line 52, ../../../compass/sass/header.scss */
 header .utility-nav ul li a {
   font-size: 11px;
   font-weight: bold;
   color: #666666;
 }
-/* line 56, ../../../compass/sass/header.scss */
+/* line 60, ../../../compass/sass/header.scss */
 header section {
   clear: both;
   border-top: 2px solid #333333;
 }
-/* line 60, ../../../compass/sass/header.scss */
+/* line 64, ../../../compass/sass/header.scss */
 header section .search {
   float: right;
   overflow: hidden;
 }
-/* line 64, ../../../compass/sass/header.scss */
+/* line 68, ../../../compass/sass/header.scss */
 header section .search input {
   display: inline;
   font-size: 12px;
   margin-top: 5px;
   padding: 2px 10px;
 }
-/* line 71, ../../../compass/sass/header.scss */
+/* line 75, ../../../compass/sass/header.scss */
 header section .search input[type="text"] {
   border: 1px solid #cccccc;
 }
-/* line 75, ../../../compass/sass/header.scss */
+/* line 79, ../../../compass/sass/header.scss */
 header section .search input[type="submit"] {
   margin: 8px 5px;
 }
-/* line 79, ../../../compass/sass/header.scss */
+/* line 83, ../../../compass/sass/header.scss */
 header section .search .icon-search {
   font-size: 25px;
   padding: 5px 0;
 }
-/* line 84, ../../../compass/sass/header.scss */
+/* line 88, ../../../compass/sass/header.scss */
 header section .search .icon-search:before {
   color: #ccc;
 }
-/* line 89, ../../../compass/sass/header.scss */
+/* line 93, ../../../compass/sass/header.scss */
 header section .primary-nav {
   clear: left;
   border-bottom: 1px solid #cccccc;
   overflow: hidden;
   height: 35px;
 }
-/* line 95, ../../../compass/sass/header.scss */
+/* line 99, ../../../compass/sass/header.scss */
 header section .primary-nav ul li {
   float: left;
 }
-/* line 98, ../../../compass/sass/header.scss */
+/* line 102, ../../../compass/sass/header.scss */
 header section .primary-nav ul li a {
   display: block;
   line-height: 35px;
@@ -1253,7 +1257,7 @@ header section .primary-nav ul li a {
   margin-right: 20px;
   position: relative;
 }
-/* line 107, ../../../compass/sass/header.scss */
+/* line 111, ../../../compass/sass/header.scss */
 header section .primary-nav ul li a.current:before {
   content: '.';
   text-indent: -50000px;
@@ -1267,7 +1271,11 @@ header section .primary-nav ul li a.current:before {
   border-right: 6px solid transparent;
   border-bottom: 6px solid #333333;
 }
-/* line 123, ../../../compass/sass/header.scss */
+/* line 126, ../../../compass/sass/header.scss */
+header section .primary-nav ul li a:hover {
+  text-decoration: none;
+}
+/* line 129, ../../../compass/sass/header.scss */
 header section .primary-nav ul li a:hover:before {
   content: '.';
   text-indent: -50000px;

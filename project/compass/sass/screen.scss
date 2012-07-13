@@ -31,6 +31,10 @@ a {
   font-weight: bold;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
 address, em {
   font-style: normal;
 }
@@ -49,7 +53,7 @@ h1, h2, h3, h4 {
 
 h2 {
   font-size: 26px;
-  margin-bottom: 10px;
+  margin: 10px 0px;
 
   span {
     display: block;

@@ -29,6 +29,10 @@ header {
         line-height: 40px;
       }
 
+      &:hover {
+        text-decoration: none;
+      }
+
       span {
         display: block;
         color: $secondary_font_color;
@@ -120,6 +124,8 @@ header {
           }
 
           &:hover {
+            text-decoration: none;
+
              &:before {
               content: '.';
               text-indent: -50000px;
