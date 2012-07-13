@@ -2,6 +2,15 @@
 
 footer {
   padding-top: 15px;
+
+  #footer {
+    margin-bottom: 15px;
+  }
+
+  .mail {
+    float: right;
+  }
+
   border-top: 2px solid $primary_font_color;
   h3 {
     font-size: 14px; 
