@@ -201,7 +201,8 @@ class Principal(models.Model):
                     issues[row.issue] = {
                         'time': str(row.filing.year.year) + row.filing.quarter,
                         'position': row.get_position_display(),
-                        'other': row.other_desc
+                        'other': row.other_desc,
+                        'comm': 'Direct'
                     }
 
             for row in indirect:
@@ -209,7 +210,8 @@ class Principal(models.Model):
                     issues[row.issue] = {
                         'time': str(row.filing.year.year) + row.filing.quarter,
                         'position': row.get_position_display(),
-                        'other': row.other_desc
+                        'other': row.other_desc,
+                        'comm': 'Indirect'
                     }
 
         return issues;
@@ -231,7 +233,8 @@ class Principal(models.Model):
                     bills[row.bill] = {
                         'time': str(row.filing.year.year) + row.filing.quarter,
                         'position': row.get_position_display(),
-                        'other': row.other_desc
+                        'other': row.other_desc,
+                        'comm': 'Direct'
                     }
 
             for row in indirect:
@@ -239,7 +242,8 @@ class Principal(models.Model):
                     bills[row.bill] = {
                         'time': str(row.filing.year.year) + row.filing.quarter,
                         'position': row.get_position_display(),
-                        'other': row.other_desc
+                        'other': row.other_desc,
+                        'comm': 'Indirect'
                     }
 
         return bills;
