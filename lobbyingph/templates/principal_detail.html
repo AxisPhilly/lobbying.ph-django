@@ -70,6 +70,7 @@
             <th>Name</th>
             <th>Position</th>
             <th>Position If Other</th>
+            <th>Communication Type</th>
           </tr>
         </thead>
         <tbody>
@@ -79,6 +80,7 @@
               <td>{{ issue }}</td>
               <td>{{ details.position }}</td>
               <td>{{ details.other }}</td>
+              <td>{{ details.comm }}</td>
             </tr>   
           {% endfor %}
           {% for bill, details in principal.get_bills.items %}
@@ -87,6 +89,7 @@
               <td>{{ bill.get_bill_type_display }} No. <a href="{{ bill.url }}" target="_blank">{{ bill }}<i class="icon-external-link"></a></td>
               <td>{{ details.position }}</td>
               <td>{{ details.other }}</td>
+              <td>{{ details.comm }}</td>
             </tr>   
           {% endfor %}
         </tbody>
