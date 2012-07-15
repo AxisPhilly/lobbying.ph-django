@@ -189,7 +189,7 @@ class Principal(models.Model):
         return firms
 
     def get_issues(self):
-        issues = {}
+        issues = []
 
         for row in self.filing_set.all():
 
@@ -198,25 +198,27 @@ class Principal(models.Model):
             
             for row in direct:
                 if row.issue != None:
-                    issues[row.issue] = {
+                    issues.append({
                         'time': str(row.filing.year.year) + row.filing.quarter,
+                        'issue': row.issue,
                         'position': row.get_position_display(),
                         'other': row.other_desc,
                         'officials': row.officials.all(),
                         'agencies': row.agencies.all(),
                         'comm': 'Direct'
-                    }
+                    })
 
             for row in indirect:
                 if row.issue != None:
-                    issues[row.issue] = {
+                    issues.append({
                         'time': str(row.filing.year.year) + row.filing.quarter,
+                        'issue': row.issue,
                         'position': row.get_position_display(),
                         'other': row.other_desc,
                         'officials': row.officials.all(),
                         'groups': row.groups.all(),
                         'comm': 'Indirect'
-                    }
+                    })
 
         return issues;
 
@@ -225,7 +227,7 @@ class Principal(models.Model):
         return len(issues)
 
     def get_bills(self):
-        bills = {}
+        bills = []
 
         for row in self.filing_set.all():
 
@@ -234,25 +236,27 @@ class Principal(models.Model):
             
             for row in direct:
                 if row.bill != None:
-                    bills[row.bill] = {
+                    bills.append({
                         'time': str(row.filing.year.year) + row.filing.quarter,
+                        'bill': row.bill,
                         'position': row.get_position_display(),
                         'other': row.other_desc,
                         'officials': row.officials.all(),
                         'agencies': row.agencies.all(),
                         'comm': 'Direct'
-                    }
+                    })
 
             for row in indirect:
                 if row.bill != None:
-                    bills[row.bill] = {
+                    bills.append({
                         'time': str(row.filing.year.year) + row.filing.quarter,
+                        'bill': row.bill,
                         'position': row.get_position_display(),
                         'other': row.other_desc,
                         'officials': row.officials.all(),
                         'groups': row.groups.all(),
                         'comm': 'Indirect'
-                    }
+                    })
 
         return bills;
 

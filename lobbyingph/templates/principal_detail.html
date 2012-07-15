@@ -74,29 +74,29 @@
           </tr>
         </thead>
         <tbody>
-          {% for issue, details in principal.get_issues.items %}
+          {% for issue in principal.get_issues %}
             <tr>
-              <td>{{ details.time }}</td>
-              <td>{{ issue }}</td>
-              <td>{{ details.position }}</td>
-              <td>{{ details.comm }}</td>
+              <td>{{ issue.time }}</td>
+              <td>{{ issue.issue }}</td>
+              <td>{{ issue.position }}</td>
+              <td>{{ issue.comm }}</td>
               <td>
-                  {{ details.officials.all|join:", " }} 
-                  {{ details.agencies.all|join:", " }}
-                  {{ details.groups.all|join:", " }}
+                  {{ issue.officials.all|join:", " }} 
+                  {{ issue.agencies.all|join:", " }}
+                  {{ issue.groups.all|join:", " }}
               </td>
             </tr>   
           {% endfor %}
-          {% for bill, details in principal.get_bills.items %}
+          {% for bill in principal.get_bills %}
             <tr>
-              <td>{{ details.time }}</td>
-              <td>{{ bill.get_bill_type_display }} No. <a href="{{ bill.url }}" target="_blank">{{ bill }}<i class="icon-external-link"></a></td>
-              <td>{{ details.position }}</td>
-              <td>{{ details.comm }}</td>
+              <td>{{ bill.time }}</td>
+              <td>{{ bill.bill.get_bill_type_display }} No. <a href="{{ bill.url }}" target="_blank">{{ bill.bill }}<i class="icon-external-link"></a></td>
+              <td>{{ bill.position }}</td>
+              <td>{{ bill.comm }}</td>
               <td>
-                  {{ details.officials.all|join:", " }}
-                  {{ details.agencies.all|join:", " }}
-                  {{ details.groups.all|join:", " }}
+                  {{ bill.officials.all|join:", " }}
+                  {{ bill.agencies.all|join:", " }}
+                  {{ bill.groups.all|join:", " }}
               </td>
             </tr>   
           {% endfor %}
