@@ -55,24 +55,21 @@
 
 {% block scripts %}
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.pager.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.pager.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/lobby.list.js"></script>
   <script type='text/javascript'>
     $(document).ready(function() { 
       // http://stackoverflow.com/questions/9027438/jquery-tablesorter-not-sorting-column-with-formatted-currency-value
       $.tablesorter.addParser({ 
-        // set a unique id 
         id: 'thousands',
         is: function(s) { 
-          // return false so this parser is not auto detected 
           return false; 
         }, 
         format: function(s) {
-          // format your data for normalization 
           return s.replace('$','').replace(/,/g,'');
         }, 
-        // set type, either numeric or text 
         type: 'numeric' 
-      }); 
+      });
 
       $("#list").tablesorter({
         widgets: ['zebra'],
@@ -83,7 +80,11 @@
           5: { sorter:'thousands' }
         }, 
         widthFixed: true
-      }).tablesorterPager({container: $("#pager")});
+      }).tablesorterPager({
+        container: $("#pager"),
+        output: '{page} / {totalPages}',
+        page: lobby.list.getPage()
+      });
     }); 
   </script>
 {% endblock %}
