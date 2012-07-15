@@ -3,88 +3,88 @@
 
 {% block content %}
   <div class="container">
-    <div class="index-header">
-        <div class="intro">
-            <p>
-                Beginning in 2012, lobbying firms and organizations paying for lobbying services in Philadelphia are required to register and file quarterly reports of their expenses with the <a href="http://www.phila.gov/ethicsboard/">City of Philadelphia Board of Ethics</a>. This site seeks to catalog those reports, make the information in the reports more accessible, and host visualizations to help citizens better understand the influence of lobbying in Philadelphia.
-            </p>
-            <p>
-                Through the quarterly filings, you can see which <a href="/principals">organizations</a> have been lobbying on which issues, and <a href="/firms">who</a> they hired for lobbying services.
-            </p>
-            <p>
-                <span class="spent">
-                    Total spent on lobbying in 2012, through March 31<sup>st</sup>: ${{ total_spending|intcomma }}
+  <div class="index-header">
+    <div class="intro">
+      <p>
+        Beginning in 2012, lobbying firms and organizations paying for lobbying services in Philadelphia are required to register and file quarterly reports of their expenses with the <a href="http://www.phila.gov/ethicsboard/">City of Philadelphia Board of Ethics</a>. This site seeks to catalog those reports, make the information in the reports more accessible, and host visualizations to help citizens better understand the influence of lobbying in Philadelphia.
+      </p>
+      <p>
+        Through the quarterly filings, you can see which <a href="/principals">organizations</a> have been lobbying on which issues, and <a href="/firms">who</a> they hired for lobbying services.
+      </p>
+      <p>
+        <span class="spent">
+          Total spent on lobbying in 2012, through March 31<sup>st</sup>: ${{ total_spending|intcomma }}
+        </span>
+      </p>
+    </div>
+    <div class="tally">
+      <div>
+        <h3>Lobbyists</h3>
+        <h2><a href="/lobbyists">{{ lobbyist_count }}</a></h2>
+      </div>
+      <div>
+        <h3>Firms</h3>
+        <h2><a href="/firms">{{ firm_count }}</a></h2>
+      </div>
+      <div>
+        <h3>Principals</h3>
+        <h2><a href="/principals">{{ principal_count }}</a></h2>
+      </div>
+    </div>
+  </div>
+  <div class="top-fives">
+    <div class="column-1">
+      <div>
+        <h3>Top Firms by Clients</h3>
+        <ul class="bar-graph">
+          {% for f in top_firms %}
+            <li>
+              <a href="/firms/{{ f.object.id }}">{{ f.object.name }}
+                <span class="total">
+                  <span class="percentage" style="width: {{ f.percent }};">
+                    <em>{{ f.count }} {% if forloop.first %} Clients {% endif %}</em>
+                  </span>
                 </span>
-            </p>
-        </div>
-        <div class="tally">
-            <div>
-                <h3>Lobbyists</h3>
-                <h2><a href="/lobbyists">{{ lobbyist_count }}</a></h2>
-            </div>
-            <div>
-                <h3>Firms</h3>
-                <h2><a href="/firms">{{ firm_count }}</a></h2>
-            </div>
-            <div>
-                <h3>Principals</h3>
-                <h2><a href="/principals">{{ principal_count }}</a></h2>
-            </div>
-        </div>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div>
+        <h3>Top Principals by Spending</h3>
+        <ul class="bar-graph">
+          {% for p in top_principals_by_spending %}
+            <li>
+              <a href="/principals/{{ p.object.id }}">{{ p.object.name }}
+                <span class="total">
+                  <span class="percentage" style="width: {{ p.percent }};">
+                    <em>${{ p.count|intcomma }} {% if forloop.first %} Spent {% endif %}</em>
+                  </span>
+                </span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
-    <div class="top-fives">
-        <div class="column-1">
-            <div>
-                <h3>Top Firms by Clients</h3>
-                <ul class="bar-graph">
-                    {% for f in top_firms %}
-                        <li>
-                            <a href="/firms/{{ f.object.id }}">{{ f.object.name }}
-                                <span class="total">
-                                    <span class="percentage" style="width: {{ f.percent }};">
-                                        <em>{{ f.count }} {% if forloop.first %} Clients {% endif %}</em>
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div>
-                <h3>Top Principals by Spending</h3>
-                <ul class="bar-graph">
-                    {% for p in top_principals_by_spending %}
-                        <li>
-                            <a href="/principals/{{ p.object.id }}">{{ p.object.name }}
-                                <span class="total">
-                                    <span class="percentage" style="width: {{ p.percent }};">
-                                        <em>${{ p.count|intcomma }} {% if forloop.first %} Spent {% endif %}</em>
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-        <div class="column-2">
-            <div>
-                <h3>Top Principals by Activity</h3>
-                <ul class="bar-graph">
-                    {% for p in top_principals_by_issues_bills %}
-                        <li>
-                            <a href="/principals/{{ p.object.id }}">{{ p.object.name }}
-                                <span class="total">
-                                    <span class="percentage" style="width: {{ p.percent }};">
-                                        <em>{{ p.count }} {% if forloop.first %} Issues Lobbied {% endif %}</em>
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
+    <div class="column-2">
+      <div>
+        <h3>Top Principals by Activity</h3>
+        <ul class="bar-graph">
+          {% for p in top_principals_by_issues_bills %}
+            <li>
+              <a href="/principals/{{ p.object.id }}">{{ p.object.name }}
+                <span class="total">
+                  <span class="percentage" style="width: {{ p.percent }};">
+                    <em>{{ p.count }} {% if forloop.first %} Issues Lobbied {% endif %}</em>
+                  </span>
+                </span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
+  </div>
   </div>
 {% endblock %}
