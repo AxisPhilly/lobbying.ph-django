@@ -202,6 +202,8 @@ class Principal(models.Model):
                         'time': str(row.filing.year.year) + row.filing.quarter,
                         'position': row.get_position_display(),
                         'other': row.other_desc,
+                        'officials': row.officials.all(),
+                        'agencies': row.agencies.all(),
                         'comm': 'Direct'
                     }
 
@@ -211,6 +213,8 @@ class Principal(models.Model):
                         'time': str(row.filing.year.year) + row.filing.quarter,
                         'position': row.get_position_display(),
                         'other': row.other_desc,
+                        'officials': row.officials.all(),
+                        'groups': row.groups.all(),
                         'comm': 'Indirect'
                     }
 
@@ -234,6 +238,8 @@ class Principal(models.Model):
                         'time': str(row.filing.year.year) + row.filing.quarter,
                         'position': row.get_position_display(),
                         'other': row.other_desc,
+                        'officials': row.officials.all(),
+                        'agencies': row.agencies.all(),
                         'comm': 'Direct'
                     }
 
@@ -243,6 +249,8 @@ class Principal(models.Model):
                         'time': str(row.filing.year.year) + row.filing.quarter,
                         'position': row.get_position_display(),
                         'other': row.other_desc,
+                        'officials': row.officials.all(),
+                        'groups': row.groups.all(),
                         'comm': 'Indirect'
                     }
 
@@ -336,7 +344,7 @@ class Official(models.Model):
         ordering = ['last_name']
 
     def __unicode__(self):
-        return self.first_name  + ' ' + self.last_name + ': ' + self.agency.name
+        return self.first_name  + ' ' + self.last_name
 
 class Agency(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False)

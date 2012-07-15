@@ -69,8 +69,8 @@
             <th>Year / Quarter</th>
             <th>Name</th>
             <th>Position</th>
-            <th>Position If Other</th>
             <th>Communication Type</th>
+            <th>Lobbied Officials/Agencies/Groups</th>
           </tr>
         </thead>
         <tbody>
@@ -79,8 +79,12 @@
               <td>{{ details.time }}</td>
               <td>{{ issue }}</td>
               <td>{{ details.position }}</td>
-              <td>{{ details.other }}</td>
               <td>{{ details.comm }}</td>
+              <td>
+                  {{ details.officials.all|join:", " }} 
+                  {{ details.agencies.all|join:", " }}
+                  {{ details.groups.all|join:", " }}
+              </td>
             </tr>   
           {% endfor %}
           {% for bill, details in principal.get_bills.items %}
@@ -88,8 +92,12 @@
               <td>{{ details.time }}</td>
               <td>{{ bill.get_bill_type_display }} No. <a href="{{ bill.url }}" target="_blank">{{ bill }}<i class="icon-external-link"></a></td>
               <td>{{ details.position }}</td>
-              <td>{{ details.other }}</td>
               <td>{{ details.comm }}</td>
+              <td>
+                  {{ details.officials.all|join:", " }}
+                  {{ details.agencies.all|join:", " }}
+                  {{ details.groups.all|join:", " }}
+              </td>
             </tr>   
           {% endfor %}
         </tbody>
@@ -106,7 +114,7 @@
             <th>Year / Quarter</th>
             <th>Direct Communication</th> 
             <th>Indirect Communication</th>
-            <th>Gifts, Travel, Lodging</th> 
+            <th>Gifts, Hospitality, Transportation, Lodging</th> 
             <th>Document Name(s)</th>
           </tr>
         </thead>
@@ -135,7 +143,7 @@
 {% block scripts %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
     {% if principal.get_total_exp %}
-    <script type='text/javascript' src="{{ STATIC_URL }}js/d3.v2.js"></script>
+      <script type='text/javascript' src="{{ STATIC_URL }}js/d3.v2.js"></script>
     {% endif %}
     <script type='text/javascript'>
 
@@ -154,55 +162,55 @@
 
         {% if principal.get_total_exp %}
 
-        if (typeof window.lobby === 'undefined' || !window.lobby) {
-          window.lobby = {};
-        }
+          if (typeof window.lobby === 'undefined' || !window.lobby) {
+            window.lobby = {};
+          }
 
-        lobby.d3 = {};
-        lobby.d3.opts = { w: 300, h: 180, r: 70 };
-        lobby.d3.pie = d3.layout.pie(),
-        lobby.d3.arc = d3.svg.arc().innerRadius(lobby.d3.opts.r * .5).outerRadius(lobby.d3.opts.r);
+          lobby.d3 = {};
+          lobby.d3.opts = { w: 300, h: 180, r: 70 };
+          lobby.d3.pie = d3.layout.pie(),
+          lobby.d3.arc = d3.svg.arc().innerRadius(lobby.d3.opts.r * .5).outerRadius(lobby.d3.opts.r);
 
-        lobby.d3.exp_data = [
-                {
-                  "label": "${{ exp_totals.direct|intcomma }} (Direct)", 
-                  "val": {{ exp_percents.direct }},
-                  "class": 'direct'
-                }, 
-                {
-                  "label": "${{ exp_totals.indirect|intcomma }} (Indirect)", 
-                  "val": {{ exp_percents.indirect }},
-                  "class": 'indirect'
-                }, 
-                { 
-                  "label": "${{ exp_totals.other|intcomma }} (Other)", 
-                  "val": {{ exp_percents.other }},
-                  "class": 'other'
-                }
-              ];
-        
-        lobby.d3.svg = d3.select("#piechart")
-            .append("svg:svg") 
-            .data([lobby.d3.exp_data])
-                .attr("width", lobby.d3.opts.w)
-                .attr("height", lobby.d3.opts.h);
+          lobby.d3.exp_data = [
+                  {
+                    "label": "${{ exp_totals.direct|intcomma }} (Direct)", 
+                    "val": {{ exp_percents.direct }},
+                    "class": 'direct'
+                  }, 
+                  {
+                    "label": "${{ exp_totals.indirect|intcomma }} (Indirect)", 
+                    "val": {{ exp_percents.indirect }},
+                    "class": 'indirect'
+                  }, 
+                  { 
+                    "label": "${{ exp_totals.other|intcomma }} (Other)", 
+                    "val": {{ exp_percents.other }},
+                    "class": 'other'
+                  }
+                ];
+          
+          lobby.d3.svg = d3.select("#piechart")
+              .append("svg:svg") 
+              .data([lobby.d3.exp_data])
+                  .attr("width", lobby.d3.opts.w)
+                  .attr("height", lobby.d3.opts.h);
 
-        lobby.d3.arcs = lobby.d3.svg.selectAll("g.arc")
-            .data(lobby.d3.pie.value(function(d) { return d.val }))
-            .enter()
-              .append("svg:g")
-                .attr("class", "arc")
-                .attr("transform", "translate(" + (lobby.d3.opts.r + 85) 
-                                              + "," + (lobby.d3.opts.r + 20) + ")");
+          lobby.d3.arcs = lobby.d3.svg.selectAll("g.arc")
+              .data(lobby.d3.pie.value(function(d) { return d.val }))
+              .enter()
+                .append("svg:g")
+                  .attr("class", "arc")
+                  .attr("transform", "translate(" + (lobby.d3.opts.r + 85) 
+                                                + "," + (lobby.d3.opts.r + 20) + ")");
 
-        lobby.d3.arcs.append("svg:path")
-              .attr("class", function(d) { return d.data.class; })
-              .attr("d", lobby.d3.arc);
+          lobby.d3.arcs.append("svg:path")
+                .attr("class", function(d) { return d.data.class; })
+                .attr("d", lobby.d3.arc);
 
-        lobby.d3.arcs.append("title")
-              .text(function(d) { return d.value + '%'; });
+          lobby.d3.arcs.append("title")
+                .text(function(d) { return d.value + '%'; });
+
         {% endif %}
-
     }); 
 
     </script>   
