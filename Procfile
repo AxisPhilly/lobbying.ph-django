@@ -1,0 +1,1 @@
+web: python manage.py collectstatic --settings=project.settings_prod --noinput; gunicorn project.wsgi -b 0.0.0.0:$PORT 
