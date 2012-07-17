@@ -23,7 +23,7 @@
     */
 
 @import "compass/css3/font-face";
-$fontAwesomePath: "http://storage.cloud.google.com/lobbyingph/fonts/vendor/fontawesome-webfont" !default;
+$fontAwesomePath: "http://commondatastorage.googleapis.com/lobbyingph/font/fontawesome-webfont" !default;
 
 @include font-face(
     'FontAwesome',

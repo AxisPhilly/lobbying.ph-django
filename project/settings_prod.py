@@ -16,7 +16,8 @@ MIDDLEWARE_CLASSES += (
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
 
 STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-STATIC_URL = 'https://s3.amazonaws.com/lobbyingph/'
+#STATIC_URL = 'https://s3.amazonaws.com/lobbyingph/'
+STATIC_URL = 'http://commondatastorage.googleapis.com/lobbyingph/'
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 AWS_ACCESS_KEY_ID = os.environ['AWS_KEY_ID']
