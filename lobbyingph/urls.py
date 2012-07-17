@@ -4,7 +4,6 @@ from lobbyingph.views import LobbyistList, LobbyistDetail
 from lobbyingph.views import FirmList, FirmDetail
 from lobbyingph.views import PrincipalList, PrincipalDetail
 from lobbyingph.views import IssueDetail
-import settings
 
 urlpatterns = patterns('',
     url(r'^$', index),
@@ -16,8 +15,3 @@ urlpatterns = patterns('',
     url(r'^principals/(?P<pk>\d+)/$', PrincipalDetail.as_view()),
     #url(r'^issues/(?P<pk>\d+)/$', IssueDetail.as_view())
 )
-
-if not settings.DEBUG:
-    urlpatterns += patterns('',
-        url(r'^static/fonts/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
-    )

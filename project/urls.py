@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib.flatpages import urls
 from search.views import CustomSearchView
 from haystack.views import search_view_factory
+from django.conf import settings
 
 from django.contrib import admin
 admin.autodiscover()
@@ -15,3 +16,8 @@ urlpatterns = patterns('',
     url(r'^about/', include(urls.urlpatterns)),
     url(r'^admin/', include(admin.site.urls)),
 )
+
+if not settings.DEBUG:
+    urlpatterns += patterns('',
+        url(r'^static/fonts/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+    )
