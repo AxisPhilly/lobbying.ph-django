@@ -15,13 +15,15 @@ MIDDLEWARE_CLASSES += (
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
 
-STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-#STATIC_URL = 'https://s3.amazonaws.com/lobbyingph/'
+# Google cloud for static files
 STATIC_URL = 'http://commondatastorage.googleapis.com/lobbyingph/'
 
-AWS_ACCESS_KEY_ID = os.environ['AWS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET']
-AWS_STORAGE_BUCKET_NAME = 'lobbyingph'
+# AWS s3 for static files
+#STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+#STATIC_URL = 'https://s3.amazonaws.com/lobbyingph/''
+#AWS_ACCESS_KEY_ID = os.environ['AWS_KEY_ID']
+#AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET']
+#AWS_STORAGE_BUCKET_NAME = 'lobbyingph'
 
 import dj_database_url
 DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
