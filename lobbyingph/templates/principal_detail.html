@@ -175,40 +175,48 @@
                   {
                     "label": "${{ exp_totals.direct|intcomma }} (Direct)", 
                     "val": {{ exp_percents.direct }},
-                    "class": 'direct'
+                    "class": 'direct',
+                    "fill": '#ff7f0e'
                   }, 
                   {
                     "label": "${{ exp_totals.indirect|intcomma }} (Indirect)", 
                     "val": {{ exp_percents.indirect }},
-                    "class": 'indirect'
+                    "class": 'indirect',
+                    "fill": '#ffbb78'
                   }, 
                   { 
                     "label": "${{ exp_totals.other|intcomma }} (Other)", 
                     "val": {{ exp_percents.other }},
-                    "class": 'other'
+                    "class": 'other',
+                    "fill": '#d9d9d9'
                   }
                 ];
           
           lobby.d3.svg = d3.select("#piechart")
-              .append("svg:svg") 
-              .data([lobby.d3.exp_data])
-                  .attr("width", lobby.d3.opts.w)
-                  .attr("height", lobby.d3.opts.h);
+            .append("svg:svg") 
+            .data([lobby.d3.exp_data])
+                .attr("width", lobby.d3.opts.w)
+                .attr("height", lobby.d3.opts.h);
 
           lobby.d3.arcs = lobby.d3.svg.selectAll("g.arc")
-              .data(lobby.d3.pie.value(function(d) { return d.val }))
-              .enter()
-                .append("svg:g")
-                  .attr("class", "arc")
-                  .attr("transform", "translate(" + (lobby.d3.opts.r + 85) 
-                                                + "," + (lobby.d3.opts.r + 20) + ")");
+            .data(lobby.d3.pie.value(function(d) { return d.val }))
+            .enter()
+              .append("svg:g")
+                .attr("class", "arc")
+                .attr("fill", "#fff")
+                .attr("transform", "translate(" + (lobby.d3.opts.r + 85) 
+                                              + "," + (lobby.d3.opts.r + 20) + ")");
 
           lobby.d3.arcs.append("svg:path")
-                .attr("class", function(d) { return d.data.class; })
-                .attr("d", lobby.d3.arc);
+            .attr("d", lobby.d3.arc)
+
+          lobby.d3.arcs
+            .transition()
+              .duration(500)
+              .style("fill", function(d) { return d.data.fill; })
 
           lobby.d3.arcs.append("title")
-                .text(function(d) { return d.value + '%'; });
+            .text(function(d) { return d.value + '%'; });
 
         {% endif %}
     }); 
