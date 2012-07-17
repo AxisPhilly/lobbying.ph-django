@@ -1,6 +1,6 @@
 from project.settings_common import *
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 # CACHE
@@ -23,5 +23,5 @@ AWS_ACCESS_KEY_ID = os.environ['AWS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET']
 AWS_STORAGE_BUCKET_NAME = 'lobbyingph'
 
-import dj_database_url
-DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
+#import dj_database_url
+#DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
