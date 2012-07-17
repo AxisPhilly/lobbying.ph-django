@@ -16,8 +16,3 @@ urlpatterns = patterns('',
     url(r'^about/', include(urls.urlpatterns)),
     url(r'^admin/', include(admin.site.urls)),
 )
-
-if not settings.DEBUG:
-    urlpatterns += patterns('',
-        url(r'^static/fonts/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
-    )
