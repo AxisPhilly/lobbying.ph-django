@@ -13,6 +13,8 @@ MIDDLEWARE_CLASSES += (
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
+
 STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 STATIC_URL = 'https://s3.amazonaws.com/lobbyingph/'
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
