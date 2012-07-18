@@ -29,8 +29,8 @@
       <thead>
         <tr>
           <th>Name</th>
+          <th>Firm / Principal</th>
           <th>Address</th>
-          <th>Phone</th>
           <th>Email</th>
         <tr>
       </thead>
@@ -38,8 +38,16 @@
         {% for object in object_list %}
           <tr>
             <td><a href="{{ request.get_full_path}}{{ object.id }}">{{ object.name }}</a></td>
+            <td>
+              {% if object.firm %}
+                <a href="/firms/{{ object.firm.id }}">{{ object.firm }}</a>
+              {% elif object.principals %} 
+                {% for principal in object.principals.all %}
+                  <span><a href="/principals/{{ principal.id }}">{{ principal }}</a></span>
+                {% endfor %}
+              {% endif %}
+            </td>
             <td>{{ object.get_address }}</td>
-            <td>{{ object.phone }}</td>
             <td>{{ object.email }}</td>
           </tr>
         {% endfor %}
