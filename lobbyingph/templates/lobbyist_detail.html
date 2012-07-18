@@ -7,8 +7,8 @@
 
     {% if lobbyist.firm %}
         <span><a href="/firms/{{ lobbyist.firm.id }}">{{ lobbyist.firm }}</a></span>
-    {% elif lobbyist.principal %}
-        {% for principal in lobbyist.principal.all %}
+    {% elif lobbyist.principals %}
+        {% for principal in lobbyist.principals.all %}
             <span><a href="/principals/{{ principal.id }}">{{ principal }}</a></span>
         {% endfor %}
     {% endif %}
