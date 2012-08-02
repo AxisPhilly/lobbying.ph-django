@@ -1,6 +1,6 @@
 from project.settings_common import *
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 # CACHE
