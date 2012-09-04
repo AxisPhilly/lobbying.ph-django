@@ -43,7 +43,7 @@
                 <a href="/firms/{{ object.firm.id }}">{{ object.firm }}</a>
               {% elif object.principals %} 
                 {% for principal in object.principals.all %}
-                  <span><a href="/principals/{{ principal.id }}">{{ principal }}</a></span>
+                  <span><a href="/principals/{{ principal.id }}">{{ principal }},</a></span>
                 {% endfor %}
               {% endif %}
             </td>
