@@ -183,8 +183,9 @@ class Principal(models.Model):
 
             unique_firms = row.firms.distinct('name')
 
-            for f in unique_firms: 
-                firms.append(f)
+            for f in unique_firms:
+                if f not in firms:
+                    firms.append(f)
 
         return firms
 
