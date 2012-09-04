@@ -295,6 +295,9 @@ class Filing(models.Model):
     principal = models.ForeignKey(Principal, null=True, blank=True)
     firms = models.ManyToManyField(Firm, null=True, blank=True)
     lobbyists = models.ManyToManyField(Lobbyist, null=True, blank=True)
+    errors = models.BooleanField(default=False)
+    corrected = models.BooleanField(default=False)
+    error_description = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
         return str(self.year.year) + self.quarter + ': ' + self.principal.name
