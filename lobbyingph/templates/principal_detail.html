@@ -67,7 +67,7 @@
         <thead> 
           <tr>
             <th>Year / Quarter</th>
-            <th>Name</th>
+            <th style="min-width: 120px;">Name</th>
             <th>Position</th>
             <th>Communication Type</th>
             <th>Lobbied Officials/Agencies/Groups</th>
@@ -83,6 +83,7 @@
               <td>
                   {{ issue.officials.all|join:", " }} 
                   {{ issue.agencies.all|join:", " }}
+                  {% if issue.agency %} {{ issue.agency }} {% endif %}
                   {{ issue.groups.all|join:", " }}
               </td>
             </tr>   
