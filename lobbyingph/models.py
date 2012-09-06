@@ -212,7 +212,8 @@ class Principal(models.Model):
             for row in indirect:
                 if row.issue != None:
                     target = list(row.officials.all()) + list(row.groups.all())
-                    target.append(row.agency)
+                    if row.agency:
+                        target.append(row.agency)
 
                     issues.append({
                         'time': str(row.filing.year.year) + row.filing.quarter,
@@ -257,7 +258,8 @@ class Principal(models.Model):
             for row in indirect:
                 if row.bill != None:
                     target = list(row.officials.all()) + list(row.groups.all())
-                    target.append(row.agency)
+                    if row.agency:
+                        target.append(row.agency)
 
                     bills.append({
                         'time': str(row.filing.year.year) + row.filing.quarter,
