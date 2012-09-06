@@ -34,7 +34,7 @@
           <th>Direct Communications</th>
           <th>Indrect Communications</th>
           <th>Gifts, Travel, Lodging</th>
-          <th># of Staff Lobbyists</th>
+          <th># of Issues Lobbied</th>
         <tr>
       </thead>
       <tbody>
@@ -45,7 +45,7 @@
             <td>${{ object.get_exp_totals.direct|floatformat:2|intcomma }}</td>
             <td>${{ object.get_exp_totals.indirect|floatformat:2|intcomma }}</td>
             <td>${{ object.get_exp_totals.other|floatformat:2|intcomma }}</td>
-            <td>{{ object.lobbyist_set.count }}</td>
+            <td>{{ object.get_issue_bill_count }}</td>
           </tr>
         {% endfor %}
       </tbody>
