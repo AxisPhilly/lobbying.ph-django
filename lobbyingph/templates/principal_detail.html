@@ -81,10 +81,8 @@
               <td>{{ issue.position }}</td>
               <td>{{ issue.comm }}</td>
               <td>
-                  {{ issue.officials.all|join:", " }} 
-                  {{ issue.agencies.all|join:", " }}
+                  {{ issue.target|join:", " }}
                   {% if issue.agency %} {{ issue.agency }} {% endif %}
-                  {{ issue.groups.all|join:", " }}
               </td>
             </tr>   
           {% endfor %}
@@ -95,9 +93,7 @@
               <td>{{ bill.position }}</td>
               <td>{{ bill.comm }}</td>
               <td>
-                  {{ bill.officials.all|join:", " }}
-                  {{ bill.agencies.all|join:", " }}
-                  {{ bill.groups.all|join:", " }}
+                  {{ bill.target|join:", " }}
               </td>
             </tr>   
           {% endfor %}

@@ -205,21 +205,21 @@ class Principal(models.Model):
                         'issue': row.issue,
                         'position': row.get_position_display(),
                         'other': row.other_desc,
-                        'officials': row.officials.all(),
-                        'agencies': row.agencies.all(),
+                        'target': list(row.officials.all()) + list(row.agencies.all()),
                         'comm': 'Direct'
                     })
 
             for row in indirect:
                 if row.issue != None:
+                    target = list(row.officials.all()) + list(row.groups.all())
+                    target.append(row.agency)
+
                     issues.append({
                         'time': str(row.filing.year.year) + row.filing.quarter,
                         'issue': row.issue,
                         'position': row.get_position_display(),
                         'other': row.other_desc,
-                        'officials': row.officials.all(),
-                        'agency': row.agency,
-                        'groups': row.groups.all(),
+                        'target': target,
                         'comm': 'Indirect'
                     })
 
@@ -250,20 +250,21 @@ class Principal(models.Model):
                         'bill': row.bill,
                         'position': row.get_position_display(),
                         'other': row.other_desc,
-                        'officials': row.officials.all(),
-                        'agencies': row.agencies.all(),
+                        'target': list(row.officials.all()) + list(row.agencies.all()),
                         'comm': 'Direct'
                     })
 
             for row in indirect:
                 if row.bill != None:
+                    target = list(row.officials.all()) + list(row.groups.all())
+                    target.append(row.agency)
+
                     bills.append({
                         'time': str(row.filing.year.year) + row.filing.quarter,
                         'bill': row.bill,
                         'position': row.get_position_display(),
                         'other': row.other_desc,
-                        'officials': row.officials.all(),
-                        'groups': row.groups.all(),
+                        'target': target,
                         'comm': 'Indirect'
                     })
 
