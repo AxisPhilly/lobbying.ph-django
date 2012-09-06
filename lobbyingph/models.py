@@ -195,8 +195,8 @@ class Principal(models.Model):
 
         for row in self.filing_set.all():
 
-            direct = row.exp_direct_comm_set.distinct('issue')
-            indirect = row.exp_indirect_comm_set.distinct('issue')
+            direct = row.exp_direct_comm_set.all()
+            indirect = row.exp_indirect_comm_set.all()
             
             for row in direct:
                 if row.issue != None:
@@ -218,6 +218,7 @@ class Principal(models.Model):
                         'position': row.get_position_display(),
                         'other': row.other_desc,
                         'officials': row.officials.all(),
+                        'agency': row.agency,
                         'groups': row.groups.all(),
                         'comm': 'Indirect'
                     })
@@ -226,15 +227,21 @@ class Principal(models.Model):
 
     def get_issue_count(self):
         issues = self.get_issues()
-        return len(issues)
+
+        unique_issues = []
+        for i in issues:
+            if i['issue'] not in unique_issues:
+                unique_issues.append(i['issue'])
+
+        return len(unique_issues)
 
     def get_bills(self):
         bills = []
 
         for row in self.filing_set.all():
 
-            direct = row.exp_direct_comm_set.distinct('bill')
-            indirect = row.exp_indirect_comm_set.distinct('bill')
+            direct = row.exp_direct_comm_set.all()
+            indirect = row.exp_indirect_comm_set.all()
             
             for row in direct:
                 if row.bill != None:
@@ -264,7 +271,13 @@ class Principal(models.Model):
 
     def get_bill_count(self):
         bills = self.get_bills()
-        return len(bills)
+
+        unique_bills = []
+        for i in bills:
+            if i['bill'] not in unique_bills:
+                unique_bills.append(i['bill'])
+
+        return len(unique_bills)
 
     def get_issue_bill_count(self):
         bills = self.get_bill_count()
