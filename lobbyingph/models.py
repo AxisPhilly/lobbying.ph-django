@@ -6,6 +6,7 @@ from decimal import *
 STATE_CHOICES = (
     ('AL','Alabama'),
     ('AR','Arkansas'),
+    ('AZ','Arizona'),
     ('CA','Calfornia'),
     ('CO','Colorado'),
     ('DC','District of Columbia'),
