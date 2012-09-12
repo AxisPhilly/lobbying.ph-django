@@ -49,8 +49,8 @@ header, section.content, footer {
     */
 @font-face {
   font-family: "FontAwesome";
-  src: url(http://commondatastorage.googleapis.com/lobbyingph/font/fontawesome-webfont.eot);
-  src: url(http://commondatastorage.googleapis.com/lobbyingph/font/fontawesome-webfont.eot?#iefix) format('eot'), url(http://commondatastorage.googleapis.com/lobbyingph/font/fontawesome-webfont.woff) format('woff'), url(http://commondatastorage.googleapis.com/lobbyingph/font/fontawesome-webfont.ttf) format('truetype'), url(http://commondatastorage.googleapis.com/lobbyingph/font/fontawesome-webfont.svg#FontAwesomeRegular) format('svg');
+  src: url(http://lobbyingph.storage.googleapis.com/font/fontawesome-webfont.eot);
+  src: url(http://lobbyingph.storage.googleapis.com/font/fontawesome-webfont.eot?#iefix) format('eot'), url(http://lobbyingph.storage.googleapis.com/font/fontawesome-webfont.woff) format('woff'), url(http://lobbyingph.storage.googleapis.com/font/fontawesome-webfont.ttf) format('truetype'), url(http://lobbyingph.storage.googleapis.com/font/fontawesome-webfont.svg#FontAwesomeRegular) format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -82,22 +82,19 @@ a [class*=" icon-"] {
 }
 
 /* line 63, ../../../compass/sass/font-awesome.scss */
-.btn [class^="icon-"],
-.btn [class*=" icon-"], .nav-tabs [class^="icon-"], .nav-tabs [class*=" icon-"] {
+.btn [class^="icon-"], .btn [class*=" icon-"], .nav-tabs [class^="icon-"], .nav-tabs [class*=" icon-"] {
   /* keeps button heights with and without icons the same */
   line-height: .9em;
 }
 
 /* line 71, ../../../compass/sass/font-awesome.scss */
-li [class^="icon-"],
-li [class*=" icon-"] {
+li [class^="icon-"], li [class*=" icon-"] {
   display: inline-block;
   width: 1.25em;
   text-align: center;
 }
 /* line 77, ../../../compass/sass/font-awesome.scss */
-li .icon-large:before,
-li .icon-large:before {
+li .icon-large:before, li .icon-large:before {
   /* 1.5 increased font size for icon-large * 1.25 width */
   width: 1.875em;
 }
@@ -109,13 +106,11 @@ ul.icons {
   text-indent: -0.8em;
 }
 /* line 90, ../../../compass/sass/font-awesome.scss */
-ul.icons li [class^="icon-"],
-ul.icons li [class*=" icon-"] {
+ul.icons li [class^="icon-"], ul.icons li [class*=" icon-"] {
   width: .8em;
 }
 /* line 94, ../../../compass/sass/font-awesome.scss */
-ul.icons li .icon-large:before,
-ul.icons li .icon-large:before {
+ul.icons li .icon-large:before, ul.icons li .icon-large:before {
   /* 1.5 increased font size for icon-large * 1.25 width */
   vertical-align: initial;
 }
@@ -1282,8 +1277,8 @@ input {
     */
 @font-face {
   font-family: "FontAwesome";
-  src: url(http://commondatastorage.googleapis.com/lobbyingph/font/fontawesome-webfont.eot);
-  src: url(http://commondatastorage.googleapis.com/lobbyingph/font/fontawesome-webfont.eot?#iefix) format('eot'), url(http://commondatastorage.googleapis.com/lobbyingph/font/fontawesome-webfont.woff) format('woff'), url(http://commondatastorage.googleapis.com/lobbyingph/font/fontawesome-webfont.ttf) format('truetype'), url(http://commondatastorage.googleapis.com/lobbyingph/font/fontawesome-webfont.svg#FontAwesomeRegular) format('svg');
+  src: url(http://lobbyingph.storage.googleapis.com/font/fontawesome-webfont.eot);
+  src: url(http://lobbyingph.storage.googleapis.com/font/fontawesome-webfont.eot?#iefix) format('eot'), url(http://lobbyingph.storage.googleapis.com/font/fontawesome-webfont.woff) format('woff'), url(http://lobbyingph.storage.googleapis.com/font/fontawesome-webfont.ttf) format('truetype'), url(http://lobbyingph.storage.googleapis.com/font/fontawesome-webfont.svg#FontAwesomeRegular) format('svg');
   font-weight: normal;
   font-style: normal;
 }
