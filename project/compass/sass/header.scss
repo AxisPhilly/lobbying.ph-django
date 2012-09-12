@@ -1,5 +1,4 @@
 @import './variables';
-@import './font-awesome';
 
 header {
   padding-top: 20px;
@@ -16,18 +15,6 @@ header {
       text-decoration: none;
       font-weight: bold;
       line-height: 20px;
-
-      &:before {
-        width: 44px;
-        display: block;
-        height: 40px;
-        font-family: FontAwesome;
-        color: $primary_font_color !important;
-        float: left;
-        margin-right: 17px;
-        font-size: 50px;
-        line-height: 40px;
-      }
 
       &:hover {
         text-decoration: none;
