@@ -16,7 +16,7 @@ MIDDLEWARE_CLASSES += (
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
 
 # Google cloud for static files
-STATIC_URL = 'http://commondatastorage.googleapis.com/lobbyingph/'
+STATIC_URL = 'http://lobbyingph.storage.googleapis.com/'
 
 # AWS s3 for static files
 #STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
