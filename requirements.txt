@@ -15,3 +15,4 @@ pylibmc==1.2.3
 python-ptrace==0.6.4
 requests==0.13.2
 wsgiref==0.1.2
+simplejson==2.6.1
