@@ -128,12 +128,21 @@ class Principal(models.Model):
         totals = self.get_exp_totals()
         return sum(totals.itervalues())
 
-    def get_exp_totals(self):
-        totals = self.filing_set.aggregate(
-            direct=Sum('total_exp_direct_comm'),
-            indirect=Sum('total_exp_indirect_comm'),
-            other=Sum('total_exp_other')
-        )
+    def get_exp_totals(self, quarter=None, year=None):
+        if quarter:
+            totals = self.filing_set.filter(
+                    quarter=quarter, year__year=year
+                ).aggregate(
+                    direct=Sum('total_exp_direct_comm'),
+                    indirect=Sum('total_exp_indirect_comm'),
+                    other=Sum('total_exp_other')
+                )
+        else:
+            totals = self.filing_set.aggregate(
+                direct=Sum('total_exp_direct_comm'),
+                indirect=Sum('total_exp_indirect_comm'),
+                other=Sum('total_exp_other')
+            )
 
         # patched until this is released:
         # https://code.djangoproject.com/ticket/10929
@@ -143,8 +152,18 @@ class Principal(models.Model):
 
         return totals
 
-    def get_exp_percents(self):
-        totals = self.get_exp_totals()
+    def get_exp_totals_by_quarter(self):
+        quarters = self.filing_set.distinct('quarter','year').values('quarter','year')
+
+        results = {}
+        for q in quarters:
+            totals = self.get_exp_totals(quarter=q['quarter'], year=q['year'].year)
+            results[q['quarter'] + str(q['year'].year)] = totals
+
+        return results
+
+    def get_exp_percents(self, quarter=None, year=None):
+        totals = self.get_exp_totals(quarter, year)
         total = sum(totals.itervalues())
 
         if total != 0:
@@ -159,6 +178,16 @@ class Principal(models.Model):
                 'indirect': 0,
                 'other': 0
             }
+
+    def get_exp_percents_by_quarter(self):
+        quarters = self.filing_set.distinct('quarter','year').values('quarter','year')
+
+        results = {}
+        for q in quarters:
+            totals = self.get_exp_percents(quarter=q['quarter'], year=q['year'].year)
+            results[q['quarter'] + str(q['year'].year)] = totals
+
+        return results
 
     def get_topics(self):
         topics = []
