@@ -185,8 +185,8 @@
 
           lobby.d3 = {};
           lobby.d3.opts = { w: 300, h: 180, r: 70 };
-          lobby.d3.pie = d3.layout.pie().value(function(d) { return d.percent }),
-          lobby.d3.arc = d3.svg.arc().innerRadius(lobby.d3.opts.r * .5).outerRadius(lobby.d3.opts.r);
+          lobby.d3.pie = d3.layout.pie().value(function(d) { return d.percent; }),
+          lobby.d3.arc = d3.svg.arc().innerRadius(lobby.d3.opts.r * 0.5).outerRadius(lobby.d3.opts.r);
 
           lobby.d3.data = {{ d3_data|safe }}
 
@@ -194,8 +194,8 @@
               .attr("width", lobby.d3.opts.w)
               .attr("height", lobby.d3.opts.h)
             .append("svg:g")
-              .attr("transform", "translate(" + (lobby.d3.opts.r + 85) 
-                                              + "," + (lobby.d3.opts.r + 20) + ")");
+              .attr("transform", "translate(" + (lobby.d3.opts.r + 85) + 
+                                            "," + (lobby.d3.opts.r + 20) + ")");
 
           lobby.d3.arcs = lobby.d3.svg.selectAll("path")
             .data(lobby.d3.pie(lobby.d3.data.total))
@@ -211,9 +211,9 @@
           // http://bl.ocks.org/1346410
           d3.select(".quarter-select").on("change", function() {
             var $select = $(this);
-            var data = lobby.d3.data[$select.val()] // swap the data
-            lobby.d3.arcs = lobby.d3.arcs.data(lobby.d3.pie(data)) // update data
-            lobby.d3.svg.selectAll("title").remove() //update titles
+            var data = lobby.d3.data[$select.val()]; // swap the data
+            lobby.d3.arcs = lobby.d3.arcs.data(lobby.d3.pie(data)); // update data
+            lobby.d3.svg.selectAll("title").remove(); //update titles
             lobby.d3.arcs.append("title").text(function(d) { return d.data.percent + '%'; });
             lobby.d3.arcs.transition().duration(250).attrTween("d", lobby.d3.arcTween); // tween the data
             lobby.d3.updateExpSummary($select.val()); // update numbers
@@ -227,7 +227,7 @@
             return function(t) {
               return lobby.d3.arc(i(t));
             };
-          }
+          };
 
           lobby.d3.updateExpSummary = function(quarter) {
             var $legend = $('.legend'),
@@ -241,7 +241,7 @@
 
             $('.exp-summary-dollars').html('$' + total.formatMoney());
             $('.exp-summary').html(lobby.d3.getTimeAlias(quarter));
-          }
+          };
 
           lobby.d3.getTimeAlias = function(quarter) {
             var descAlias = {
@@ -253,7 +253,7 @@
             };
 
             return descAlias[quarter];
-          }
+          };
 
           //http://stackoverflow.com/questions/149055/how-can-i-format-numbers-as-money-in-javascript
           Number.prototype.formatMoney = function(){
