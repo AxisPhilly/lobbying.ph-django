@@ -80,54 +80,60 @@
 }
 
 /* line 81, ../../../compass/sass/content.scss */
-.total {
+.exp-summary-dollars {
   font-weight: bold;
 }
 
 /* line 85, ../../../compass/sass/content.scss */
+.quarter-select {
+  margin-left: 140px;
+  text-transform: capitalize;
+}
+
+/* line 90, ../../../compass/sass/content.scss */
 .pie-container {
   overflow: hidden;
   width: 100%;
   height: 100%;
   /* pie chart slice classes */
 }
-/* line 91, ../../../compass/sass/content.scss */
+/* line 96, ../../../compass/sass/content.scss */
 .pie-container .direct {
   fill: #ff7f0e;
 }
-/* line 95, ../../../compass/sass/content.scss */
+/* line 100, ../../../compass/sass/content.scss */
 .pie-container .indirect {
   fill: #ffbb78;
 }
-/* line 99, ../../../compass/sass/content.scss */
+/* line 104, ../../../compass/sass/content.scss */
 .pie-container .other {
   fill: #d9d9d9;
 }
-/* line 103, ../../../compass/sass/content.scss */
-.pie-container .color {
+/* line 108, ../../../compass/sass/content.scss */
+.pie-container .key {
   display: inline-block;
   height: 12px;
   width: 12px;
   margin-right: 5px;
 }
-/* line 109, ../../../compass/sass/content.scss */
-.pie-container .color.direct {
+/* line 115, ../../../compass/sass/content.scss */
+.pie-container .direct .key {
   background-color: #ff7f0e;
 }
-/* line 113, ../../../compass/sass/content.scss */
-.pie-container .color.indirect {
+/* line 119, ../../../compass/sass/content.scss */
+.pie-container .indirect .key {
   background-color: #ffbb78;
 }
-/* line 117, ../../../compass/sass/content.scss */
-.pie-container .color.other {
+/* line 123, ../../../compass/sass/content.scss */
+.pie-container .other .key {
   background-color: #d9d9d9;
 }
 
-/* line 123, ../../../compass/sass/content.scss */
+/* line 128, ../../../compass/sass/content.scss */
 .list-header {
   overflow: hidden;
 }
-/* line 126, ../../../compass/sass/content.scss */
+/* line 131, ../../../compass/sass/content.scss */
 .list-header p {
   width: 50%;
   display: inline-block;
@@ -135,32 +141,32 @@
   margin-bottom: 0px;
 }
 
-/* line 134, ../../../compass/sass/content.scss */
+/* line 139, ../../../compass/sass/content.scss */
 .contact {
   padding-bottom: 8px;
   margin-bottom: 8px;
 }
-/* line 138, ../../../compass/sass/content.scss */
+/* line 143, ../../../compass/sass/content.scss */
 .contact li {
   margin-bottom: 5px;
 }
 
-/* line 143, ../../../compass/sass/content.scss */
+/* line 148, ../../../compass/sass/content.scss */
 .details {
   margin-bottom: 15px;
   font-weight: bold;
 }
-/* line 147, ../../../compass/sass/content.scss */
+/* line 152, ../../../compass/sass/content.scss */
 .details a {
   font-weight: bold;
 }
 
-/* line 153, ../../../compass/sass/content.scss */
+/* line 158, ../../../compass/sass/content.scss */
 .bar-graph li {
   margin-bottom: 15px;
   font-weight: bold;
 }
-/* line 158, ../../../compass/sass/content.scss */
+/* line 163, ../../../compass/sass/content.scss */
 .bar-graph .total {
   width: 100%;
   height: 30px;
@@ -169,7 +175,7 @@
   position: relative;
   margin-top: 5px;
 }
-/* line 167, ../../../compass/sass/content.scss */
+/* line 172, ../../../compass/sass/content.scss */
 .bar-graph .percentage {
   position: absolute;
   height: 30px;
@@ -177,7 +183,7 @@
   display: block;
   line-height: 40px;
 }
-/* line 174, ../../../compass/sass/content.scss */
+/* line 179, ../../../compass/sass/content.scss */
 .bar-graph .percentage em {
   color: #333333;
   text-align: right;

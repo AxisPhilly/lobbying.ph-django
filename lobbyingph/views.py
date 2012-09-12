@@ -6,6 +6,7 @@ from django.db.models import Sum
 from django.shortcuts import get_object_or_404, render, render_to_response
 from decimal import *
 from django.db import connection
+import simplejson as json
 
 def index(request):
     lobbyists = Lobbyist.objects.all()
@@ -98,6 +99,36 @@ class PrincipalDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(PrincipalDetail, self).get_context_data(**kwargs)
 
+        # Construct a list that won't need any modification for use
+        # in the d3 expenditure donut chart
+
+        # Add the total expenditures first
+        exp_data = {}
+        exp_data['total'] = []
+        percents = self.object.get_exp_percents()
+        for k,v in self.object.get_exp_totals().items():
+            exp_data['total'].append(
+            {
+                'class': k,
+                'dollars': v, 
+                'percent': percents[k]
+            });
+
+        # Then add the expenditures for each quarter
+        q_percents = self.object.get_exp_percents_by_quarter()
+        for k,v in self.object.get_exp_totals_by_quarter().items():
+            exp_data[k] = []
+            for qk, qv in v.items():
+                exp_data[k].append({
+                    'class': qk,
+                    'dollars': qv, 
+                    'percent': q_percents[k][qk]
+                });
+
+        context['d3_data'] = json.dumps(exp_data)
+
         context['exp_totals'] = self.object.get_exp_totals()
         context['exp_percents'] = self.object.get_exp_percents()
+        context['quarters'] = self.object.filing_set.distinct('quarter','year').values('quarter','year')
+        
         return context

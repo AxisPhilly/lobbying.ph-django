@@ -44,16 +44,36 @@
       </ul>
     </div>
     <div class="column">
-      <h3>Expenditures</h3>
-      <span>Total expenditures in 2012, through June 30<sup>th</sup> : <span class="total">${{ principal.get_total_exp|floatformat:2|intcomma }}</span></span>
+      <h3>Expenditures
+        <select class="quarter-select">
+          <option value="total">Total</option>
+          {% for q in quarters %}
+            <option value="{{ q.quarter }}{{ q.year|date:"Y" }}">{{ q.quarter }}{{ q.year|date:"Y" }}</option>
+          {% endfor %}
+        </select>
+      </h3>
+      <span class="exp-summary">Total expenditures in 2012</span>:
+      <span class="exp-summary-dollars">${{ principal.get_total_exp|floatformat:2|intcomma }}</span>
       <div class="pie-container">
         <div id="piechart"></div>
         {% if principal.get_total_exp %}
           <div class="legend">
             <ul>
-              <li><span class="color direct"></span>Direct Communication: ${{ exp_totals.direct|floatformat:2|intcomma }}</li>
-              <li><span class="color indirect"></span>Indirect Communications: ${{ exp_totals.indirect|floatformat:2|intcomma }}</li>
-              <li><span class="color other"></span>Gifts, Transportation, Hospitality, Lodging: ${{ exp_totals.other|floatformat:2|intcomma }}</li>
+              <li class="direct">
+                <span class="key"></span>
+                Direct Communication: 
+                $<span class="count">{{ exp_totals.direct|floatformat:2|intcomma }}</span>
+              </li>
+              <li class="indirect">
+                <span class="key"></span>
+                Indirect Communications: 
+                $<span class="count">{{ exp_totals.indirect|floatformat:2|intcomma }}</span>
+              </li>
+              <li class="other">
+                <span class="key"></span>
+                Gifts, Transportation, Hospitality, Lodging: 
+                $<span class="count">{{ exp_totals.other|floatformat:2|intcomma }}</span>
+              </li>
             </ul>
           </div>
         {% endif %}
@@ -140,7 +160,7 @@
 {% block scripts %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
     {% if principal.get_total_exp %}
-      <script type='text/javascript' src="{{ STATIC_URL }}js/d3.v2.min.js"></script>
+      <script type='text/javascript' src="{{ STATIC_URL }}js/d3.v2.js"></script>
     {% endif %}
     <script type='text/javascript'>
 
@@ -165,55 +185,82 @@
 
           lobby.d3 = {};
           lobby.d3.opts = { w: 300, h: 180, r: 70 };
-          lobby.d3.pie = d3.layout.pie(),
+          lobby.d3.pie = d3.layout.pie().value(function(d) { return d.percent }),
           lobby.d3.arc = d3.svg.arc().innerRadius(lobby.d3.opts.r * .5).outerRadius(lobby.d3.opts.r);
 
-          lobby.d3.exp_data = [
-                  {
-                    "label": "${{ exp_totals.direct|intcomma }} (Direct)", 
-                    "val": {{ exp_percents.direct }},
-                    "class": 'direct',
-                    "fill": '#ff7f0e'
-                  }, 
-                  {
-                    "label": "${{ exp_totals.indirect|intcomma }} (Indirect)", 
-                    "val": {{ exp_percents.indirect }},
-                    "class": 'indirect',
-                    "fill": '#ffbb78'
-                  }, 
-                  { 
-                    "label": "${{ exp_totals.other|intcomma }} (Other)", 
-                    "val": {{ exp_percents.other }},
-                    "class": 'other',
-                    "fill": '#d9d9d9'
-                  }
-                ];
-          
-          lobby.d3.svg = d3.select("#piechart")
-            .append("svg:svg") 
-            .data([lobby.d3.exp_data])
-                .attr("width", lobby.d3.opts.w)
-                .attr("height", lobby.d3.opts.h);
+          lobby.d3.data = {{ d3_data|safe }}
 
-          lobby.d3.arcs = lobby.d3.svg.selectAll("g.arc")
-            .data(lobby.d3.pie.value(function(d) { return d.val }))
-            .enter()
-              .append("svg:g")
-                .attr("class", "arc")
-                .attr("fill", "#fff")
-                .attr("transform", "translate(" + (lobby.d3.opts.r + 85) 
+          lobby.d3.svg = d3.select("#piechart").append("svg:svg") 
+              .attr("width", lobby.d3.opts.w)
+              .attr("height", lobby.d3.opts.h)
+            .append("svg:g")
+              .attr("transform", "translate(" + (lobby.d3.opts.r + 85) 
                                               + "," + (lobby.d3.opts.r + 20) + ")");
 
-          lobby.d3.arcs.append("svg:path")
-            .attr("d", lobby.d3.arc)
-
-          lobby.d3.arcs
-            .transition()
-              .duration(500)
-              .style("fill", function(d) { return d.data.fill; })
+          lobby.d3.arcs = lobby.d3.svg.selectAll("path")
+            .data(lobby.d3.pie(lobby.d3.data.total))
+            .enter()
+              .append("svg:path")
+                .attr("class", function(d) { return 'arc ' + d.data.class; })
+                .attr("d", lobby.d3.arc)
+                .each(function(d) { this._current = d; });
 
           lobby.d3.arcs.append("title")
-            .text(function(d) { return d.value + '%'; });
+            .text(function(d) { return d.data.percent + '%'; });
+
+          // http://bl.ocks.org/1346410
+          d3.select(".quarter-select").on("change", function() {
+            var $select = $(this);
+            var data = lobby.d3.data[$select.val()] // swap the data
+            lobby.d3.arcs = lobby.d3.arcs.data(lobby.d3.pie(data)) // update data
+            lobby.d3.svg.selectAll("title").remove() //update titles
+            lobby.d3.arcs.append("title").text(function(d) { return d.data.percent + '%'; });
+            lobby.d3.arcs.transition().duration(250).attrTween("d", lobby.d3.arcTween); // tween the data
+            lobby.d3.updateExpSummary($select.val()); // update numbers
+          });
+
+          // Store the currently-displayed angles in this._current.
+          // Then, interpolate from this._current to the new angles.
+          lobby.d3.arcTween = function(a) {
+            var i = d3.interpolate(this._current, a);
+            this._current = i(0);
+            return function(t) {
+              return lobby.d3.arc(i(t));
+            };
+          }
+
+          lobby.d3.updateExpSummary = function(quarter) {
+            var $legend = $('.legend'),
+              data = lobby.d3.data[quarter],
+              total = 0;
+
+            for (var i = 0; i < data.length; i++) {
+              $legend.find('.' + data[i].class + ' .count').html(data[i].dollars.formatMoney());
+              total += data[i].dollars;
+            }
+
+            $('.exp-summary-dollars').html('$' + total.formatMoney());
+            $('.exp-summary').html(lobby.d3.getTimeAlias(quarter));
+          }
+
+          lobby.d3.getTimeAlias = function(quarter) {
+            var descAlias = {
+              'total': 'Total expenditures in 2012',
+              'Q12012': '1st quarter (Jan. - Mar.) 2012 expenditures',
+              'Q22012': '2nd quarter (Apr. - Jun.) 2012 expenditures',
+              'Q32012': '3rd quarter (July. - Sep.) 2012 expenditures',
+              'Q42012': '4th quarter (Oct. - Dec.) 2012 expenditures',
+            };
+
+            return descAlias[quarter];
+          }
+
+          //http://stackoverflow.com/questions/149055/how-can-i-format-numbers-as-money-in-javascript
+          Number.prototype.formatMoney = function(){
+            var c=2, d='.', t=',';
+            var n = this, c = isNaN(c = Math.abs(c)) ? 2 : c, d = d == undefined ? "," : d, t = t == undefined ? "." : t, s = n < 0 ? "-" : "", i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", j = (j = i.length) > 3 ? j % 3 : 0;
+            return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+          };
 
         {% endif %}
     }); 

@@ -78,8 +78,13 @@
   }
 }
 
-.total {
+.exp-summary-dollars {
   font-weight: bold;
+}
+
+.quarter-select {
+  margin-left: 140px;
+  text-transform: capitalize;
 }
 
 .pie-container {
@@ -100,23 +105,23 @@
     fill: #d9d9d9;
   }
 
-  .color {
+  .key {
     display: inline-block;
     height: 12px;
     width: 12px;
     margin-right: 5px;
+  }
 
-    &.direct {
-      background-color: #ff7f0e;
-    }
+  .direct .key {
+    background-color: #ff7f0e;
+  }
 
-    &.indirect {
-      background-color: #ffbb78;
-    }
+  .indirect .key {
+    background-color: #ffbb78;
+  }
 
-    &.other {
-      background-color: #d9d9d9;
-    }
+  .other .key {
+    background-color: #d9d9d9;
   }
 }
 
