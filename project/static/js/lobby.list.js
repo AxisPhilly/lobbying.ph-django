@@ -11,5 +11,5 @@ lobby.list = {
     }
 
     return page;
-  },
-}
+  }
+};

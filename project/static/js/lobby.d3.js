@@ -11,7 +11,7 @@ lobby.d3 = {
             $('.tooltip').html(contents).show();
         } else {
           $('<div/>', {
-            class: 'tooltip',
+            'class': 'tooltip',
             html: contents
           }).appendTo('#graph').show();
         }
@@ -36,17 +36,17 @@ lobby.d3 = {
     createTooltipContent: function(d) {
         if (d.type === 'official') {
             return _.template(
-                "<p><%= first_name %> <%= last_name %></p>" + 
+                "<p><%= first_name %> <%= last_name %></p>" +
                 "<p><%= title %></p>", d);
         } else {
             return d.name;
         }
-    },  
+    },
 
     // Dynamically set the height based on the number of official nodes
     getHeight: function(nodes) {
         var officials = _.filter(nodes, function(node){
-           var type = (node.type === 'official') ? true : false; 
+           var type = (node.type === 'official') ? true : false;
            return type;
         });
 
@@ -59,7 +59,7 @@ lobby.d3 = {
 
     getNodeClass: function(d) {
         if (d.type === 'principal') {
-            if (d.position == 2) {
+            if (d.position === 2) {
                 return 'node oppose';
             } else {
                 return 'node support';
