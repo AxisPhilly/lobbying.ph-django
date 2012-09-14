@@ -1,31 +1,36 @@
 from django.db import models
 import datetime
 from django.db.models import Sum
-from decimal import *
+from decimal import Decimal
+
 
 STATE_CHOICES = (
-    ('AL','Alabama'),
-    ('AR','Arkansas'),
-    ('AZ','Arizona'),
-    ('CA','Calfornia'),
-    ('CO','Colorado'),
-    ('DC','District of Columbia'),
-    ('DE','Delaware'),
-    ('IL','Illinois'),
-    ('FL','Florida'),
-    ('MA','Massachusetts'),
-    ('MD','Maryland'),
-    ('NC','North Carolina'),
-    ('NJ','New Jersey'),
-    ('NY','New York'),
-    ('PA','Pennsylvania'),
-    ('VA','Virginia'),
-    ('TN','Tennessee'),
-    ('TX','Texas'),
-    ('WA','Washington'),
+    ('AL', 'Alabama'),
+    ('AR', 'Arkansas'),
+    ('AZ', 'Arizona'),
+    ('CA', 'Calfornia'),
+    ('CO', 'Colorado'),
+    ('DC', 'District of Columbia'),
+    ('DE', 'Delaware'),
+    ('IL', 'Illinois'),
+    ('FL', 'Florida'),
+    ('MA', 'Massachusetts'),
+    ('MD', 'Maryland'),
+    ('NC', 'North Carolina'),
+    ('NJ', 'New Jersey'),
+    ('NY', 'New York'),
+    ('PA', 'Pennsylvania'),
+    ('VA', 'Virginia'),
+    ('TN', 'Tennessee'),
+    ('TX', 'Texas'),
+    ('WA', 'Washington'),
 )
 
+
 class Lobbyist(models.Model):
+    """
+    Individual, attached to firms and principals
+    """
     name = models.CharField(max_length=75)
     address1 = models.CharField(max_length=100)
     address2 = models.CharField(max_length=100, null=True, blank=True)
@@ -49,7 +54,11 @@ class Lobbyist(models.Model):
         add_list = [self.address1, self.city, self.state, self.zipcode]
         return ', '.join(add_list)
 
+
 class Firm(models.Model):
+    """
+    Entity which is hired by Principal
+    """
     name = models.CharField(max_length=150)
     address1 = models.CharField(max_length=100)
     address2 = models.CharField(max_length=100, null=True, blank=True)
@@ -71,7 +80,8 @@ class Firm(models.Model):
         return ', '.join(add_list)
 
     def get_clients(self):
-        unique_clients = self.filing_set.distinct('principal').only('principal').select_related('principal')
+        unique_clients = self.filing_set.distinct(
+            'principal').only('principal').select_related('principal')
         clients = []
 
         for row in unique_clients:
@@ -81,8 +91,8 @@ class Firm(models.Model):
         return clients
 
     def get_client_count(self):
-        c = self.get_clients()
-        return len(c)
+        clients = self.get_clients()
+        return len(clients)
 
     def get_topics(self):
         topics = []
@@ -91,11 +101,11 @@ class Firm(models.Model):
             direct = row.exp_direct_comm_set.distinct('category')
             indirect = row.exp_direct_comm_set.distinct('category')
 
-            for row in indirect: 
+            for row in indirect:
                 if (row.category not in topics):
                     topics.append(row.category)
 
-            for row in direct: 
+            for row in direct:
                 if (row.category not in topics):
                     topics.append(row.category)
 
@@ -104,6 +114,10 @@ class Firm(models.Model):
 
 
 class Principal(models.Model):
+    """
+    Lobbying organization who themselves lobby or pay firms
+    to lobby on their behalf
+    """
     name = models.CharField(max_length=150)
     address1 = models.CharField(max_length=100)
     address2 = models.CharField(max_length=100, null=True, blank=True)
@@ -146,19 +160,21 @@ class Principal(models.Model):
 
         # patched until this is released:
         # https://code.djangoproject.com/ticket/10929
-        for k, v in totals.items():
-            if not v:
-                totals[k] = Decimal(0.00)
+        for exp_type, dollars in totals.items():
+            if not dollars:
+                totals[exp_type] = Decimal(0.00)
 
         return totals
 
     def get_exp_totals_by_quarter(self):
-        quarters = self.filing_set.distinct('quarter','year').values('quarter','year')
+        quarters = self.filing_set.distinct(
+            'quarter', 'year').values('quarter', 'year')
 
         results = {}
-        for q in quarters:
-            totals = self.get_exp_totals(quarter=q['quarter'], year=q['year'].year)
-            results[q['quarter'] + str(q['year'].year)] = totals
+        for quarter in quarters:
+            totals = self.get_exp_totals(
+                quarter=quarter['quarter'], year=quarter['year'].year)
+            results[quarter['quarter'] + str(quarter['year'].year)] = totals
 
         return results
 
@@ -180,12 +196,14 @@ class Principal(models.Model):
             }
 
     def get_exp_percents_by_quarter(self):
-        quarters = self.filing_set.distinct('quarter','year').values('quarter','year')
+        quarters = self.filing_set.distinct(
+            'quarter', 'year').values('quarter', 'year')
 
         results = {}
-        for q in quarters:
-            totals = self.get_exp_percents(quarter=q['quarter'], year=q['year'].year)
-            results[q['quarter'] + str(q['year'].year)] = totals
+        for quarter in quarters:
+            totals = self.get_exp_percents(
+                quarter=quarter['quarter'], year=quarter['year'].year)
+            results[quarter['quarter'] + str(quarter['year'].year)] = totals
 
         return results
 
@@ -193,16 +211,15 @@ class Principal(models.Model):
         topics = []
 
         for row in self.filing_set.all():
-            
             direct = row.exp_direct_comm_set.distinct('category')
             indirect = row.exp_indirect_comm_set.distinct('category')
 
             for row in direct:
-                if (row.category not in topics): 
+                if (row.category not in topics):
                     topics.append(row.category)
 
             for row in indirect:
-                if (row.category not in topics): 
+                if (row.category not in topics):
                     topics.append(row.category)
 
         return topics
@@ -213,9 +230,9 @@ class Principal(models.Model):
 
             unique_firms = row.firms.distinct('name')
 
-            for f in unique_firms:
-                if f not in firms:
-                    firms.append(f)
+            for firm in unique_firms:
+                if firm not in firms:
+                    firms.append(firm)
 
         return firms
 
@@ -226,7 +243,7 @@ class Principal(models.Model):
 
             direct = row.exp_direct_comm_set.all()
             indirect = row.exp_indirect_comm_set.all()
-            
+
             for row in direct:
                 if row.issue != None:
                     issues.append({
@@ -234,7 +251,8 @@ class Principal(models.Model):
                         'issue': row.issue,
                         'position': row.get_position_display(),
                         'other': row.other_desc,
-                        'target': list(row.officials.all()) + list(row.agencies.all()),
+                        'target': list(row.officials.all()) +
+                                    list(row.agencies.all()),
                         'comm': 'Direct'
                     })
 
@@ -253,15 +271,15 @@ class Principal(models.Model):
                         'comm': 'Indirect'
                     })
 
-        return issues;
+        return issues
 
     def get_issue_count(self):
         issues = self.get_issues()
 
         unique_issues = []
-        for i in issues:
-            if i['issue'] not in unique_issues:
-                unique_issues.append(i['issue'])
+        for issue in issues:
+            if issue['issue'] not in unique_issues:
+                unique_issues.append(issue['issue'])
 
         return len(unique_issues)
 
@@ -272,7 +290,7 @@ class Principal(models.Model):
 
             direct = row.exp_direct_comm_set.all()
             indirect = row.exp_indirect_comm_set.all()
-            
+
             for row in direct:
                 if row.bill != None:
                     bills.append({
@@ -280,7 +298,8 @@ class Principal(models.Model):
                         'bill': row.bill,
                         'position': row.get_position_display(),
                         'other': row.other_desc,
-                        'target': list(row.officials.all()) + list(row.agencies.all()),
+                        'target': list(row.officials.all()) +
+                                    list(row.agencies.all()),
                         'comm': 'Direct'
                     })
 
@@ -299,15 +318,15 @@ class Principal(models.Model):
                         'comm': 'Indirect'
                     })
 
-        return bills;
+        return bills
 
     def get_bill_count(self):
         bills = self.get_bills()
 
         unique_bills = []
-        for i in bills:
-            if i['bill'] not in unique_bills:
-                unique_bills.append(i['bill'])
+        for bill in bills:
+            if bill['bill'] not in unique_bills:
+                unique_bills.append(bill['bill'])
 
         return len(unique_bills)
 
@@ -327,18 +346,27 @@ POSITION_CHOICE = (
 )
 
 QUARTER_CHOICES = (
-    ('Q1','Q1'),
-    ('Q2','Q2'),
-    ('Q3','Q3'),
-    ('Q4','Q4'),
+    ('Q1', 'Q1'),
+    ('Q2', 'Q2'),
+    ('Q3', 'Q3'),
+    ('Q4', 'Q4'),
 )
 
+
 class Filing(models.Model):
+    """
+    Quarterly filing usually by Principal, but sometimes firm.
+    Basically a digital representation of paper form.
+    """
     quarter = models.CharField(max_length=2, choices=QUARTER_CHOICES)
-    year = models.DateField(null=False, blank=False, default=datetime.date.today)
-    total_exp_direct_comm = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
-    total_exp_indirect_comm = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
-    total_exp_other = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    year = models.DateField(
+        null=False, blank=False, default=datetime.date.today)
+    total_exp_direct_comm = models.DecimalField(
+        max_digits=12, decimal_places=2, default=0.00)
+    total_exp_indirect_comm = models.DecimalField(
+        max_digits=12, decimal_places=2, default=0.00)
+    total_exp_other = models.DecimalField(
+        max_digits=12, decimal_places=2, default=0.00)
     principal = models.ForeignKey(Principal, null=True, blank=True)
     firms = models.ManyToManyField(Firm, null=True, blank=True)
     lobbyists = models.ManyToManyField(Lobbyist, null=True, blank=True)
@@ -350,23 +378,34 @@ class Filing(models.Model):
         return str(self.year.year) + self.quarter + ': ' + self.principal.name
 
     def get_total_exp(self):
-        total = (self.total_exp_direct_comm + 
-                self.total_exp_indirect_comm + 
+        total = (self.total_exp_direct_comm +
+                self.total_exp_indirect_comm +
                 self.total_exp_other)
 
         return total
 
+
 class Exp_Direct_Comm(models.Model):
+    """
+    Expenditure, type Direct Communication
+    Filing is parent.
+    """
     category = models.ForeignKey('Category')
     issue = models.ForeignKey('Issue', blank=True, null=True)
     bill = models.ForeignKey('Bill', blank=True, null=True)
-    position = models.SmallIntegerField(choices=POSITION_CHOICE, blank=True, null=True)
+    position = models.SmallIntegerField(
+        choices=POSITION_CHOICE, blank=True, null=True)
     other_desc = models.CharField(max_length=200, blank=True, null=True)
     agencies = models.ManyToManyField('Agency', blank=True, null=True)
     officials = models.ManyToManyField('Official', blank=True, null=True)
     filing = models.ForeignKey(Filing)
 
+
 class Exp_Indirect_Comm(models.Model):
+    """
+    Expenditure, type Indirect Communication
+    Filing is parent.
+    """
     category = models.ForeignKey('Category')
     issue = models.ForeignKey('Issue', blank=True, null=True)
     bill = models.ForeignKey('Bill', blank=True, null=True)
@@ -374,11 +413,17 @@ class Exp_Indirect_Comm(models.Model):
     other_desc = models.CharField(max_length=200, blank=True, null=True)
     agency = models.ForeignKey('Agency', blank=True, null=True)
     officials = models.ManyToManyField('Official', blank=True, null=True)
-    methods = models.ManyToManyField('Communication_Method', blank=True, null=True)
+    methods = models.ManyToManyField(
+        'Communication_Method', blank=True, null=True)
     groups = models.ManyToManyField('Receipent_Group', blank=True, null=True)
     filing = models.ForeignKey(Filing)
 
+
 class Exp_Other(models.Model):
+    """
+    Expenditure, type Other (travel, lodging, etc)
+    Filing is parent.
+    """
     official = models.ForeignKey('Official', null=True)
     agency = models.ForeignKey('Agency', null=True)
     description = models.TextField(blank=True, null=True)
@@ -388,9 +433,16 @@ class Exp_Other(models.Model):
     source = models.ForeignKey(Principal, null=True)
     filing = models.ForeignKey(Filing)
 
+
 class Official(models.Model):
-    first_name = models.CharField(max_length=100, blank=True, null=True, default='')
-    last_name = models.CharField(max_length=100, blank=False, null=False, default='')
+    """
+    City Official. Identified in Expenditures
+    Work for an Agency
+    """
+    first_name = models.CharField(
+        max_length=100, blank=True, null=True, default='')
+    last_name = models.CharField(
+        max_length=100, blank=False, null=False, default='')
     title = models.CharField(max_length=100, blank=True, null=True)
     agency = models.ForeignKey('Agency', blank=True, null=True)
 
@@ -398,9 +450,13 @@ class Official(models.Model):
         ordering = ['last_name']
 
     def __unicode__(self):
-        return self.first_name  + ' ' + self.last_name
+        return self.first_name + ' ' + self.last_name
+
 
 class Agency(models.Model):
+    """
+    Collection of Officials
+    """
     name = models.CharField(max_length=100, blank=False, null=False)
 
     class Meta:
@@ -414,7 +470,11 @@ BILL_TYPE_CHOICES = (
     (1, 'Resolution')
 )
 
+
 class Source(models.Model):
+    """
+    Source document for Filing. Usually quarterly expense report
+    """
     name = models.CharField(max_length=100, blank=False, null=True)
     url = models.URLField(blank=False, null=True)
     filing = models.ForeignKey(Filing, blank=True, null=True)
@@ -425,11 +485,19 @@ class Source(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class Bill(models.Model):
+    """
+    City Council bill
+    """
     name = models.CharField(max_length=100, blank=True, null=True)
-    number = models.CharField(max_length=10, blank=False, null=False, default=0)
-    bill_type = models.SmallIntegerField(blank=False, null=False, default=0, choices=BILL_TYPE_CHOICES)
-    url = models.URLField(blank=False, null=False, default="http://legislation.phila.gov/detailreport/?key=")
+    number = models.CharField(
+        max_length=10, blank=False, null=False, default=0)
+    bill_type = models.SmallIntegerField(
+        blank=False, null=False, default=0, choices=BILL_TYPE_CHOICES)
+    url = models.URLField(
+        blank=False, null=False,
+        default="http://legislation.phila.gov/detailreport/?key=")
 
     class Meta:
         ordering = ['number']
@@ -437,7 +505,12 @@ class Bill(models.Model):
     def __unicode__(self):
         return self.number
 
+
 class Issue(models.Model):
+    """
+    Issue mentioned in expenditure reports.
+    Sometimes attached to Bill.
+    """
     description = models.TextField(blank=False, null=False)
     bill = models.ForeignKey(Bill, blank=True, null=True)
     summary = models.TextField(blank=True, null=True)
@@ -449,7 +522,12 @@ class Issue(models.Model):
     def __unicode__(self):
         return self.description
 
+
 class Category(models.Model):
+    """
+    Lobbying category. Defined for each expenditure.
+    Source is last page of paper filing form.
+    """
     name = models.CharField(max_length=100, blank=False, null=False)
 
     class Meta:
@@ -457,8 +535,13 @@ class Category(models.Model):
 
     def __unicode__(self):
         return self.name
+
 
 class Communication_Method(models.Model):
+    """
+    Attached to Exp_Indirect_Comm.
+    Defines how lobbying was conducted (ex: social media, meeting)
+    """
     name = models.CharField(max_length=100, blank=False, null=False)
 
     class Meta:
@@ -467,7 +550,11 @@ class Communication_Method(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class Receipent_Group(models.Model):
+    """
+    Group targeted by a Exp_Indirect_Comm
+    """
     name = models.CharField(max_length=100, blank=False, null=False)
 
     class Meta:
@@ -486,11 +573,17 @@ PUBLISHER_CHOICES = (
     (6, 'PhillyMag'),
 )
 
+
 class Article(models.Model):
+    """
+    News article. Attached to Issues.
+    """
     headline = models.CharField(max_length=200, blank=False, null=False)
-    publisher = models.SmallIntegerField(blank=False, null=True, choices=PUBLISHER_CHOICES)
+    publisher = models.SmallIntegerField(
+        blank=False, null=True, choices=PUBLISHER_CHOICES)
     url = models.URLField(blank=False, null=False)
-    date = models.DateField(blank=False, null=False, default=datetime.date.today())
+    date = models.DateField(
+        blank=False, null=False, default=datetime.date.today())
     quote = models.TextField(blank=True, null=True)
     issue = models.ForeignKey(Issue, blank=True, null=True)
 
