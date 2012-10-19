@@ -4,7 +4,7 @@ View for Lobbyist, Firm, Principal and site index page
 from __future__ import division
 from django.views.generic import ListView
 from django.views.generic import DetailView
-from lobbyingph.models import Lobbyist, Firm, Principal, Issue, Filing
+from lobbyingph.models import Lobbyist, Firm, Principal, Issue, Filing, Official
 from django.shortcuts import render
 import simplejson as json
 
@@ -111,6 +111,22 @@ class FirmDetail(DetailView):
     """
     model = Firm
     template_name = 'firm_detail.html'
+
+
+class OfficialList(ListView):
+    """
+    List view for City officials
+    """
+    model = Official
+    template_name = 'official_list.html'
+
+
+class OfficialDetail(DetailView):
+    """
+    Detail view for City officials
+    """
+    model = Official
+    template_name = 'official_detail.html'
 
 
 class PrincipalList(ListView):

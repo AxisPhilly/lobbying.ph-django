@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block content %}
+  <h2 class="name">
+    {{ official.first_name }} {{ official.last_name}}
+
+    <span>{{ official.title }}, {{ official.agency }}</span>
+
+  </h2>
+  <ul class="contact">
+    <li>{{ lobbyist.get_address }}</li>
+    <li>{{ lobbyist.phone }}</li>
+    <li><a href="mailto:{{ lobbyist.email }}">{{ lobbyist.email }}</a></li>
+  </ul>
+
+{% endblock %}
