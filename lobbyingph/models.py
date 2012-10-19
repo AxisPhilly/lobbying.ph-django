@@ -458,6 +458,7 @@ class Agency(models.Model):
     Collection of Officials
     """
     name = models.CharField(max_length=100, blank=False, null=False)
+    alias = models.CharField(max_length=100, blank=False, null=False, default='')
 
     class Meta:
         ordering = ['name']
