@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load humanize %}
 
+{% block head %}
+    <link href="{{ STATIC_URL }}css/themes/blue/style.css" media="screen" rel="stylesheet" type="text/css" />
+{% endblock %}
+
 {% block content %}
   <h2 class="name">
     {{ official.first_name }} {{ official.last_name}}
@@ -9,9 +13,58 @@
 
   </h2>
   <ul class="contact">
-    <li>{{ lobbyist.get_address }}</li>
-    <li>{{ lobbyist.phone }}</li>
-    <li><a href="mailto:{{ lobbyist.email }}">{{ lobbyist.email }}</a></li>
   </ul>
+  <div class="column-container">
+    <div class="column">
+      <h3>Lobbied on Topics</h3>
+      <ul class="details">
+        {% for topic in official.get_topics %}
+          <li>{{ topic.name }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 
+  <div class="filings">
+    <h3>Issues / Bills / Resolutions</h3>
+    {% if official.get_issues %}
+      <table id="issues" class="tablesorter">
+        <thead> 
+          <tr>
+            <th>Year / Quarter</th>
+            <th>Name</th>
+            <th>Lobbied by</th>
+            <th>Lobbyist Position</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for issue in official.get_issues %}
+            <tr>
+              <td>{{ issue.time }}</td>
+              <td>{{ issue.issue }}</td>
+              <td><a href="/principals/{{ issue.principal.id }}">{{ issue.principal }}</a></td>
+              <td>{{ issue.position }}</td>
+              <td><a href="{{ issue.source.url }}">Document</a></td>
+            </tr>   
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
+    <script type='text/javascript'>
+    $(document).ready(function() { 
+      $("#issues")
+        .tablesorter({ 
+          widgets: ['zebra'],
+          sortList: [[0,1]]
+        });
+    }); 
+    </script>   
 {% endblock %}
