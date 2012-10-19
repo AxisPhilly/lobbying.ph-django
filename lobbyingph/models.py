@@ -452,6 +452,56 @@ class Official(models.Model):
     def __unicode__(self):
         return self.first_name + ' ' + self.last_name
 
+    def get_lobby_count(self):
+        count = 0
+
+        for row in self.exp_direct_comm_set.all():
+            count += 1
+
+        for row in self.exp_indirect_comm_set.all():
+            count += 1
+
+        return count
+
+    def get_topics(self):
+        topics = []
+
+        for row in self.exp_direct_comm_set.distinct('category'):
+            if(row.category not in topics):
+                topics.append(row.category)
+
+        for row in self.exp_indirect_comm_set.distinct('category'):
+            if(row.category not in topics):
+                topics.append(row.category)
+
+        topics.sort(key=str)
+        return topics
+
+    def get_issues(self):
+        issues = []
+
+        for row in self.exp_direct_comm_set.all():
+            if row.issue != None:
+                issues.append({
+                    'issue': row.issue,
+                    'principal': row.filing.principal,
+                    'position': row.get_position_display(),
+                    'time': str(row.filing.year.year) + row.filing.quarter,
+                    'source': row.filing.source_set.all()[0]
+                })
+
+        for row in self.exp_indirect_comm_set.all():
+            if row.issue != None:
+                issues.append({
+                    'issue': row.issue,
+                    'principal': row.filing.principal,
+                    'position': row.get_position_display(),
+                    'time': str(row.filing.year.year) + row.filing.quarter,
+                    'source': row.filing.source_set.all()[0]
+                })
+
+        return issues
+
 
 class Agency(models.Model):
     """
