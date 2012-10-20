@@ -97,7 +97,7 @@
           {% for issue in principal.get_issues %}
             <tr>
               <td>{{ issue.time }}</td>
-              <td>{{ issue.issue }}</td>
+              <td>{{ issue.object.description }}</td>
               <td>{{ issue.position }}</td>
               <td>{{ issue.comm }}</td>
               <td>
@@ -109,7 +109,7 @@
           {% for bill in principal.get_bills %}
             <tr>
               <td>{{ bill.time }}</td>
-              <td>{{ bill.bill.get_bill_type_display }} No. <a href="{{ bill.bill.url }}" target="_blank">{{ bill.bill }} <i class="icon-external-link"></a></td>
+              <td>{{ bill.object.get_bill_type_display }} No. <a href="{{ bill.object.url }}" target="_blank">{{ bill.object.number }} <i class="icon-external-link"></a></td>
               <td>{{ bill.position }}</td>
               <td>{{ bill.comm }}</td>
               <td>
