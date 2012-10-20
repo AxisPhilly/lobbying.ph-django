@@ -100,10 +100,7 @@
               <td>{{ issue.object.description }}</td>
               <td>{{ issue.position }}</td>
               <td>{{ issue.comm }}</td>
-              <td>
-                  {{ issue.target|join:", " }}
-                  {% if issue.agency %} {{ issue.agency }} {% endif %}
-              </td>
+              <td>{{ issue.target|join:", " }}</td>
             </tr>   
           {% endfor %}
           {% for bill in principal.get_bills %}
@@ -112,9 +109,7 @@
               <td>{{ bill.object.get_bill_type_display }} No. <a href="{{ bill.object.url }}" target="_blank">{{ bill.object.number }} <i class="icon-external-link"></a></td>
               <td>{{ bill.position }}</td>
               <td>{{ bill.comm }}</td>
-              <td>
-                  {{ bill.target|join:", " }}
-              </td>
+              <td>{{ bill.target|join:", " }}</td>
             </tr>   
           {% endfor %}
         </tbody>
