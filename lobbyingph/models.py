@@ -99,18 +99,14 @@ class Firm(models.Model):
         topics = []
 
         for row in self.filing_set.all():
-            direct = row.exp_direct_comm_set.distinct('category')
-            indirect = row.exp_direct_comm_set.distinct('category')
+            result_list = list(chain(
+                row.exp_direct_comm_set.distinct('category'),
+                row.exp_indirect_comm_set.distinct('category')))
 
-            for row in indirect:
+            for row in result_list:
                 if (row.category not in topics):
                     topics.append(row.category)
 
-            for row in direct:
-                if (row.category not in topics):
-                    topics.append(row.category)
-
-        topics.sort(key=str)
         return topics
 
 
@@ -175,6 +171,7 @@ class Principal(models.Model):
         for quarter in quarters:
             totals = self.get_exp_totals(
                 quarter=quarter['quarter'], year=quarter['year'].year)
+
             results[quarter['quarter'] + str(quarter['year'].year)] = totals
 
         return results
@@ -204,6 +201,7 @@ class Principal(models.Model):
         for quarter in quarters:
             totals = self.get_exp_percents(
                 quarter=quarter['quarter'], year=quarter['year'].year)
+
             results[quarter['quarter'] + str(quarter['year'].year)] = totals
 
         return results
@@ -212,14 +210,11 @@ class Principal(models.Model):
         topics = []
 
         for row in self.filing_set.all():
-            direct = row.exp_direct_comm_set.distinct('category')
-            indirect = row.exp_indirect_comm_set.distinct('category')
+            result_list = list(chain(
+                row.exp_direct_comm_set.distinct('category'),
+                row.exp_indirect_comm_set.distinct('category')))
 
-            for row in direct:
-                if (row.category not in topics):
-                    topics.append(row.category)
-
-            for row in indirect:
+            for row in result_list:
                 if (row.category not in topics):
                     topics.append(row.category)
 
@@ -242,37 +237,61 @@ class Principal(models.Model):
 
         for row in self.filing_set.all():
 
-            direct = row.exp_direct_comm_set.all()
-            indirect = row.exp_indirect_comm_set.all()
+            result_list = list(chain(
+                row.exp_direct_comm_set.all().filter(issue__isnull=False),
+                row.exp_indirect_comm_set.all().filter(issue__isnull=False)))
 
-            for row in direct:
-                if row.issue != None:
-                    issues.append({
-                        'time': str(row.filing.year.year) + row.filing.quarter,
-                        'issue': row.issue,
-                        'position': row.get_position_display(),
-                        'other': row.other_desc,
-                        'target': list(row.officials.all()) +
-                                    list(row.agencies.all()),
-                        'comm': 'Direct'
-                    })
-
-            for row in indirect:
-                if row.issue != None:
+            for row in result_list:
+                if row.__class__ == Exp_Indirect_Comm:
                     target = list(row.officials.all()) + list(row.groups.all())
                     if row.agency:
                         target.append(row.agency)
+                    comm = 'Indirect'
 
-                    issues.append({
-                        'time': str(row.filing.year.year) + row.filing.quarter,
-                        'issue': row.issue,
-                        'position': row.get_position_display(),
-                        'other': row.other_desc,
-                        'target': target,
-                        'comm': 'Indirect'
-                    })
+                else:
+                    target = list(row.officials.all()) + list(row.agencies.all())
+                    comm = 'Direct'
+
+                issues.append({
+                    'time': str(row.filing.year.year) + row.filing.quarter,
+                    'issue': row.issue,
+                    'position': row.get_position_display(),
+                    'other': row.other_desc,
+                    'target': target,
+                    'comm': comm
+                })
 
         return issues
+
+    def get_bills(self):
+        bills = []
+
+        for row in self.filing_set.all():
+            result_list = list(chain(
+                row.exp_direct_comm_set.all().filter(bill__isnull=False),
+                row.exp_indirect_comm_set.all().filter(bill__isnull=False)))
+
+            for row in result_list:
+                if row.__class__ == Exp_Indirect_Comm:
+                    target = list(row.officials.all()) + list(row.groups.all())
+                    if row.agency:
+                        target.append(row.agency)
+                    comm = 'Indirect'
+
+                else:
+                    target = list(row.officials.all()) + list(row.agencies.all())
+                    comm = 'Direct'
+
+                bills.append({
+                    'time': str(row.filing.year.year) + row.filing.quarter,
+                    'bill': row.bill,
+                    'position': row.get_position_display(),
+                    'other': row.other_desc,
+                    'target': target,
+                    'comm': comm
+                })
+
+        return bills
 
     def get_issue_count(self):
         issues = self.get_issues()
@@ -283,43 +302,6 @@ class Principal(models.Model):
                 unique_issues.append(issue['issue'])
 
         return len(unique_issues)
-
-    def get_bills(self):
-        bills = []
-
-        for row in self.filing_set.all():
-
-            direct = row.exp_direct_comm_set.all()
-            indirect = row.exp_indirect_comm_set.all()
-
-            for row in direct:
-                if row.bill != None:
-                    bills.append({
-                        'time': str(row.filing.year.year) + row.filing.quarter,
-                        'bill': row.bill,
-                        'position': row.get_position_display(),
-                        'other': row.other_desc,
-                        'target': list(row.officials.all()) +
-                                    list(row.agencies.all()),
-                        'comm': 'Direct'
-                    })
-
-            for row in indirect:
-                if row.bill != None:
-                    target = list(row.officials.all()) + list(row.groups.all())
-                    if row.agency:
-                        target.append(row.agency)
-
-                    bills.append({
-                        'time': str(row.filing.year.year) + row.filing.quarter,
-                        'bill': row.bill,
-                        'position': row.get_position_display(),
-                        'other': row.other_desc,
-                        'target': target,
-                        'comm': 'Indirect'
-                    })
-
-        return bills
 
     def get_bill_count(self):
         bills = self.get_bills()
@@ -480,19 +462,18 @@ class Official(models.Model):
         issues = []
 
         result_list = list(chain(
-            self.exp_direct_comm_set.all(),
-            self.exp_indirect_comm_set.all()
+            self.exp_direct_comm_set.all().filter(issue__isnull=False),
+            self.exp_indirect_comm_set.all().filter(issue__isnull=False)
         ))
 
         for row in result_list:
-            if row.issue != None:
-                issues.append({
-                    'issue': row.issue,
-                    'principal': row.filing.principal,
-                    'position': row.get_position_display(),
-                    'time': str(row.filing.year.year) + row.filing.quarter,
-                    'source': row.filing.source_set.all()[0]
-                })
+            issues.append({
+                'issue': row.issue,
+                'principal': row.filing.principal,
+                'position': row.get_position_display(),
+                'time': str(row.filing.year.year) + row.filing.quarter,
+                'source': row.filing.source_set.all()[0]
+            })
 
         return issues
 
