@@ -2,6 +2,7 @@ from django.db import models
 import datetime
 from django.db.models import Sum
 from decimal import Decimal
+from itertools import chain
 
 
 STATE_CHOICES = (
@@ -455,22 +456,20 @@ class Official(models.Model):
     def get_lobby_count(self):
         count = 0
 
-        for row in self.exp_direct_comm_set.all():
-            count += 1
-
-        for row in self.exp_indirect_comm_set.all():
-            count += 1
+        count = (self.exp_direct_comm_set.all().count() +
+                self.exp_indirect_comm_set.all().count())
 
         return count
 
     def get_topics(self):
         topics = []
 
-        for row in self.exp_direct_comm_set.distinct('category'):
-            if(row.category not in topics):
-                topics.append(row.category)
+        result_list = list(chain(
+            self.exp_direct_comm_set.distinct('category'),
+            self.exp_indirect_comm_set.distinct('category')
+        ))
 
-        for row in self.exp_indirect_comm_set.distinct('category'):
+        for row in result_list:
             if(row.category not in topics):
                 topics.append(row.category)
 
@@ -480,17 +479,12 @@ class Official(models.Model):
     def get_issues(self):
         issues = []
 
-        for row in self.exp_direct_comm_set.all():
-            if row.issue != None:
-                issues.append({
-                    'issue': row.issue,
-                    'principal': row.filing.principal,
-                    'position': row.get_position_display(),
-                    'time': str(row.filing.year.year) + row.filing.quarter,
-                    'source': row.filing.source_set.all()[0]
-                })
+        result_list = list(chain(
+            self.exp_direct_comm_set.all(),
+            self.exp_indirect_comm_set.all()
+        ))
 
-        for row in self.exp_indirect_comm_set.all():
+        for row in result_list:
             if row.issue != None:
                 issues.append({
                     'issue': row.issue,
