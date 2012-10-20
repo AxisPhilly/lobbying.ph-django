@@ -458,24 +458,40 @@ class Official(models.Model):
         topics.sort(key=str)
         return topics
 
-    def get_issues(self):
-        issues = []
+    def get_issues_or_bills(self, choice):
+        results = []
+
+        kwargs = {
+            '{0}__{1}'.format(choice, 'isnull'): False
+        }
 
         result_list = list(chain(
-            self.exp_direct_comm_set.all().filter(issue__isnull=False),
-            self.exp_indirect_comm_set.all().filter(issue__isnull=False)
+            self.exp_direct_comm_set.all().filter(**kwargs).prefetch_related(
+                'filing', 'filing__principal'),
+            self.exp_indirect_comm_set.all().filter(**kwargs).prefetch_related(
+                'filing', 'filing__principal')
         ))
 
         for row in result_list:
-            issues.append({
-                'issue': row.issue,
+            results.append({
+                'object': getattr(row, choice),
                 'principal': row.filing.principal,
                 'position': row.get_position_display(),
                 'time': str(row.filing.year.year) + row.filing.quarter,
                 'source': row.filing.source_set.all()[0]
             })
 
+        return results
+
+    def get_issues(self):
+        issues = self.get_issues_or_bills('issue')
+
         return issues
+
+    def get_bills(self):
+        bills = self.get_issues_or_bills('bill')
+
+        return bills
 
 
 class Agency(models.Model):
