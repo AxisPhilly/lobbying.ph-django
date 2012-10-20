@@ -42,10 +42,19 @@
           {% for issue in official.get_issues %}
             <tr>
               <td>{{ issue.time }}</td>
-              <td>{{ issue.issue }}</td>
+              <td>{{ issue.object.description }}</td>
               <td><a href="/principals/{{ issue.principal.id }}">{{ issue.principal }}</a></td>
               <td>{{ issue.position }}</td>
               <td><a href="{{ issue.source.url }}">Document</a></td>
+            </tr>   
+          {% endfor %}
+          {% for bill in official.get_bills %}
+            <tr>
+              <td>{{ bill.time }}</td>
+              <td>{{ bill.object.get_bill_type_display }} No. <a href="{{ bill.object.url }}" target="_blank">{{ bill.object.number }} <i class="icon-external-link"></a></td>
+              <td><a href="/principals/{{ bill.principal.id }}">{{ bill.principal }}</a></td>
+              <td>{{ bill.position }}</td>
+              <td><a href="{{ bill.source.url }}">Document</a></td>
             </tr>   
           {% endfor %}
         </tbody>
