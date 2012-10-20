@@ -232,14 +232,18 @@ class Principal(models.Model):
 
         return firms
 
-    def get_issues(self):
-        issues = []
+    def get_issues_or_bills(self, choice):
+        results = []
+
+        kwargs = {
+            '{0}__{1}'.format(choice, 'isnull'): False
+        }
 
         for row in self.filing_set.all():
 
             result_list = list(chain(
-                row.exp_direct_comm_set.all().filter(issue__isnull=False),
-                row.exp_indirect_comm_set.all().filter(issue__isnull=False)))
+                row.exp_direct_comm_set.all().filter(**kwargs),
+                row.exp_indirect_comm_set.all().filter(**kwargs)))
 
             for row in result_list:
                 if row.__class__ == Exp_Indirect_Comm:
@@ -252,54 +256,30 @@ class Principal(models.Model):
                     target = list(row.officials.all()) + list(row.agencies.all())
                     comm = 'Direct'
 
-                issues.append({
+                results.append({
                     'time': str(row.filing.year.year) + row.filing.quarter,
-                    'issue': row.issue,
+                    'object': getattr(row, choice),
                     'position': row.get_position_display(),
                     'other': row.other_desc,
                     'target': target,
                     'comm': comm
                 })
 
-        return issues
+        return results
+
+    def get_issues(self):
+        return self.get_issues_or_bills('issue')
 
     def get_bills(self):
-        bills = []
-
-        for row in self.filing_set.all():
-            result_list = list(chain(
-                row.exp_direct_comm_set.all().filter(bill__isnull=False),
-                row.exp_indirect_comm_set.all().filter(bill__isnull=False)))
-
-            for row in result_list:
-                if row.__class__ == Exp_Indirect_Comm:
-                    target = list(row.officials.all()) + list(row.groups.all())
-                    if row.agency:
-                        target.append(row.agency)
-                    comm = 'Indirect'
-
-                else:
-                    target = list(row.officials.all()) + list(row.agencies.all())
-                    comm = 'Direct'
-
-                bills.append({
-                    'time': str(row.filing.year.year) + row.filing.quarter,
-                    'bill': row.bill,
-                    'position': row.get_position_display(),
-                    'other': row.other_desc,
-                    'target': target,
-                    'comm': comm
-                })
-
-        return bills
+        return self.get_issues_or_bills('bill')
 
     def get_issue_count(self):
         issues = self.get_issues()
 
         unique_issues = []
         for issue in issues:
-            if issue['issue'] not in unique_issues:
-                unique_issues.append(issue['issue'])
+            if issue['object'] not in unique_issues:
+                unique_issues.append(issue['object'])
 
         return len(unique_issues)
 
@@ -308,8 +288,8 @@ class Principal(models.Model):
 
         unique_bills = []
         for bill in bills:
-            if bill['bill'] not in unique_bills:
-                unique_bills.append(bill['bill'])
+            if bill['object'] not in unique_bills:
+                unique_bills.append(bill['object'])
 
         return len(unique_bills)
 
@@ -484,14 +464,10 @@ class Official(models.Model):
         return results
 
     def get_issues(self):
-        issues = self.get_issues_or_bills('issue')
-
-        return issues
+        return self.get_issues_or_bills('issue')
 
     def get_bills(self):
-        bills = self.get_issues_or_bills('bill')
-
-        return bills
+        return self.get_issues_or_bills('bill')
 
 
 class Agency(models.Model):
