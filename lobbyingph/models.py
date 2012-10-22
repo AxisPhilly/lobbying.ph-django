@@ -136,11 +136,11 @@ class Principal(models.Model):
         add_list = [self.address1, self.city, self.state, self.zipcode]
         return ', '.join(add_list)
 
-    def get_total_exp(self):
-        totals = self.get_exp_totals()
-        return sum(totals.itervalues())
-
     def get_exp_totals(self, quarter=None, year=None):
+        """Returns a dictionary containing total spending by expenditure
+        type. If quarter is not specified, data is returned for all
+        quarters.
+        """
         if quarter:
             totals = self.filing_set.filter(
                     quarter=quarter, year__year=year
@@ -164,7 +164,16 @@ class Principal(models.Model):
 
         return totals
 
+    def get_total_exp(self):
+        """Returns the total amount of spending for all quarters
+        """
+        totals = self.get_exp_totals()
+        return sum(totals.itervalues())
+
     def get_exp_totals_by_quarter(self):
+        """Returns a dictionary that, for each quarter, contains
+        the total spending for each expenditure type
+        """
         quarters = self.filing_set.distinct(
             'quarter', 'year').values('quarter', 'year')
 
@@ -178,6 +187,13 @@ class Principal(models.Model):
         return results
 
     def get_exp_percents(self, quarter=None, year=None):
+        """Returns a dictionary that, for the specified quarter
+        and year, contains the percent of spending by each expenditure
+        type.
+
+        If year or quarter is not specified, will return the data for
+        all quarters.
+        """
         totals = self.get_exp_totals(quarter, year)
         total = sum(totals.itervalues())
 
@@ -195,6 +211,9 @@ class Principal(models.Model):
             }
 
     def get_exp_percents_by_quarter(self):
+        """Returns a dictionary that, for each quarter contains
+        the percent of spending by each expenditure type
+        """
         quarters = self.filing_set.distinct(
             'quarter', 'year').values('quarter', 'year')
 
@@ -208,6 +227,9 @@ class Principal(models.Model):
         return results
 
     def get_topics(self):
+        """Returns a list of unique topics/categories that the
+        principal has lobbed on.
+        """
         topics = []
 
         for row in self.filing_set.all():
@@ -223,6 +245,9 @@ class Principal(models.Model):
         return topics
 
     def get_firms(self):
+        """Returns a list of unique firms the principal has
+        hired to lobby
+        """
         firms = []
         for row in self.filing_set.all():
 
@@ -236,6 +261,14 @@ class Principal(models.Model):
         return firms
 
     def get_issues_or_bills(self, choice):
+        """Returns a list of objects containing details on each
+        issue or bill that the Principal has lobbied on. For
+        issue/bill that has been lobbied on for more than 1 quarter,
+        an entry for each quarter is added to the output.
+        self.get_unique_issues/bill removes these duplicates.
+
+        Expected values for Choice are 'issue' or 'bill'
+        """
         results = []
 
         kwargs = {
@@ -271,12 +304,20 @@ class Principal(models.Model):
         return results
 
     def get_issues(self):
+        """Returns a list of issues the principal has lobbied on.
+        """
         return self.get_issues_or_bills('issue')
 
     def get_bills(self):
+        """Returns a list of bills the principal has lobbied on.
+        """
         return self.get_issues_or_bills('bill')
 
-    def get_issue_count(self):
+    def get_unique_issues(self):
+        """Take list of issues, remove duplicates.
+        i.e. if principal lobbied on soda tax two
+        quarters in a row, that gets counted as 1 issue.
+        """
         issues = self.get_issues()
 
         unique_issues = []
@@ -284,9 +325,13 @@ class Principal(models.Model):
             if issue['object'] not in unique_issues:
                 unique_issues.append(issue['object'])
 
-        return len(unique_issues)
+        return unique_issues
 
-    def get_bill_count(self):
+    def get_unique_bills(self):
+        """Take list of bills, remove duplicates.
+        i.e. if principal lobbied on Bill No. 123221
+        2 quarters in a row, that gets counted as 1 issue.
+        """
         bills = self.get_bills()
 
         unique_bills = []
@@ -294,13 +339,13 @@ class Principal(models.Model):
             if bill['object'] not in unique_bills:
                 unique_bills.append(bill['object'])
 
-        return len(unique_bills)
+        return unique_bills
 
-    def get_issue_bill_count(self):
-        bills = self.get_bill_count()
-        issues = self.get_issue_count()
-
-        return (bills + issues)
+    def get_issue_and_bill_count(self):
+        """Returns a count of the unique bills and issues the
+        Principal has lobbied on.
+        """
+        return len(self.get_unique_bills()) + len(self.get_unique_issues())
 
 POSITION_CHOICE = (
     (1, 'Support'),
