@@ -45,7 +45,7 @@
             <td>${{ object.get_exp_totals.direct|floatformat:2|intcomma }}</td>
             <td>${{ object.get_exp_totals.indirect|floatformat:2|intcomma }}</td>
             <td>${{ object.get_exp_totals.other|floatformat:2|intcomma }}</td>
-            <td>{{ object.get_issue_bill_count }}</td>
+            <td>{{ object.get_issue_and_bill_count }}</td>
           </tr>
         {% endfor %}
       </tbody>

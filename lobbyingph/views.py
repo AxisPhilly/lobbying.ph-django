@@ -29,7 +29,7 @@ def index(request):
     p_sorted_spending = sorted(principals,
         key=lambda p: -p.get_total_exp())
     p_sorted_issue_bill = sorted(principals,
-        key=lambda p: -p.get_issue_bill_count())
+        key=lambda p: -p.get_issue_and_bill_count())
 
     # Then generate top lists
     # http://stackoverflow.com/questions/5306756/
@@ -55,9 +55,9 @@ def index(request):
     for principal in p_sorted_issue_bill[:5]:
         top_p_issue_bill.append({
             'object': principal,
-            'count': principal.get_issue_bill_count(),
-            'percent': "{:.0%}".format(principal.get_issue_bill_count() /
-                p_sorted_issue_bill[0].get_issue_bill_count())
+            'count': principal.get_issue_and_bill_count(),
+            'percent': "{:.0%}".format(principal.get_issue_and_bill_count() /
+                p_sorted_issue_bill[0].get_issue_and_bill_count())
         })
 
     context = {
