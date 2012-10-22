@@ -82,7 +82,7 @@ class Firm(models.Model):
 
     def get_clients(self):
         unique_clients = self.filing_set.distinct(
-            'principal').only('principal').select_related('principal')
+            'principal').only('principal').prefetch_related('principal')
         clients = []
 
         for row in unique_clients:
@@ -107,6 +107,7 @@ class Firm(models.Model):
                 if (row.category not in topics):
                     topics.append(row.category)
 
+        topics.sort(key=str)
         return topics
 
 
