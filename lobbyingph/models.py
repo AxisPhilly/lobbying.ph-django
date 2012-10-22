@@ -219,6 +219,7 @@ class Principal(models.Model):
                 if (row.category not in topics):
                     topics.append(row.category)
 
+        topics.sort(key=str)
         return topics
 
     def get_firms(self):
@@ -231,6 +232,7 @@ class Principal(models.Model):
                 if firm not in firms:
                     firms.append(firm)
 
+        firms.sort(key=str)
         return firms
 
     def get_issues_or_bills(self, choice):
