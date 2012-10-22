@@ -106,7 +106,7 @@
           {% for bill in principal.get_bills %}
             <tr>
               <td>{{ bill.time }}</td>
-              <td>{{ bill.object.get_bill_type_display }} No. <a href="{{ bill.object.url }}" target="_blank">{{ bill.object.number }} <i class="icon-external-link"></a></td>
+              <td>{{ bill.object.get_bill_type_display }} No. <a href="{{ bill.object.url }}" target="_blank">{{ bill.object.number }}</a></td>
               <td>{{ bill.position }}</td>
               <td>{{ bill.comm }}</td>
               <td>{{ bill.target|join:", " }}</td>
