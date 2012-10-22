@@ -6,17 +6,13 @@ class SourceInline(admin.TabularInline):
     model = Source
 
 
-class Exp_Direct_CommInline(admin.TabularInline):
-    model = Exp_Direct_Comm
-    filter_horizontal = ['officials', ]
-
-
 class Exp_OtherInline(admin.TabularInline):
     model = Exp_Other
 
 
-class Exp_Indirect_CommInline(admin.TabularInline):
-    model = Exp_Indirect_Comm
+class Expenditure_Inline(admin.TabularInline):
+    model = Expenditure
+    filter_horizontal = ['officials', ]
 
 
 class ArticleInline(admin.TabularInline):
@@ -28,7 +24,8 @@ class FilingAdmin(admin.ModelAdmin):
         SourceInline,
         Exp_Direct_CommInline,
         Exp_Indirect_CommInline,
-        Exp_OtherInline
+        Exp_OtherInline,
+        Expenditure_Inline
     ]
 
 
