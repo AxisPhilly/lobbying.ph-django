@@ -22,8 +22,6 @@ class ArticleInline(admin.TabularInline):
 class FilingAdmin(admin.ModelAdmin):
     inlines = [
         SourceInline,
-        Exp_Direct_CommInline,
-        Exp_Indirect_CommInline,
         Exp_OtherInline,
         Expenditure_Inline
     ]
