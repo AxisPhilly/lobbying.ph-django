@@ -2,7 +2,6 @@ from django.db import models
 import datetime
 from django.db.models import Sum
 from decimal import Decimal
-from itertools import chain
 
 
 STATE_CHOICES = (
@@ -99,13 +98,9 @@ class Firm(models.Model):
         topics = []
 
         for row in self.filing_set.all():
-            result_list = list(chain(
-                row.exp_direct_comm_set.distinct('category'),
-                row.exp_indirect_comm_set.distinct('category')))
-
-            for row in result_list:
-                if (row.category not in topics):
-                    topics.append(row.category)
+            for item in row.expenditure_set.distinct('category'):
+                if (item.category not in topics):
+                    topics.append(item.category)
 
         topics.sort(key=str)
         return topics
@@ -233,13 +228,9 @@ class Principal(models.Model):
         topics = []
 
         for row in self.filing_set.all():
-            result_list = list(chain(
-                row.exp_direct_comm_set.distinct('category'),
-                row.exp_indirect_comm_set.distinct('category')))
-
-            for row in result_list:
-                if (row.category not in topics):
-                    topics.append(row.category)
+            for item in row.expenditure_set.distinct('category'):
+                if (item.category not in topics):
+                    topics.append(item.category)
 
         topics.sort(key=str)
         return topics
@@ -250,7 +241,6 @@ class Principal(models.Model):
         """
         firms = []
         for row in self.filing_set.all():
-
             unique_firms = row.firms.distinct('name')
 
             for firm in unique_firms:
@@ -276,29 +266,17 @@ class Principal(models.Model):
         }
 
         for row in self.filing_set.all():
-
-            result_list = list(chain(
-                row.exp_direct_comm_set.all().filter(**kwargs),
-                row.exp_indirect_comm_set.all().filter(**kwargs)))
-
-            for row in result_list:
-                if row.__class__ == Exp_Indirect_Comm:
-                    target = list(row.officials.all()) + list(row.groups.all())
-                    if row.agency:
-                        target.append(row.agency)
-                    comm = 'Indirect'
-
-                else:
-                    target = list(row.officials.all()) + list(row.agencies.all())
-                    comm = 'Direct'
+            for item in row.expenditure_set.all().filter(**kwargs):
+                target = (list(item.officials.all()) + list(item.agencies.all()) +
+                        list(item.groups.all()))
 
                 results.append({
-                    'time': str(row.filing.year.year) + row.filing.quarter,
-                    'object': getattr(row, choice),
-                    'position': row.get_position_display(),
-                    'other': row.other_desc,
+                    'time': str(item.filing.year.year) + item.filing.quarter,
+                    'object': getattr(item, choice),
+                    'position': item.get_position_display(),
+                    'other': item.other_desc,
                     'target': target,
-                    'comm': comm
+                    'comm': item.get_communication_display()
                 })
 
         return results
@@ -330,7 +308,7 @@ class Principal(models.Model):
     def get_unique_bills(self):
         """Take list of bills, remove duplicates.
         i.e. if principal lobbied on Bill No. 123221
-        2 quarters in a row, that gets counted as 1 issue.
+        2 quarters in a row, that gets counted as 1 bill.
         """
         bills = self.get_bills()
 
@@ -396,9 +374,34 @@ class Filing(models.Model):
         return total
 
 
-class Exp_Direct_Comm(models.Model):
+class Expenditure(models.Model):
+    """Direct and indirect Expenditures.
+    Parent is Filing.
     """
-    Expenditure, type Direct Communication
+    communication = models.SmallIntegerField(
+        choices=((0, 'Direct'), (1, 'Indirect')), blank=False, null=False)
+    category = models.ForeignKey('Category')
+    issue = models.ForeignKey('Issue', blank=True, null=True)
+    bill = models.ForeignKey('Bill', blank=True, null=True)
+    position = models.SmallIntegerField(
+        choices=POSITION_CHOICE, blank=True, null=True)
+    other_desc = models.CharField(max_length=200, blank=True, null=True)
+
+    # direct
+    agencies = models.ManyToManyField('Agency', blank=True, null=True)
+    officials = models.ManyToManyField('Official', blank=True, null=True)
+
+    # indirect
+    methods = models.ManyToManyField(
+        'Communication_Method', blank=True, null=True)
+    groups = models.ManyToManyField('Receipent_Group', blank=True, null=True)
+
+    filing = models.ForeignKey(Filing)
+    oldid = models.SmallIntegerField(blank=True, null=True)
+
+
+class Exp_Direct_Comm(models.Model):
+    """Expenditure, type Direct Communication
     Filing is parent.
     """
     category = models.ForeignKey('Category')
@@ -464,22 +467,12 @@ class Official(models.Model):
         return self.first_name + ' ' + self.last_name
 
     def get_lobby_count(self):
-        count = 0
-
-        count = (self.exp_direct_comm_set.all().count() +
-                self.exp_indirect_comm_set.all().count())
-
-        return count
+        return self.expenditure_set.all().count()
 
     def get_topics(self):
         topics = []
 
-        result_list = list(chain(
-            self.exp_direct_comm_set.distinct('category'),
-            self.exp_indirect_comm_set.distinct('category')
-        ))
-
-        for row in result_list:
+        for row in self.exp_direct_comm_set.distinct('category'):
             if(row.category not in topics):
                 topics.append(row.category)
 
@@ -493,14 +486,10 @@ class Official(models.Model):
             '{0}__{1}'.format(choice, 'isnull'): False
         }
 
-        result_list = list(chain(
-            self.exp_direct_comm_set.all().filter(**kwargs).prefetch_related(
+        items = self.expenditure_set.all().filter(**kwargs).prefetch_related(
                 'filing', 'filing__principal'),
-            self.exp_indirect_comm_set.all().filter(**kwargs).prefetch_related(
-                'filing', 'filing__principal')
-        ))
 
-        for row in result_list:
+        for row in items:
             results.append({
                 'object': getattr(row, choice),
                 'principal': row.filing.principal,
