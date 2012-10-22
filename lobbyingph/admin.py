@@ -1,29 +1,36 @@
 from django.contrib import admin
 from lobbyingph.models import *
 
+
 class SourceInline(admin.TabularInline):
     model = Source
 
+
 class Exp_Direct_CommInline(admin.TabularInline):
     model = Exp_Direct_Comm
-    filter_horizontal = ['officials',]
+    filter_horizontal = ['officials', ]
+
 
 class Exp_OtherInline(admin.TabularInline):
     model = Exp_Other
 
+
 class Exp_Indirect_CommInline(admin.TabularInline):
     model = Exp_Indirect_Comm
 
+
 class ArticleInline(admin.TabularInline):
     model = Article
+
 
 class FilingAdmin(admin.ModelAdmin):
     inlines = [
         SourceInline,
         Exp_Direct_CommInline,
-        Exp_Indirect_CommInline, 
+        Exp_Indirect_CommInline,
         Exp_OtherInline
     ]
+
 
 class IssueAdmin(admin.ModelAdmin):
     inlines = [
