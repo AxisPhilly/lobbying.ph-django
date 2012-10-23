@@ -12,12 +12,12 @@ class Migration(SchemaMigration):
         db.delete_column('lobbyingph_lobbyist', 'principal_id')
 
         # Adding M2M table for field principal on 'Lobbyist'
-        db.create_table('lobbyingph_lobbyist_principal', (
+        db.create_table('lobbyingph_lobbyist_principals', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('lobbyist', models.ForeignKey(orm['lobbyingph.lobbyist'], null=False)),
             ('principal', models.ForeignKey(orm['lobbyingph.principal'], null=False))
         ))
-        db.create_unique('lobbyingph_lobbyist_principal', ['lobbyist_id', 'principal_id'])
+        db.create_unique('lobbyingph_lobbyist_principals', ['lobbyist_id', 'principal_id'])
 
 
     def backwards(self, orm):
@@ -133,7 +133,7 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '75'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '12'}),
-            'principal': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['lobbyingph.Principal']", 'null': 'True', 'blank': 'True'}),
+            'principals': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['lobbyingph.Principal']", 'null': 'True', 'blank': 'True'}),
             'state': ('django.db.models.fields.CharField', [], {'max_length': '2'}),
             'zipcode': ('django.db.models.fields.CharField', [], {'max_length': '10'})
         },

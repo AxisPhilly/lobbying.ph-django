@@ -137,7 +137,7 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '75'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '12'}),
-            'principal': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['lobbyingph.Principal']", 'null': 'True', 'blank': 'True'}),
+            'principals': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['lobbyingph.Principal']", 'null': 'True', 'blank': 'True'}),
             'state': ('django.db.models.fields.CharField', [], {'max_length': '2'}),
             'zipcode': ('django.db.models.fields.CharField', [], {'max_length': '10'})
         },
