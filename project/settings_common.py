@@ -1,6 +1,5 @@
 # Django settings for lobbyingph project.
 import os
-from os.path import abspath, basename, dirname, join, normpath
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
 INTERNAL_IPS = (
@@ -15,7 +14,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'lobbying',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
@@ -61,7 +60,7 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__),".."))
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
@@ -136,7 +135,8 @@ INSTALLED_APPS = (
     'lobbyingph',
     'search',
     'gunicorn',
-    'storages'
+    'storages',
+    'fixture_magic'
 )
 
 # A sample logging configuration. The only tangible logging
