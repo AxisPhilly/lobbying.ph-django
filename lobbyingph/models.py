@@ -367,9 +367,11 @@ class Filing(models.Model):
         return str(self.year.year) + self.quarter + ': ' + self.principal.name
 
     def get_total_exp(self):
-        total = (self.total_exp_direct_comm +
-                self.total_exp_indirect_comm +
-                self.total_exp_other)
+        total = Decimal(
+                    self.total_exp_direct_comm +
+                    self.total_exp_indirect_comm +
+                    self.total_exp_other
+                ).quantize(Decimal('1.00'))
 
         return total
 
