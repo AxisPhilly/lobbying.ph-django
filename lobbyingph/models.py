@@ -51,7 +51,14 @@ class Lobbyist(models.Model):
         return self.name
 
     def get_address(self):
-        add_list = [self.address1, self.city, self.state, self.zipcode]
+        street_add = [self.address1]
+        if self.address2:
+            street_add.append(self.address2)
+        if self.address3:
+            street_add.append(self.address3)
+
+        add_list = [', '.join(street_add), self.city, self.state, self.zipcode]
+
         return ', '.join(add_list)
 
 
