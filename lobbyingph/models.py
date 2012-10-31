@@ -472,7 +472,7 @@ class Official(models.Model):
     def get_topics(self):
         topics = []
 
-        for row in self.exp_direct_comm_set.distinct('category'):
+        for row in self.expenditure_set.distinct('category'):
             if(row.category not in topics):
                 topics.append(row.category)
 
@@ -487,15 +487,15 @@ class Official(models.Model):
         }
 
         items = self.expenditure_set.all().filter(**kwargs).prefetch_related(
-                'filing', 'filing__principal'),
+                'filing', 'filing__principal')
 
-        for row in items:
+        for item in items:
             results.append({
-                'object': getattr(row, choice),
-                'principal': row.filing.principal,
-                'position': row.get_position_display(),
-                'time': str(row.filing.year.year) + row.filing.quarter,
-                'source': row.filing.source_set.all()[0]
+                'object': getattr(item, choice),
+                'principal': item.filing.principal,
+                'position': item.get_position_display(),
+                'time': str(item.filing.year.year) + item.filing.quarter,
+                'source': item.filing.source_set.all()
             })
 
         return results
