@@ -214,8 +214,8 @@ class OfficialTestCase(TestCase):
         official = Official.objects.get(pk=18)  # Henon
         unique_topics = []
 
+        # Test that topic is of type Category
         for topic in official.get_topics():
-            # Test that topic is of type Category
             self.assertEqual(type(topic), Category)
             if topic.pk not in unique_topics:
                 unique_topics.append(topic.pk)
@@ -223,14 +223,12 @@ class OfficialTestCase(TestCase):
         # Test uniqueness
         self.assertEqual(len(unique_topics), len(set(official.get_topics())))
 
-        #  Test that count is accurate
+        # Test that get_topic is inclusive
         principal1 = Principal.objects.get(pk=4)
         category1 = Category.objects.create(name='foo')
         category2 = Category.objects.create(name='bar')
-
         filing1 = Filing.objects.create(quarter='Q1', principal=principal1)
         filing2 = Filing.objects.create(quarter='Q2', principal=principal1)
-
         expenditure1 = Expenditure.objects.create(communication=0,
             category=category1, filing=filing1)
         expenditure1.save()
@@ -256,9 +254,30 @@ class OfficialTestCase(TestCase):
         """
         official = Official.objects.get(pk=18)  # Henon
 
-        # Test for object key
+        # Test that object key is of type Issue
         for issue in official.get_issues():
             self.assertEqual(type(issue['object']), Issue)
+
+        # Test that get_issues is inclusive
+        issue1 = Issue.objects.create(description='Foo')
+        issue2 = Issue.objects.create(description='Bar')
+        principal1 = Principal.objects.get(pk=4)
+        category1 = Category.objects.create(name='foo')
+        filing1 = Filing.objects.create(quarter='Q1', principal=principal1)
+        filing2 = Filing.objects.create(quarter='Q2', principal=principal1)
+        expenditure1 = Expenditure.objects.create(communication=0,
+            category=category1, filing=filing1, issue=issue1)
+        expenditure1.save()
+        expenditure1.officials.add(self.official)
+        expenditure2 = Expenditure.objects.create(communication=0,
+            category=category1, filing=filing2, issue=issue2)
+        expenditure2.save()
+        expenditure2.officials.add(self.official)
+
+        self.assertEqual(len(self.official.get_issues()), 2)
+
+        for issue in self.official.get_issues():
+            self.assertIn(issue['object'], [issue1, issue2])
 
     def test_get_bills(self):
         """get_bills
@@ -267,6 +286,27 @@ class OfficialTestCase(TestCase):
         """
         official = Official.objects.get(pk=18)  # Henon
 
-        # Test for object key
+        # Test that object key is of type Bill
         for bill in official.get_bills():
             self.assertEqual(type(bill['object']), Bill)
+
+        # Test that get_bills is inclusive
+        bill1 = Bill.objects.create(number='000000')
+        bill2 = Bill.objects.create(number='111111')
+        principal1 = Principal.objects.get(pk=4)
+        category1 = Category.objects.create(name='foo')
+        filing1 = Filing.objects.create(quarter='Q1', principal=principal1)
+        filing2 = Filing.objects.create(quarter='Q2', principal=principal1)
+        expenditure1 = Expenditure.objects.create(communication=0,
+            category=category1, filing=filing1, bill=bill1)
+        expenditure1.save()
+        expenditure1.officials.add(self.official)
+        expenditure2 = Expenditure.objects.create(communication=0,
+            category=category1, filing=filing2, bill=bill2)
+        expenditure2.save()
+        expenditure2.officials.add(self.official)
+
+        self.assertEqual(len(self.official.get_bills()), 2)
+
+        for bill in self.official.get_bills():
+            self.assertIn(bill['object'], [bill1, bill2])
