@@ -45,7 +45,10 @@
               <td>{{ issue.object.description }}</td>
               <td><a href="/principals/{{ issue.principal.id }}">{{ issue.principal }}</a></td>
               <td>{{ issue.position }}</td>
-              <td><a href="{{ issue.source.url }}">Document</a></td>
+              <td>{% for source in issue.source %} 
+                {% if not forloop.first %}, {% endfor %}
+                <a href="{{ issue.source.url }}">Document</a>
+              </td>
             </tr>   
           {% endfor %}
           {% for bill in official.get_bills %}
