@@ -26,7 +26,7 @@ class LobbyistTestCase(TestCase):
     def test_get_address(self):
         """get_address method returns the lobbyists's street address"""
         self.assertEqual(self.lobbyist.get_address(), "Tall Building, " +
-            "Philadelphia, PA, 19143")
+            "123 Main St., Suite 320, Philadelphia, PA, 19143")
 
 
 class FirmTestCase(TestCase):
