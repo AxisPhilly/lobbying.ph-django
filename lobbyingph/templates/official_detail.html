@@ -16,7 +16,7 @@
   </ul>
   <div class="column-container">
     <div class="column">
-      <h3>Lobbied on Topics</h3>
+      <h3>Topics</h3>
       <ul class="details">
         {% for topic in official.get_topics %}
           <li>{{ topic.name }}</li>
@@ -45,9 +45,11 @@
               <td>{{ issue.object.description }}</td>
               <td><a href="/principals/{{ issue.principal.id }}">{{ issue.principal }}</a></td>
               <td>{{ issue.position }}</td>
-              <td>{% for source in issue.source %} 
-                {% if not forloop.first %}, {% endfor %}
-                <a href="{{ issue.source.url }}">Document</a>
+              <td>
+                {% for source in issue.source %} 
+                  {% if not forloop.first %}, {% endif %}
+                  <a href="{{ issue.source.url }}">Document</a>
+                {% endfor %}
               </td>
             </tr>   
           {% endfor %}
