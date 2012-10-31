@@ -151,6 +151,51 @@ class FirmTestCase(TestCase):
             self.assertIn(topic.pk, [category1.pk, category2.pk])
 
 
+class PrincipalTestCase(TestCase):
+
+    def setup(self):
+        pass
+
+    def test_principal_exists(self):
+        pass
+
+    def test_get_address(self):
+        pass
+
+    def test_get_exp_totals(self):
+        pass
+
+    def test_get_total_exp(self):
+        pass
+
+    def test_get_exp_totals_by_quarter(self):
+        pass
+
+    def test_get_exp_percents(self):
+        pass
+
+    def test_get_exp_percents_by_quarter(self):
+        pass
+
+    def test_get_topics(self):
+        pass
+
+    def test_get_firms(self):
+        pass
+
+    def test_get_issues(self):
+        pass
+
+    def test_get_unique_issues(self):
+        pass
+
+    def test_get_unique_bills(self):
+        pass
+
+    def get_issue_and_bill_count(self):
+        pass
+
+
 class OfficialTestCase(TestCase):
     fixtures = ['official', 'firm', 'principal', 'lobbyist', 'filing',
         'expenditure', 'communication_method', 'receipent_group', 'agency'
