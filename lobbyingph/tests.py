@@ -1,5 +1,6 @@
 from django.test import TestCase
 from lobbyingph.models import *
+from decimal import *
 
 
 class LobbyistTestCase(TestCase):
@@ -310,3 +311,42 @@ class OfficialTestCase(TestCase):
 
         for bill in self.official.get_bills():
             self.assertIn(bill['object'], [bill1, bill2])
+
+
+class FilingTestCase(TestCase):
+
+    def setUp(self):
+        self.filing = Filing.objects.create(
+            quarter='Q1',
+            total_exp_direct_comm=10000.10,
+            total_exp_indirect_comm=20000.20,
+            total_exp_other=5000.30
+        )
+
+    def test_filing_exists(self):
+        """Filing was created successfully with provided attributes"""
+        self.assertEqual(self.filing.quarter, 'Q1')
+        self.assertEqual(self.filing.total_exp_direct_comm, 10000.10)
+        self.assertEqual(self.filing.total_exp_indirect_comm, 20000.20)
+        self.assertEqual(self.filing.total_exp_other, 5000.30)
+
+    def test_get_total_exp(self):
+        """get_total_exp returns the total expenditures that were reported
+        1) always returns a decimal
+        2) equals the total of the three expenditure fields
+        """
+
+        # Test that it returns a float
+        self.assertEqual(type(self.filing.get_total_exp()), Decimal)
+
+        # Test that it's including all three expenditure fields in total
+        self.assertEqual(self.filing.get_total_exp(), Decimal('35000.60'))
+
+        self.filing2 = Filing.objects.create(
+            quarter='Q1',
+            total_exp_direct_comm=10000.12,
+            total_exp_indirect_comm=20000.20,
+            total_exp_other=5000.37
+        )
+
+        self.assertEqual(self.filing2.get_total_exp(), Decimal('35000.69'))
