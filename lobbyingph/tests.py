@@ -49,13 +49,16 @@ class FirmTestCase(TestCase):
         self.principal2 = Principal.objects.get(pk=5)
         self.category1 = Category.objects.create(name='foo')
         self.category2 = Category.objects.create(name='bar')
-        self.filing1 = Filing.objects.create(quarter='Q1', principal=self.principal1)
+        self.filing1 = Filing.objects.create(quarter='Q1',
+            principal=self.principal1)
         self.filing1.save()
         self.filing1.firms.add(self.firm)
-        self.filing2 = Filing.objects.create(quarter='Q2', principal=self.principal1)
+        self.filing2 = Filing.objects.create(quarter='Q2',
+            principal=self.principal1)
         self.filing2.save()
         self.filing2.firms.add(self.firm)
-        self.filing3 = Filing.objects.create(quarter='Q1', principal=self.principal2)
+        self.filing3 = Filing.objects.create(quarter='Q1',
+            principal=self.principal2)
         self.filing3.save()
         self.filing3.firms.add(self.firm)
         Expenditure.objects.create(communication=0, category=self.category1,
@@ -74,7 +77,7 @@ class FirmTestCase(TestCase):
     def test_get_address(self):
         """get_address method returns the firm's street address"""
         self.assertEqual(self.firm.get_address(), "The Penn Building, " +
-            "Philadelphia, PA, 19107")
+            "400 Market St, Suite 500, Philadelphia, PA, 19107")
 
     def test_get_clients(self):
         """get_clients returns a list of clients which
@@ -142,20 +145,88 @@ class FirmTestCase(TestCase):
 
 class PrincipalTestCase(TestCase):
 
-    def setup(self):
-        pass
+    def setUp(self):
+        self.principal1 = Principal.objects.create(
+            name="Special Interest",
+            address1="Girard Building",
+            address2="400 South St",
+            address3="Suite 100",
+            city="Philadelphia",
+            state="PA",
+            zipcode="19107",
+            phone="2154444444",
+            email="lobby@specialinterest.com"
+        )
+
+        self.principal2 = Principal.objects.create(
+            name="Specialer Interest",
+            address1="Girard Building",
+            address2="400 South St",
+            address3="",
+            city="Philadelphia",
+            state="PA",
+            zipcode="19107",
+            phone="2154444444",
+            email="lobby@specialinterest.com"
+        )
+
+        self.category1 = Category.objects.create(name='foo')
+        self.category2 = Category.objects.create(name='bar')
+        self.filing1 = Filing.objects.create(quarter='Q1',
+            principal=self.principal1,
+            total_exp_direct_comm=10000.10,
+            total_exp_indirect_comm=20000.20,
+            total_exp_other=5000.30)
+        self.filing2 = Filing.objects.create(quarter='Q2',
+            principal=self.principal1,
+            total_exp_direct_comm=10000.12,
+            total_exp_indirect_comm=20000.20,
+            total_exp_other=5000.37)
+        self.issue1 = Issue.objects.create(description='Foo')
+        self.issue2 = Issue.objects.create(description='Bar')
+        self.bill1 = Bill.objects.create(number='000000')
+        self.bill2 = Bill.objects.create(number='111111')
+        self.expenditure1 = Expenditure.objects.create(communication=0,
+            category=self.category1, filing=self.filing1, issue=self.issue1,
+            bill=self.bill1)
+        self.expenditure1.save()
+        self.expenditure2 = Expenditure.objects.create(communication=0,
+            category=self.category1, filing=self.filing2, issue=self.issue2,
+            bill=self.bill2)
+        self.expenditure2.save()
+        self.expenditure3 = Expenditure.objects.create(communication=0,
+            category=self.category2, filing=self.filing2, issue=self.issue2)
+        self.expenditure3.save()
 
     def test_principal_exists(self):
-        pass
+        self.assertEqual(self.principal1.name, 'Special Interest')
+        self.assertEqual(self.principal1.address1, 'Girard Building')
+        self.assertEqual(self.principal1.phone, '2154444444')
 
     def test_get_address(self):
-        pass
+        self.assertEqual(self.principal1.get_address(),
+            'Girard Building, 400 South St, Suite 100, Philadelphia, PA, 19107')
+        self.assertEqual(self.principal2.get_address(),
+            'Girard Building, 400 South St, Philadelphia, PA, 19107')
 
     def test_get_exp_totals(self):
-        pass
+        # No parameters return sum for all quarters
+        totals = self.principal1.get_exp_totals()
+
+        self.assertEqual(totals['direct'], Decimal('20000.22'))
+        self.assertEqual(totals['indirect'], Decimal('40000.40'))
+        self.assertEqual(totals['other'], Decimal('10000.67'))
+
+        # Providing quarter parameter returns totals just for that quarter
+        q1_totals = self.principal1.get_exp_totals(quarter='Q1', year=2012)
+
+        self.assertEqual(q1_totals['direct'], Decimal('10000.10'))
+        self.assertEqual(q1_totals['indirect'], Decimal('20000.20'))
+        self.assertEqual(q1_totals['other'], Decimal('5000.30'))
 
     def test_get_total_exp(self):
-        pass
+        # sums get_exp_totals
+        self.assertEqual(self.principal1.get_total_exp(), Decimal('70001.29'))
 
     def test_get_exp_totals_by_quarter(self):
         pass
