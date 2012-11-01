@@ -202,12 +202,8 @@ class OfficialTestCase(TestCase):
     ]
 
     def setUp(self):
-        self.official = Official.objects.create(
-            first_name="Michael",
-            last_name="Nutter",
-            title="Mayor"
-        )
-
+        self.official = Official.objects.create(first_name="Michael",
+            last_name="Nutter", title="Mayor")
         self.principal1 = Principal.objects.get(pk=4)
         self.category1 = Category.objects.create(name='foo')
         self.category2 = Category.objects.create(name='bar')
