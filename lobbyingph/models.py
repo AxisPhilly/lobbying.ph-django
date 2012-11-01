@@ -196,7 +196,9 @@ class Principal(models.Model):
         results = {}
         for quarter in quarters:
             totals = self.get_exp_totals(
-                quarter=quarter['quarter'], year=quarter['year'].year)
+                quarter=quarter['quarter'],
+                year=quarter['year'].year
+            )
 
             results[quarter['quarter'] + str(quarter['year'].year)] = totals
 
