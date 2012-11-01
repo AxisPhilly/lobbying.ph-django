@@ -208,6 +208,32 @@ class OfficialTestCase(TestCase):
             title="Mayor"
         )
 
+        self.principal1 = Principal.objects.get(pk=4)
+        self.category1 = Category.objects.create(name='foo')
+        self.category2 = Category.objects.create(name='bar')
+        self.filing1 = Filing.objects.create(quarter='Q1',
+            principal=self.principal1)
+        self.filing2 = Filing.objects.create(quarter='Q2',
+            principal=self.principal1)
+        self.issue1 = Issue.objects.create(description='Foo')
+        self.issue2 = Issue.objects.create(description='Bar')
+        self.bill1 = Bill.objects.create(number='000000')
+        self.bill2 = Bill.objects.create(number='111111')
+        self.expenditure1 = Expenditure.objects.create(communication=0,
+            category=self.category1, filing=self.filing1, issue=self.issue1,
+            bill=self.bill1)
+        self.expenditure1.save()
+        self.expenditure1.officials.add(self.official)
+        self.expenditure2 = Expenditure.objects.create(communication=0,
+            category=self.category1, filing=self.filing2, issue=self.issue2,
+            bill=self.bill2)
+        self.expenditure2.save()
+        self.expenditure2.officials.add(self.official)
+        self.expenditure3 = Expenditure.objects.create(communication=0,
+            category=self.category2, filing=self.filing2, issue=self.issue2)
+        self.expenditure3.save()
+        self.expenditure3.officials.add(self.official)
+
     def test_official_exists(self):
         """Official was created successfully with provided attributes"""
         self.assertEqual(self.official.first_name, 'Michael')
@@ -227,26 +253,6 @@ class OfficialTestCase(TestCase):
         self.assertEqual(type(official.get_lobby_count()), int)
 
         #  Test that count is accurate
-        principal1 = Principal.objects.get(pk=4)
-        category1 = Category.objects.create(name='foo')
-        category2 = Category.objects.create(name='bar')
-
-        filing1 = Filing.objects.create(quarter='Q1', principal=principal1)
-        filing2 = Filing.objects.create(quarter='Q2', principal=principal1)
-
-        expenditure1 = Expenditure.objects.create(communication=0,
-            category=category1, filing=filing1)
-        expenditure1.save()
-        expenditure1.officials.add(self.official)
-        expenditure2 = Expenditure.objects.create(communication=0,
-            category=category1, filing=filing2)
-        expenditure2.save()
-        expenditure2.officials.add(self.official)
-        expenditure3 = Expenditure.objects.create(communication=0,
-            category=category2, filing=filing2)
-        expenditure3.save()
-        expenditure3.officials.add(self.official)
-
         self.assertEqual(self.official.get_lobby_count(), 3)
 
     def test_get_topics(self):
@@ -270,28 +276,10 @@ class OfficialTestCase(TestCase):
         self.assertEqual(len(unique_topics), len(set(official.get_topics())))
 
         # Test that get_topic is inclusive
-        principal1 = Principal.objects.get(pk=4)
-        category1 = Category.objects.create(name='foo')
-        category2 = Category.objects.create(name='bar')
-        filing1 = Filing.objects.create(quarter='Q1', principal=principal1)
-        filing2 = Filing.objects.create(quarter='Q2', principal=principal1)
-        expenditure1 = Expenditure.objects.create(communication=0,
-            category=category1, filing=filing1)
-        expenditure1.save()
-        expenditure1.officials.add(self.official)
-        expenditure2 = Expenditure.objects.create(communication=0,
-            category=category1, filing=filing2)
-        expenditure2.save()
-        expenditure2.officials.add(self.official)
-        expenditure3 = Expenditure.objects.create(communication=0,
-            category=category2, filing=filing2)
-        expenditure3.save()
-        expenditure3.officials.add(self.official)
-
         self.assertEqual(len(self.official.get_topics()), 2)
 
         for topic in self.official.get_topics():
-            self.assertIn(topic.pk, [category1.pk, category2.pk])
+            self.assertIn(topic.pk, [self.category1.pk, self.category2.pk])
 
     def test_get_issues(self):
         """get_issues
@@ -305,25 +293,10 @@ class OfficialTestCase(TestCase):
             self.assertEqual(type(issue['object']), Issue)
 
         # Test that get_issues is inclusive
-        issue1 = Issue.objects.create(description='Foo')
-        issue2 = Issue.objects.create(description='Bar')
-        principal1 = Principal.objects.get(pk=4)
-        category1 = Category.objects.create(name='foo')
-        filing1 = Filing.objects.create(quarter='Q1', principal=principal1)
-        filing2 = Filing.objects.create(quarter='Q2', principal=principal1)
-        expenditure1 = Expenditure.objects.create(communication=0,
-            category=category1, filing=filing1, issue=issue1)
-        expenditure1.save()
-        expenditure1.officials.add(self.official)
-        expenditure2 = Expenditure.objects.create(communication=0,
-            category=category1, filing=filing2, issue=issue2)
-        expenditure2.save()
-        expenditure2.officials.add(self.official)
-
-        self.assertEqual(len(self.official.get_issues()), 2)
+        self.assertEqual(len(self.official.get_issues()), 3)
 
         for issue in self.official.get_issues():
-            self.assertIn(issue['object'], [issue1, issue2])
+            self.assertIn(issue['object'], [self.issue1, self.issue2])
 
     def test_get_bills(self):
         """get_bills
@@ -337,25 +310,10 @@ class OfficialTestCase(TestCase):
             self.assertEqual(type(bill['object']), Bill)
 
         # Test that get_bills is inclusive
-        bill1 = Bill.objects.create(number='000000')
-        bill2 = Bill.objects.create(number='111111')
-        principal1 = Principal.objects.get(pk=4)
-        category1 = Category.objects.create(name='foo')
-        filing1 = Filing.objects.create(quarter='Q1', principal=principal1)
-        filing2 = Filing.objects.create(quarter='Q2', principal=principal1)
-        expenditure1 = Expenditure.objects.create(communication=0,
-            category=category1, filing=filing1, bill=bill1)
-        expenditure1.save()
-        expenditure1.officials.add(self.official)
-        expenditure2 = Expenditure.objects.create(communication=0,
-            category=category1, filing=filing2, bill=bill2)
-        expenditure2.save()
-        expenditure2.officials.add(self.official)
-
         self.assertEqual(len(self.official.get_bills()), 2)
 
         for bill in self.official.get_bills():
-            self.assertIn(bill['object'], [bill1, bill2])
+            self.assertIn(bill['object'], [self.bill1, self.bill2])
 
 
 class FilingTestCase(TestCase):
