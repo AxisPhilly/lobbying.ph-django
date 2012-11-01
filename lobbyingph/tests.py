@@ -45,6 +45,26 @@ class FirmTestCase(TestCase):
             email="questions@lobbyinginc.com"
         )
 
+        self.principal1 = Principal.objects.get(pk=4)
+        self.principal2 = Principal.objects.get(pk=5)
+        self.category1 = Category.objects.create(name='foo')
+        self.category2 = Category.objects.create(name='bar')
+        self.filing1 = Filing.objects.create(quarter='Q1', principal=self.principal1)
+        self.filing1.save()
+        self.filing1.firms.add(self.firm)
+        self.filing2 = Filing.objects.create(quarter='Q2', principal=self.principal1)
+        self.filing2.save()
+        self.filing2.firms.add(self.firm)
+        self.filing3 = Filing.objects.create(quarter='Q1', principal=self.principal2)
+        self.filing3.save()
+        self.filing3.firms.add(self.firm)
+        Expenditure.objects.create(communication=0, category=self.category1,
+            filing=self.filing1)
+        Expenditure.objects.create(communication=0, category=self.category1,
+            filing=self.filing2)
+        Expenditure.objects.create(communication=0, category=self.category2,
+            filing=self.filing2)
+
     def test_firm_exists(self):
         """Firm was created successfully with provided attributes"""
         self.assertEqual(self.firm.name, "Lobbying, Inc.")
@@ -78,19 +98,6 @@ class FirmTestCase(TestCase):
         self.assertEqual(len(unique_clients), len(set(firm.get_clients())))
 
         # Test client list is inclusive, and includes no duplicates
-        principal1 = Principal.objects.get(pk=4)
-        principal2 = Principal.objects.get(pk=5)
-
-        filing1 = Filing.objects.create(quarter='Q1', principal=principal1)
-        filing1.save()
-        filing1.firms.add(self.firm)
-        filing2 = Filing.objects.create(quarter='Q2', principal=principal1)
-        filing2.save()
-        filing2.firms.add(self.firm)
-        filing3 = Filing.objects.create(quarter='Q1', principal=principal2)
-        filing3.save()
-        filing3.firms.add(self.firm)
-
         self.assertEqual(len(self.firm.get_clients()), 2)
 
         for client in self.firm.get_clients():
@@ -127,28 +134,10 @@ class FirmTestCase(TestCase):
         self.assertEqual(len(unique_topics), len(set(firm.get_topics())))
 
         # Test topic list is inclusive, and includes no duplicates
-        principal1 = Principal.objects.get(pk=4)
-        category1 = Category.objects.create(name='foo')
-        category2 = Category.objects.create(name='bar')
-
-        filing1 = Filing.objects.create(quarter='Q1', principal=principal1)
-        filing1.save()
-        filing1.firms.add(self.firm)
-        filing2 = Filing.objects.create(quarter='Q2', principal=principal1)
-        filing2.save()
-        filing2.firms.add(self.firm)
-
-        Expenditure.objects.create(communication=0, category=category1,
-            filing=filing1)
-        Expenditure.objects.create(communication=0, category=category1,
-            filing=filing2)
-        Expenditure.objects.create(communication=0, category=category2,
-            filing=filing2)
-
         self.assertEqual(len(self.firm.get_topics()), 2)
 
         for topic in self.firm.get_topics():
-            self.assertIn(topic.pk, [category1.pk, category2.pk])
+            self.assertIn(topic.pk, [self.category1.pk, self.category2.pk])
 
 
 class PrincipalTestCase(TestCase):
@@ -315,31 +304,12 @@ class OfficialTestCase(TestCase):
 class FilingTestCase(TestCase):
 
     def setUp(self):
-        self.filing = Filing.objects.create(
+        self.filing1 = Filing.objects.create(
             quarter='Q1',
             total_exp_direct_comm=10000.10,
             total_exp_indirect_comm=20000.20,
             total_exp_other=5000.30
         )
-
-    def test_filing_exists(self):
-        """Filing was created successfully with provided attributes"""
-        self.assertEqual(self.filing.quarter, 'Q1')
-        self.assertEqual(self.filing.total_exp_direct_comm, 10000.10)
-        self.assertEqual(self.filing.total_exp_indirect_comm, 20000.20)
-        self.assertEqual(self.filing.total_exp_other, 5000.30)
-
-    def test_get_total_exp(self):
-        """get_total_exp returns the total expenditures that were reported
-        1) always returns a decimal
-        2) equals the total of the three expenditure fields
-        """
-
-        # Test that it returns a float
-        self.assertEqual(type(self.filing.get_total_exp()), Decimal)
-
-        # Test that it's including all three expenditure fields in total
-        self.assertEqual(self.filing.get_total_exp(), Decimal('35000.60'))
 
         self.filing2 = Filing.objects.create(
             quarter='Q1',
@@ -348,4 +318,23 @@ class FilingTestCase(TestCase):
             total_exp_other=5000.37
         )
 
+    def test_filing_exists(self):
+        """Filing was created successfully with provided attributes"""
+        self.assertEqual(self.filing1.quarter, 'Q1')
+        self.assertEqual(self.filing1.total_exp_direct_comm, 10000.10)
+        self.assertEqual(self.filing1.total_exp_indirect_comm, 20000.20)
+        self.assertEqual(self.filing1.total_exp_other, 5000.30)
+
+    def test_get_total_exp(self):
+        """get_total_exp returns the total expenditures that were reported
+        1) always returns a decimal
+        2) equals the total of the three expenditure fields
+        """
+
+        # Test that it returns a Decimal
+        self.assertEqual(type(self.filing1.get_total_exp()), Decimal)
+        self.assertEqual(type(self.filing2.get_total_exp()), Decimal)
+
+        # Test that it's including all three expenditure fields in total
+        self.assertEqual(self.filing1.get_total_exp(), Decimal('35000.60'))
         self.assertEqual(self.filing2.get_total_exp(), Decimal('35000.69'))
