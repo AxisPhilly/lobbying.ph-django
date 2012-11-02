@@ -170,18 +170,18 @@ class PrincipalTestCase(TestCase):
             email="lobby@specialinterest.com"
         )
 
-        self.category1 = Category.objects.create(name='foo')
-        self.category2 = Category.objects.create(name='bar')
+        self.category1 = Category.objects.create(name='Real Estate')
+        self.category2 = Category.objects.create(name='Healthcare')
         self.filing1 = Filing.objects.create(quarter='Q1',
             principal=self.principal1,
-            total_exp_direct_comm=10000.10,
-            total_exp_indirect_comm=20000.20,
-            total_exp_other=5000.30)
+            total_exp_direct_comm=5000.05,
+            total_exp_indirect_comm=15000.20,
+            total_exp_other=1000.30)
         self.filing2 = Filing.objects.create(quarter='Q2',
             principal=self.principal1,
-            total_exp_direct_comm=10000.12,
-            total_exp_indirect_comm=20000.20,
-            total_exp_other=5000.37)
+            total_exp_direct_comm=21000.00,
+            total_exp_indirect_comm=20500.20,
+            total_exp_other=2000.37)
         self.issue1 = Issue.objects.create(description='Foo')
         self.issue2 = Issue.objects.create(description='Bar')
         self.bill1 = Bill.objects.create(number='000000')
@@ -213,32 +213,64 @@ class PrincipalTestCase(TestCase):
         # No parameters return sum for all quarters
         totals = self.principal1.get_exp_totals()
 
-        self.assertEqual(totals['direct'], Decimal('20000.22'))
-        self.assertEqual(totals['indirect'], Decimal('40000.40'))
-        self.assertEqual(totals['other'], Decimal('10000.67'))
+        self.assertEqual(totals['direct'], Decimal('26000.05'))
+        self.assertEqual(totals['indirect'], Decimal('35500.40'))
+        self.assertEqual(totals['other'], Decimal('3000.67'))
 
         # Providing quarter parameter returns totals just for that quarter
         q1_totals = self.principal1.get_exp_totals(quarter='Q1', year=2012)
 
-        self.assertEqual(q1_totals['direct'], Decimal('10000.10'))
-        self.assertEqual(q1_totals['indirect'], Decimal('20000.20'))
-        self.assertEqual(q1_totals['other'], Decimal('5000.30'))
+        self.assertEqual(q1_totals['direct'], Decimal('5000.05'))
+        self.assertEqual(q1_totals['indirect'], Decimal('15000.20'))
+        self.assertEqual(q1_totals['other'], Decimal('1000.30'))
 
     def test_get_total_exp(self):
         # sums get_exp_totals
-        self.assertEqual(self.principal1.get_total_exp(), Decimal('70001.29'))
+        self.assertEqual(self.principal1.get_total_exp(), Decimal('64501.12'))
 
     def test_get_exp_totals_by_quarter(self):
-        pass
+        totals = self.principal1.get_exp_totals_by_quarter()
+
+        self.assertEqual(totals['Q12012']['direct'], Decimal('5000.05'))
+        self.assertEqual(totals['Q12012']['indirect'], Decimal('15000.20'))
+        self.assertEqual(totals['Q12012']['other'], Decimal('1000.30'))
+        self.assertEqual(totals['Q22012']['direct'], Decimal('21000.00'))
+        self.assertEqual(totals['Q22012']['indirect'], Decimal('20500.20'))
+        self.assertEqual(totals['Q22012']['other'], Decimal('2000.37'))
 
     def test_get_exp_percents(self):
-        pass
+        # No parameters return percents of total spending for each type
+        percents = self.principal1.get_exp_percents()
+        self.assertEqual(percents['direct'], '40.31')
+        self.assertEqual(percents['indirect'], '55.04')
+        self.assertEqual(percents['other'], '4.65')
+
+        # Providing quarter parameter returns total just for that quarter
+        q1_percents = self.principal1.get_exp_percents(quarter='Q1', year=2012)
+
+        self.assertEqual(q1_percents['direct'], '23.81')
+        self.assertEqual(q1_percents['indirect'], '71.43')
+        self.assertEqual(q1_percents['other'], '4.76')
+
+        # Test that percents add up to 100%
+        total = (Decimal(q1_percents['direct']) + Decimal(q1_percents['indirect']) +
+                Decimal(q1_percents['other']))
+
+        self.assertEqual(total, Decimal('100.00'))
 
     def test_get_exp_percents_by_quarter(self):
-        pass
+        percents = self.principal1.get_exp_percents_by_quarter()
+
+        self.assertEqual(percents['Q12012']['direct'], '23.81')
+        self.assertEqual(percents['Q12012']['indirect'], '71.43')
+        self.assertEqual(percents['Q12012']['other'], '4.76')
+        self.assertEqual(percents['Q22012']['direct'], '48.28')
+        self.assertEqual(percents['Q22012']['indirect'], '47.13')
+        self.assertEqual(percents['Q22012']['other'], '4.60')
 
     def test_get_topics(self):
-        pass
+        for topic in self.principal1.get_topics():
+            self.assertIn(topic.name, ['Real Estate', 'Healthcare'])
 
     def test_get_firms(self):
         pass
