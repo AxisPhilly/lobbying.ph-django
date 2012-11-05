@@ -160,8 +160,8 @@ class PrincipalTestCase(TestCase):
 
         self.principal2 = Principal.objects.create(
             name="Specialer Interest",
-            address1="Girard Building",
-            address2="400 South St",
+            address1="Penn Tower",
+            address2="100 Market St",
             address3="",
             city="Philadelphia",
             state="PA",
@@ -170,6 +170,10 @@ class PrincipalTestCase(TestCase):
             email="lobby@specialinterest.com"
         )
 
+        self.firm1 = Firm.objects.create(name="Lobbying, Inc.")
+        self.firm2 = Firm.objects.create(name="Lawyers, Co.")
+        self.firm3 = Firm.objects.create(name="Lobbytown")
+
         self.category1 = Category.objects.create(name='Real Estate')
         self.category2 = Category.objects.create(name='Healthcare')
         self.filing1 = Filing.objects.create(quarter='Q1',
@@ -177,13 +181,17 @@ class PrincipalTestCase(TestCase):
             total_exp_direct_comm=5000.05,
             total_exp_indirect_comm=15000.20,
             total_exp_other=1000.30)
+        self.filing1.save()
+        self.filing1.firms.add(self.firm1, self.firm2)
         self.filing2 = Filing.objects.create(quarter='Q2',
             principal=self.principal1,
             total_exp_direct_comm=21000.00,
             total_exp_indirect_comm=20500.20,
             total_exp_other=2000.37)
-        self.issue1 = Issue.objects.create(description='Foo')
-        self.issue2 = Issue.objects.create(description='Bar')
+        self.filing2.save()
+        self.filing1.firms.add(self.firm2, self.firm3)
+        self.issue1 = Issue.objects.create(description='School Budget')
+        self.issue2 = Issue.objects.create(description='Tax Reform')
         self.bill1 = Bill.objects.create(number='000000')
         self.bill2 = Bill.objects.create(number='111111')
         self.expenditure1 = Expenditure.objects.create(communication=0,
@@ -207,7 +215,7 @@ class PrincipalTestCase(TestCase):
         self.assertEqual(self.principal1.get_address(),
             'Girard Building, 400 South St, Suite 100, Philadelphia, PA, 19107')
         self.assertEqual(self.principal2.get_address(),
-            'Girard Building, 400 South St, Philadelphia, PA, 19107')
+            'Penn Tower, 100 Market St, Philadelphia, PA, 19107')
 
     def test_get_exp_totals(self):
         # No parameters return sum for all quarters
@@ -273,10 +281,17 @@ class PrincipalTestCase(TestCase):
             self.assertIn(topic.name, ['Real Estate', 'Healthcare'])
 
     def test_get_firms(self):
-        pass
+        self.assertEqual(len(self.principal1.get_firms()), 3)
+
+        for firm in self.principal1.get_firms():
+            self.assertIn(firm.name, ["Lobbying, Inc.", "Lawyers, Co.",
+                "Lobbytown"])
 
     def test_get_issues(self):
-        pass
+        self.assertEqual(len(self.principal1.get_issues()), 2)
+
+        for issue in self.principal1.get_issues():
+            self.assertIn(issue.description, ['School Budget', 'Tax Reform'])
 
     def test_get_unique_issues(self):
         pass
