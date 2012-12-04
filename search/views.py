@@ -11,12 +11,15 @@ class CustomSearchView(SearchView):
         result_count = {
             'lobbyist': 0,
             'firm': 0,
-            'principal': 0
+            'principal': 0,
+            'official': 0
         }
 
         for result in self.results:
             print result.content_type
-            if result.content_type() == 'lobbyingph.lobbyist':
+            if result.content_type() == 'lobbyingph.official':
+                result_count['official'] += 1
+            elif result.content_type() == 'lobbyingph.lobbyist':
                 result_count['lobbyist'] += 1
             elif result.content_type() == 'lobbyingph.firm':
                 result_count['firm'] += 1

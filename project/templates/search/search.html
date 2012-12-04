@@ -4,7 +4,19 @@
     <h2>{{ page.object_list|length }} Search Result(s) for "{{ query }}"</h2>
     <div class="column">
     {% if query %}
-        <h3>Principals: {{ result_count.principal }}</h3>
+       <h3>City Officials: {{ result_count.official }}</h3>
+        {% if result_count.official %}
+            {% for result in page.object_list %}
+                {% if result.content_type == "lobbyingph.official" %}
+                    <p>
+                    <a href="/officials/{{ result.object.id }}">{{ result.object.first_name }} {{ result.object.last_name }}</a>
+                    </p>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p><i>No results</i></p>
+        {% endif %}
+       <h3>Principals: {{ result_count.principal }}</h3>
         {% if result_count.principal %}
             {% for result in page.object_list %}
                 {% if result.content_type == "lobbyingph.principal" %}
