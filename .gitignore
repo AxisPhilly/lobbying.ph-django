@@ -4,3 +4,5 @@ venv
 .sass-cache
 /static/
 .env
+*.swp
+
