@@ -16,6 +16,7 @@ STATE_CHOICES = (
     ('FL', 'Florida'),
     ('MA', 'Massachusetts'),
     ('MD', 'Maryland'),
+    ('MN', 'Minnesota'),
     ('NC', 'North Carolina'),
     ('NJ', 'New Jersey'),
     ('NY', 'New York'),
