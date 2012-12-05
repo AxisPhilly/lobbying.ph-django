@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 {% load humanize %}
+{% load lobbyingph_extras %}
 
 {% block head %}
     <link href="{{ STATIC_URL }}css/themes/blue/style.css" media="screen" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block content %}
+  {% if principal.terminated %}
+    <i class="termination">Terminated registration {{ principal.termination_quarter|quarter }}</i>
+  {% endif %}
   <h2 class="name">{{ principal.name }}</h2>
   <ul class="contact">
     <li>{{ principal.get_address }}</li>

@@ -41,10 +41,12 @@ class Lobbyist(models.Model):
     zipcode = models.CharField(max_length=10)
     phone = models.CharField(max_length=12)
     email = models.CharField(max_length=75)
+    terminated = models.BooleanField(default=False)
+    termination_quarter = models.DateField(null=True, blank=True) 
 
     firm = models.ForeignKey('Firm', null=True, blank=True)
     principals = models.ManyToManyField('Principal', null=True, blank=True)
-
+    
     class Meta:
         ordering = ['name']
 
@@ -76,6 +78,8 @@ class Firm(models.Model):
     zipcode = models.CharField(max_length=10)
     phone = models.CharField(max_length=12)
     email = models.CharField(max_length=75)
+    terminated = models.BooleanField(default=False)
+    termination_quarter = models.DateField(null=True, blank=True) 
 
     class Meta:
         ordering = ['name']
@@ -135,6 +139,8 @@ class Principal(models.Model):
     zipcode = models.CharField(max_length=10)
     phone = models.CharField(max_length=12)
     email = models.CharField(max_length=75)
+    terminated = models.BooleanField(default=False)
+    termination_quarter = models.DateField(null=True, blank=True) 
 
     class Meta:
         ordering = ['name']

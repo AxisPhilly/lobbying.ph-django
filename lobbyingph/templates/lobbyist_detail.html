@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% load humanize %}
+{% load lobbyingph_extras %}
 
 {% block content %}
+  {% if lobbyist.terminated %}
+    <i class="termination">Terminated registration {{ lobbyist.termination_quarter|quarter }}</i>
+  {% endif %}
   <h2 class="name">
     {{ lobbyist.name }}
 
