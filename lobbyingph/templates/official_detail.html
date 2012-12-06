@@ -48,7 +48,7 @@
               <td>
                 {% for source in issue.source %} 
                   {% if not forloop.first %}, {% endif %}
-                  <a href="{{ issue.source.url }}">Document</a>
+                  <a href="{{ source.url }}">Document</a>
                 {% endfor %}
               </td>
             </tr>   
@@ -59,7 +59,12 @@
               <td>{{ bill.object.get_bill_type_display }} No. <a href="{{ bill.object.url }}" target="_blank">{{ bill.object.number }} <i class="icon-external-link"></a></td>
               <td><a href="/principals/{{ bill.principal.id }}">{{ bill.principal }}</a></td>
               <td>{{ bill.position }}</td>
-              <td><a href="{{ bill.source.url }}">Document</a></td>
+              <td>
+                {% for source in bill.source %} 
+                  {% if not forloop.first %}, {% endif %}
+                  <a href="{{ source.url }}">Document</a>
+                {% endfor %}
+              </td>
             </tr>   
           {% endfor %}
         </tbody>
