@@ -2,6 +2,7 @@ from django import template
 
 register = template.Library()
 
+
 @register.filter(name='quarter')
 def quarter(tDate):
     """Returns the quarter for a given year as
