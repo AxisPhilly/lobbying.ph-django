@@ -27,7 +27,7 @@
 
   <div class="filings">
     <h3>Issues / Bills / Resolutions</h3>
-    {% if official.get_issues %}
+    {% if official.get_issues or official.get_bills %}
       <table id="issues" class="tablesorter">
         <thead> 
           <tr>
