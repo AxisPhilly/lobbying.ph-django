@@ -4,15 +4,17 @@ argparse==1.2.1
 boto==2.5.2
 distribute==0.6.24
 dj-database-url==0.2.1
+django-fixture-magic==0.0.3
 -e git://github.com/toastdriven/django-haystack.git@acc656cc5f35a84573d5ae82dce62e901f79ef7d#egg=django_haystack-dev
 django-heroku-memcacheify==0.3
 django-pylibmc-sasl==0.2.4
 django-storages==1.1.4
 gunicorn==0.14.5
 psycopg2==2.4.5
--e git://github.com/caseypt/pyelasticsearch.git#egg=pyelasticsearch
+-e git://github.com/caseypt/pyelasticsearch.git@084703988dd5496d045cac3d342554e2f10caf2f#egg=pyelasticsearch-dev
 pylibmc==1.2.3
 python-ptrace==0.6.4
 requests==0.13.2
-wsgiref==0.1.2
 simplejson==2.6.1
+wget==1.0
+wsgiref==0.1.2
