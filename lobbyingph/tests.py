@@ -288,10 +288,10 @@ class PrincipalTestCase(TestCase):
                 "Lobbytown"])
 
     def test_get_issues(self):
-        self.assertEqual(len(self.principal1.get_issues()), 2)
+        self.assertEqual(len(self.principal1.get_issues()), 3)
 
         for issue in self.principal1.get_issues():
-            self.assertIn(issue.description, ['School Budget', 'Tax Reform'])
+            self.assertIn(issue['object'].description, ['School Budget', 'Tax Reform'])
 
     def test_get_unique_issues(self):
         pass
