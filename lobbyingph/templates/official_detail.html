@@ -72,6 +72,38 @@
     {% endif %}
   </div>
 
+  <div class="gifts">
+    <h3>Gifts, Hospitality, Transporation Lodging</h3>
+    {% if official.exp_other_set %}
+      <table id="gifts" class="tablesorter">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Value</th>
+            <th>Date</th>
+            <th>Giver</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for gift in official.exp_other_set.all %}
+            <tr>
+              <td>{{ gift.description }}</td>
+              <td>${{ gift.value }}</td>
+              <td>{{ gift.date }}</td>
+              <td>{{ gift.source }}</td>
+              <td>
+                {% for source in gift.filing.source_set.all %}
+                  <a href="{{ source.url }}">{{ source.name }}</a>,
+                {% endfor %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody> 
+      </table>
+    {% endif %}
+  </div>
+
 {% endblock %}
 
 
@@ -83,6 +115,12 @@
         .tablesorter({ 
           widgets: ['zebra'],
           sortList: [[0,1]]
+        });
+
+      $("#gifts")
+        .tablesorter({ 
+          widgets: ['zebra'],
+          sortList: [[2,0]]
         });
     }); 
     </script>   
