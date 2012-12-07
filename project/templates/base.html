@@ -32,7 +32,7 @@
             <li><a {% if 'official' in request.path %} class="current" {% endif %} href="/officials">City Officials</a></li>
           </ul>
           <form class="search" action="/search/?q=" method="get">
-            <input placeholder="Search by name" name="q" id="id_q" type="text"/>
+            <input placeholder="Search by name" name="q" id="id_q" type="text" value="{{ query }}"/>
             <input type="submit" value="Search">
           </form>
         </nav>
