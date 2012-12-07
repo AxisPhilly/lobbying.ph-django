@@ -74,7 +74,7 @@
 
   <div class="gifts">
     <h3>Gifts, Hospitality, Transporation Lodging</h3>
-    {% if official.exp_other_set %}
+    {% if official.exp_other_set.all %}
       <table id="gifts" class="tablesorter">
         <thead>
           <tr>
@@ -101,6 +101,8 @@
           {% endfor %}
         </tbody> 
       </table>
+    {% else %}
+      <i>None listed</i>
     {% endif %}
   </div>
 
