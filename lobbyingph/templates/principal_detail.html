@@ -159,7 +159,7 @@
               <td>${{ filing.total_exp_other|intcomma }}</td>
               <td>
                   {% for source in filing.source_set.all %}
-                    <a href="{{ source.url }}">{{ source.name }}</a>,
+                    <a href="{{ source.url }}">{{ source.name }}</a>{% if not forloop.last %}, {% endif %}
                   {% endfor %}
               </td>
             </tr>   
