@@ -47,8 +47,7 @@
               <td>{{ issue.position }}</td>
               <td>
                 {% for source in issue.source %} 
-                  {% if not forloop.first %}, {% endif %}
-                  <a href="{{ source.url }}">Document</a>
+                  <a href="{{ source.url }}">Document</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
               </td>
             </tr>   
@@ -61,8 +60,7 @@
               <td>{{ bill.position }}</td>
               <td>
                 {% for source in bill.source %} 
-                  {% if not forloop.first %}, {% endif %}
-                  <a href="{{ source.url }}">Document</a>
+                  <a href="{{ source.url }}">Document</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
               </td>
             </tr>   
