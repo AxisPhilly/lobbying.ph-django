@@ -45,7 +45,8 @@ class Lobbyist(models.Model):
     email = models.CharField(max_length=75)
     terminated = models.BooleanField(default=False)
     termination_quarter = models.DateField(null=True, blank=True)
-
+    slug = models.SlugField(max_length=100, blank=True, null=True)
+    
     firm = models.ForeignKey('Firm', null=True, blank=True)
     principals = models.ManyToManyField('Principal', null=True, blank=True)
 
@@ -54,7 +55,12 @@ class Lobbyist(models.Model):
 
     def __unicode__(self):
         return self.name
-
+ 
+    # http://stackoverflow.com/questions/837828/how-do-i-create-a-slug-in-django
+    def save(self, *args, **kwargs):
+      self.s = slugify(self.name)
+      super(Lobbyist, self).save(*args, **kwargs)
+   
     def get_address(self):
         street_add = [self.address1]
         if self.address2:
@@ -82,12 +88,18 @@ class Firm(models.Model):
     email = models.CharField(max_length=75)
     terminated = models.BooleanField(default=False)
     termination_quarter = models.DateField(null=True, blank=True)
-
+    slug = models.SlugField(max_length=100, blank=True, null=True)
+    
     class Meta:
         ordering = ['name']
 
     def __unicode__(self):
         return self.name
+
+    # http://stackoverflow.com/questions/837828/how-do-i-create-a-slug-in-django
+    def save(self, *args, **kwargs):
+      self.s = slugify(self.name)
+      super(Firm, self).save(*args, **kwargs)
 
     def get_address(self):
         street_add = [self.address1]
@@ -143,12 +155,18 @@ class Principal(models.Model):
     email = models.CharField(max_length=75)
     terminated = models.BooleanField(default=False)
     termination_quarter = models.DateField(null=True, blank=True)
-
+    slug = models.SlugField(max_length=100, blank=True, null=True)
+    
     class Meta:
         ordering = ['name']
 
     def __unicode__(self):
         return self.name
+
+    # http://stackoverflow.com/questions/837828/how-do-i-create-a-slug-in-django
+    def save(self, *args, **kwargs):
+      self.s = slugify(self.name)
+      super(Principal, self).save(*args, **kwargs)
 
     def get_address(self):
         street_add = [self.address1]
