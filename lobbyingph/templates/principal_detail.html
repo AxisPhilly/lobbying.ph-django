@@ -107,7 +107,7 @@
               <td>
                {% for target in issue.target %}
                   {% if target.last_name %}
-                    <a href="/officials/{{ target.id }}">{{ target }}</a>{% if not forloop.last %}, {% endif %}
+                    <a href="/official/{{ target.slug }}">{{ target }}</a>{% if not forloop.last %}, {% endif %}
                   {% else %}
                     {{ target }}
                   {% endif %}
@@ -124,7 +124,7 @@
               <td>
                 {% for target in bill.target %}
                   {% if target.last_name %}
-                    <a href="/officials/{{ target.id }}">{{ target }}</a>{% if not forloop.last %}, {% endif %}
+                    <a href="/official/{{ target.slug }}">{{ target }}</a>{% if not forloop.last %}, {% endif %}
                   {% else %}
                     {{ target }}
                   {% endif %}

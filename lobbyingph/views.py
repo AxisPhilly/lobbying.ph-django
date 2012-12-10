@@ -128,7 +128,6 @@ class OfficialDetail(DetailView):
     model = Official
     template_name = 'official_detail.html'
 
-
 class PrincipalList(ListView):
     """
     Table/List view of Principal

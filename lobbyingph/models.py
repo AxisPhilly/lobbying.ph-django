@@ -2,6 +2,7 @@ from django.db import models
 import datetime
 from django.db.models import Sum
 from decimal import Decimal
+from django.template.defaultfilters import slugify
 
 
 STATE_CHOICES = (
@@ -492,9 +493,15 @@ class Official(models.Model):
         max_length=100, blank=False, null=False, default='')
     title = models.CharField(max_length=100, blank=True, null=True)
     agency = models.ForeignKey('Agency', blank=True, null=True)
+    slug = models.SlugField(max_length=100, blank=True, null=True)
 
     class Meta:
         ordering = ['last_name']
+
+    # http://stackoverflow.com/questions/837828/how-do-i-create-a-slug-in-django
+    def save(self, *args, **kwargs):
+      self.s = slugify(self.first_name + ' ' + self.last_name)
+      super(Official, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.first_name + ' ' + self.last_name
