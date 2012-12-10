@@ -109,7 +109,7 @@
                   {% if target.last_name %}
                     <a href="/official/{{ target.slug }}">{{ target }}</a>{% if not forloop.last %}, {% endif %}
                   {% else %}
-                    {{ target }}
+                  {{ target }}{% if not forloop.last %}, {% endif %}
                   {% endif %}
                 {% endfor %}
               </td> 
@@ -126,7 +126,7 @@
                   {% if target.last_name %}
                     <a href="/official/{{ target.slug }}">{{ target }}</a>{% if not forloop.last %}, {% endif %}
                   {% else %}
-                    {{ target }}
+                  {{ target }}{% if not forloop.last %}, {% endif %}
                   {% endif %}
                 {% endfor %}
               </td>
