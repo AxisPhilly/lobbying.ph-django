@@ -228,7 +228,6 @@
             var $select = $(this);
             var data = lobby.d3.data[$select.val()]; // swap the data
             var total = $.map(data, function(element){ if(element.dollars !== 0) { return element.dollars } });
-            console.log(total);
             if (total.length) {
               $('svg g').show(); 
               lobby.d3.arcs = lobby.d3.arcs.data(lobby.d3.pie(data)); // update data
