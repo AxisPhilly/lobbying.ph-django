@@ -175,7 +175,7 @@
 {% block scripts %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
     {% if principal.get_total_exp %}
-      <script type='text/javascript' src="{{ STATIC_URL }}js/d3.v2.js"></script>
+      <script type='text/javascript' src="{{ STATIC_URL }}js/d3.v2.min.js"></script>
     {% endif %}
     <script type='text/javascript'>
 
@@ -227,10 +227,17 @@
           d3.select(".quarter-select").on("change", function() {
             var $select = $(this);
             var data = lobby.d3.data[$select.val()]; // swap the data
-            lobby.d3.arcs = lobby.d3.arcs.data(lobby.d3.pie(data)); // update data
-            lobby.d3.svg.selectAll("title").remove(); //update titles
-            lobby.d3.arcs.append("title").text(function(d) { return d.data.percent + '%'; });
-            lobby.d3.arcs.transition().duration(250).attrTween("d", lobby.d3.arcTween); // tween the data
+            var total = $.map(data, function(element){ if(element.dollars !== 0) { return element.dollars } });
+            console.log(total);
+            if (total.length) {
+              $('svg g').show(); 
+              lobby.d3.arcs = lobby.d3.arcs.data(lobby.d3.pie(data)); // update data
+              lobby.d3.svg.selectAll("title").remove(); //update titles
+              lobby.d3.arcs.append("title").text(function(d) { return d.data.percent + '%'; });
+              lobby.d3.arcs.transition().duration(250).attrTween("d", lobby.d3.arcTween); // tween the data
+            } else {
+              $('svg g').hide();
+            }
             lobby.d3.updateExpSummary($select.val()); // update numbers
           });
 
@@ -263,7 +270,7 @@
               'total': 'Total expenditures in 2012',
               'Q12012': '1st quarter (Jan. - Mar.) 2012 expenditures',
               'Q22012': '2nd quarter (Apr. - Jun.) 2012 expenditures',
-              'Q32012': '3rd quarter (July. - Sep.) 2012 expenditures',
+              'Q32012': '3rd quarter (July - Sep.) 2012 expenditures',
               'Q42012': '4th quarter (Oct. - Dec.) 2012 expenditures',
             };
 
