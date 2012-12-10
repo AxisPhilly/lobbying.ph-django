@@ -104,7 +104,15 @@
               <td>{{ issue.object.description }}</td>
               <td>{{ issue.position }}</td>
               <td>{{ issue.comm }}</td>
-              <td>{{ issue.target|join:", " }}</td>
+              <td>
+               {% for target in issue.target %}
+                  {% if target.last_name %}
+                    <a href="/officials/{{ target.id }}">{{ target }}</a>{% if not forloop.last %}, {% endif %}
+                  {% else %}
+                    {{ target }}
+                  {% endif %}
+                {% endfor %}
+              </td> 
             </tr>   
           {% endfor %}
           {% for bill in principal.get_bills %}
@@ -113,7 +121,15 @@
               <td>{{ bill.object.get_bill_type_display }} No. <a href="{{ bill.object.url }}" target="_blank">{{ bill.object.number }}</a></td>
               <td>{{ bill.position }}</td>
               <td>{{ bill.comm }}</td>
-              <td>{{ bill.target|join:", " }}</td>
+              <td>
+                {% for target in bill.target %}
+                  {% if target.last_name %}
+                    <a href="/officials/{{ target.id }}">{{ target }}</a>{% if not forloop.last %}, {% endif %}
+                  {% else %}
+                    {{ target }}
+                  {% endif %}
+                {% endfor %}
+              </td>
             </tr>   
           {% endfor %}
         </tbody>
