@@ -9,7 +9,7 @@
             {% for result in page.object_list %}
                 {% if result.content_type == "lobbyingph.official" %}
                     <p>
-                    <a href="/officials/{{ result.object.id }}">{{ result.object.first_name }} {{ result.object.last_name }}</a>
+                    <a href="/official/{{ result.object.slug }}">{{ result.object.first_name }} {{ result.object.last_name }}</a>
                     </p>
                 {% endif %}
             {% endfor %}
