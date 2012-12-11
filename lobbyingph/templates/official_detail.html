@@ -9,7 +9,9 @@
   <h2 class="name">
     {{ official.first_name }} {{ official.last_name}}
 
-    <span>{{ official.title }}, {{ official.agency }}</span>
+    {% if official.agency %}
+      <span>{{ official.title }}, {{ official.agency }}</span>
+    {% endif %}
 
   </h2>
   <ul class="contact">
