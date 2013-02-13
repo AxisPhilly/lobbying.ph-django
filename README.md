@@ -1,7 +1,5 @@
 #Lobbying.ph-django
-This is the active repo for http://lobbying.ph, a tool to help journalists and citizens better understand and access Philadelphia [lobbying reports](http://www.phila.gov/ethicsboard/lobbying.html).
-
-This project is supported by the Philadelphia Public Interest Information Network.
+This is the active repo for [Lobbying.ph](http://lobbying.ph), a tool to help journalists and citizens better understand and access Philadelphia [lobbying reports](http://www.phila.gov/ethicsboard/lobbying.html).
 
 The original Sinatra/Ruby version of the site (https://github.com/caseypt/lobbying.ph) was used as a prototype and is no longer maintained.
 
