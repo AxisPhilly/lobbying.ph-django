@@ -294,18 +294,18 @@ header section .primary-nav ul li a:hover:before {
 /* line 60, ../../../compass/sass/content.scss */
 .top-fives .column-1 {
   display: inline-block;
-  width: 59%;
+  width: 49%;
 }
 /* line 64, ../../../compass/sass/content.scss */
 .top-fives .column-1 div {
-  width: 46%;
+  width: 98%;
   margin-right: 17px;
   display: inline-block;
 }
 /* line 71, ../../../compass/sass/content.scss */
 .top-fives .column-2 {
   display: inline-block;
-  width: 40%;
+  width: 49%;
 }
 /* line 76, ../../../compass/sass/content.scss */
 .top-fives h3 {

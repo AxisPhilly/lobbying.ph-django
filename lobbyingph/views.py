@@ -25,8 +25,8 @@ def index(request):
 
     # Sort the base lists
     # stackoverflow.com/questions/930865/
-    firms_sorted_clients = sorted(firms,
-        key=lambda f: -f.get_client_count())
+    #firms_sorted_clients = sorted(firms,
+    #    key=lambda f: -f.get_client_count())
     p_sorted_spending = sorted(principals,
         key=lambda p: -p.get_total_exp())
     p_sorted_issue_bill = sorted(principals,
@@ -34,14 +34,14 @@ def index(request):
 
     # Then generate top lists
     # http://stackoverflow.com/questions/5306756/
-    top_firms = []
-    for firm in firms_sorted_clients[:5]:
-        top_firms.append({
-            'object': firm,
-            'count': firm.get_client_count(),
-            'percent': "{:.0%}".format(firm.get_client_count() /
-                firms_sorted_clients[0].get_client_count())
-        })
+    #top_firms = []
+    #for firm in firms_sorted_clients[:5]:
+    #    top_firms.append({
+    #        'object': firm,
+    #        'count': firm.get_client_count(),
+    #        'percent': "{:.0%}".format(firm.get_client_count() /
+    #            firms_sorted_clients[0].get_client_count())
+    #    })
 
     top_p_spending = []
     for principal in p_sorted_spending[:5]:
@@ -67,7 +67,7 @@ def index(request):
         'principal_count': principals.count(),
         'official_count': officials.count(),
         'total_spending': total_spending,
-        'top_firms': top_firms,
+        #'top_firms': top_firms,
         'top_principals_by_spending': top_p_spending,
         'top_principals_by_issues_bills': top_p_issue_bill
     }
