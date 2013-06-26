@@ -179,6 +179,6 @@ class PrincipalDetail(DetailView):
         context['exp_totals'] = self.object.get_exp_totals()
         context['exp_percents'] = self.object.get_exp_percents()
         context['quarters'] = self.object.filing_set.distinct(
-            'quarter', 'year').values('quarter', 'year')
+            'quarter', 'year').order_by('-year').values('quarter', 'year')
 
         return context

@@ -52,7 +52,7 @@
         <select class="quarter-select">
           <option value="total">Total</option>
           {% for q in quarters %}
-            <option value="{{ q.quarter }}{{ q.year|date:"Y" }}">{{ q.quarter }}{{ q.year|date:"Y" }}</option>
+            <option value="{{ q.year|date:"Y" }}{{ q.quarter }}">{{ q.year|date:"Y" }}{{ q.quarter }}</option>
           {% endfor %}
         </select>
       </h3>
@@ -266,11 +266,12 @@
 
           lobby.d3.getTimeAlias = function(quarter) {
             var descAlias = {
-              'total': 'Total expenditures in 2012',
-              'Q12012': '1st quarter (Jan. - Mar.) 2012 expenditures',
-              'Q22012': '2nd quarter (Apr. - Jun.) 2012 expenditures',
-              'Q32012': '3rd quarter (July - Sep.) 2012 expenditures',
-              'Q42012': '4th quarter (Oct. - Dec.) 2012 expenditures',
+              'total': 'Total expenditures',
+              '2012Q1': '1st quarter (Jan. - Mar.) 2012 expenditures',
+              '2012Q2': '2nd quarter (Apr. - Jun.) 2012 expenditures',
+              '2012Q3': '3rd quarter (July - Sep.) 2012 expenditures',
+              '2012Q4': '4th quarter (Oct. - Dec.) 2012 expenditures',
+              '2013Q1': '1st quarter (Jan. - Mar.) 2013 expenditures',
             };
 
             return descAlias[quarter];

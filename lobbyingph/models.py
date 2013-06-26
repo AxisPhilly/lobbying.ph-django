@@ -227,7 +227,7 @@ class Principal(models.Model):
                 year=quarter['year'].year
             )
 
-            results[quarter['quarter'] + str(quarter['year'].year)] = totals
+            results[str(quarter['year'].year) + quarter['quarter']] = totals
 
         return results
 
@@ -267,7 +267,7 @@ class Principal(models.Model):
             totals = self.get_exp_percents(
                 quarter=quarter['quarter'], year=quarter['year'].year)
 
-            results[quarter['quarter'] + str(quarter['year'].year)] = totals
+            results[str(quarter['year'].year) + quarter['quarter']] = totals
 
         return results
 
