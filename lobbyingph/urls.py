@@ -8,7 +8,7 @@ from django.views.generic.simple import redirect_to
 #from lobbyingph.views import IssueDetail
 
 urlpatterns = patterns('',
-    url(r'^$', index),
+    url(r'^$', PrincipalList.as_view()),
     url(r'^lobbyists/$', LobbyistList.as_view()),
     url(r'^lobbyists/(?P<pk>\d+)/$', LobbyistDetail.as_view()),
     url(r'^firms/$', FirmList.as_view()),
